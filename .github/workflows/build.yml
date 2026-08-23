@@ -1,4 +1,4 @@
-name: DEngine Build
+name: RunYourEvent Build
 
 on:
   push:
@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     env:
-      NEXT_PUBLIC_SITE_URL: https://dengine.vercel.app
+      NEXT_PUBLIC_SITE_URL: https://runyourevent.com
       NEXT_PUBLIC_SUPABASE_URL: https://phhpiqwvgwlgjmyiksqe.supabase.co
       NEXT_PUBLIC_SUPABASE_ANON_KEY: sb_publishable_Di0kT3dAcoP9dHlBrg-rHQ_ISw-26-9
       ANTHROPIC_API_KEY: sk-ant-build-placeholder-not-used
