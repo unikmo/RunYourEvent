@@ -49,5 +49,14 @@ export const metadata: Metadata = {
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  return <html lang="en"><body className={`${inter.className} min-h-screen`}><SiteHeader />{children}<SiteFooter /></body></html>
+  return (
+    <html lang="en">
+      <body className={`${inter.className} min-h-screen`}>
+        <a className="skip-link" href="#main-content">Skip to content</a>
+        <SiteHeader />
+        <div id="main-content">{children}</div>
+        <SiteFooter />
+      </body>
+    </html>
+  )
 }
