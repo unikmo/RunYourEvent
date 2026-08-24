@@ -1,9 +1,93 @@
 import type { Metadata } from 'next'
 import { ArrowRight, Check } from 'lucide-react'
-export const metadata:Metadata={title:{absolute:'RunYourEvent Pricing | Plans from $19'},description:'Free event execution preview. Essential $19 per event. Professional $39 per event. No subscription required for a single event.',alternates:{canonical:'/pricing'}}
-const plans=[
-{name:'Preview',price:'$0',eyebrow:'See the operating model',copy:'Confirm that RunYourEvent understands the shape and execution complexity of your event before paying.',features:['Event architecture summary','Workstream count','Representative dependency-aware tasks','Complexity assessment','Tier recommendation'],cta:'Build free preview',href:'/custom'},
-{name:'Essential',price:'$19',suffix:'/ event',eyebrow:'Straightforward events',copy:'A complete, right-sized execution plan for a genuinely simpler event — never deliberately truncated.',features:['Complete task coverage','Owners and backward timing','Dependencies','Completion criteria','Event-date anchored schedule','No subscription'],cta:'Build my event plan',href:'/custom'},
-{name:'Professional',price:'$39',suffix:'/ event',eyebrow:'Complex event delivery',copy:'Adds the deeper control layer needed when approvals, risks, suppliers and critical paths matter.',features:['Everything in Essential','Approval gates + approvers','Risk consequences','Contingencies','Critical-path detail','Vendor/procurement scope'],cta:'Build my event plan',href:'/custom',featured:true},
-{name:'Teams & Agencies',price:'Custom',eyebrow:'Repeat event operations',copy:'For teams that want reusable execution models, portfolio readiness and integrations across multiple events.',features:['Concurrent events','Reusable organization models','Company approval rules','Portfolio readiness','Historical execution intelligence','PM/calendar integrations'],cta:'Discuss team access',href:'mailto:hello@runyourevent.com?subject=RunYourEvent%20team%20access'}]
-export default function PricingPage(){return <main className="bg-[#fbfaf7]"><section className="shell pb-14 pt-20 text-center"><p className="eyebrow">Pricing</p><h1 className="display mx-auto mt-4 max-w-4xl text-5xl font-black sm:text-6xl">Preview free. <span className="text-[#8b7440]">Complete plans from $19.</span></h1><p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-[#6f7a8b]">Price follows execution complexity — not the event label. No subscription is required for a single event.</p></section><section className="shell pb-24"><div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">{plans.map((p:any)=><article key={p.name} className={`rounded-[30px] border p-7 ${p.featured?'border-[#c9aa57] bg-[#15233f] text-white':'border-black/[.06] bg-white'}`}><p className={`text-[10px] font-black uppercase tracking-[.13em] ${p.featured?'text-[#efcd6d]':'text-[#9b7b2f]'}`}>{p.eyebrow}</p><h2 className="mt-3 text-xl font-black">{p.name}</h2><p className="mt-5 text-4xl font-black">{p.price} {p.suffix&&<span className="text-sm opacity-50">{p.suffix}</span>}</p><p className={`mt-4 min-h-[96px] text-sm leading-6 ${p.featured?'text-white/60':'text-[#707b8c]'}`}>{p.copy}</p><ul className="mt-6 space-y-3">{p.features.map((f:string)=><li key={f} className="flex gap-2 text-sm"><Check size={15} className="mt-0.5 shrink-0 text-[#d8b65b]"/><span>{f}</span></li>)}</ul><a className={`${p.featured?'btn-signal':'btn-primary'} mt-7 w-full`} href={p.href}>{p.cta}<ArrowRight className="ml-2" size={15}/></a></article>)}</div><div className="mt-10 rounded-[26px] border border-[#ded2aa] bg-[#fbf6e7] p-6"><p className="font-black text-[#5f4b1f]">RunYourEvent does not hide necessary work to force an upgrade.</p><p className="mt-2 text-sm leading-6 text-[#8b7440]">Essential is complete for a simpler event. Professional costs more because it exposes deeper execution intelligence around approvals, risk, contingency, vendor scope and critical path.</p></div></section></main>}
+
+export const metadata: Metadata = {
+  title: { absolute: 'RunYourEvent Pricing | Plans from $19' },
+  description: 'Free event execution preview. Essential $19 per event. Professional $39 per event. No subscription required for a single event.',
+  alternates: { canonical: '/pricing' },
+}
+
+const plans = [
+  {
+    name: 'Preview',
+    price: '$0',
+    eyebrow: 'Start here',
+    copy: 'Confirm that RunYourEvent understands your event before paying.',
+    features: ['Event architecture summary', 'Representative execution tasks', 'Complexity assessment', 'Tier recommendation'],
+    cta: 'Build free preview',
+    href: '/custom',
+  },
+  {
+    name: 'Essential',
+    price: '$19',
+    suffix: '/ event',
+    eyebrow: 'Straightforward events',
+    copy: 'A complete, right-sized execution plan for a genuinely simpler event.',
+    features: ['Complete task coverage', 'Owners and backward timing', 'Dependencies', 'Completion criteria', 'Event-date anchored schedule', 'No subscription'],
+    cta: 'Build my event plan',
+    href: '/custom',
+  },
+  {
+    name: 'Professional',
+    price: '$39',
+    suffix: '/ event',
+    eyebrow: 'Complex delivery',
+    copy: 'Adds deeper control when approvals, risks, suppliers and critical paths matter.',
+    features: ['Everything in Essential', 'Approval gates + approvers', 'Risk consequences', 'Contingencies', 'Critical-path detail', 'Vendor/procurement scope'],
+    cta: 'Build my event plan',
+    href: '/custom',
+    featured: true,
+  },
+]
+
+export default function PricingPage() {
+  return (
+    <main className="bg-[#fcfbf8]">
+      <section className="border-b border-black/[0.06]">
+        <div className="shell py-20 sm:py-24">
+          <p className="eyebrow">Pricing</p>
+          <h1 className="display mt-5 max-w-4xl text-5xl font-black leading-[0.98] sm:text-6xl lg:text-7xl">Start free. Pay once for the complete event plan.</h1>
+          <p className="lede mt-7">No subscription is required for a single event. Price follows execution complexity—not the event label.</p>
+        </div>
+      </section>
+
+      <section className="section-pad bg-white">
+        <div className="shell">
+          <div className="grid gap-5 lg:grid-cols-3">
+            {plans.map(plan => (
+              <article key={plan.name} className={`flex flex-col rounded-[20px] border p-7 sm:p-8 ${plan.featured ? 'border-[#15233f] bg-[#15233f] text-white' : 'border-black/[0.07] bg-[#fcfbf8]'}`}>
+                <p className={`text-[10px] font-black uppercase tracking-[0.14em] ${plan.featured ? 'text-[#e7c66f]' : 'text-[#8a671b]'}`}>{plan.eyebrow}</p>
+                <h2 className="mt-3 text-xl font-black">{plan.name}</h2>
+                <p className="mt-6 text-4xl font-black tracking-[-0.04em]">{plan.price} {plan.suffix && <span className="text-sm opacity-50">{plan.suffix}</span>}</p>
+                <p className={`mt-5 text-sm leading-6 ${plan.featured ? 'text-white/60' : 'text-[#667184]'}`}>{plan.copy}</p>
+                <ul className={`mt-7 flex-1 divide-y ${plan.featured ? 'divide-white/10 border-y border-white/10' : 'divide-black/[0.07] border-y border-black/[0.07]'}`}>
+                  {plan.features.map(feature => (
+                    <li key={feature} className="flex gap-3 py-3.5 text-sm">
+                      <Check size={14} className="mt-0.5 shrink-0 text-[#d5ad48]" />
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+                <a className="btn-primary mt-7 w-full" href={plan.href}>{plan.cta}<ArrowRight className="ml-2" size={15} /></a>
+              </article>
+            ))}
+          </div>
+
+          <div className="mt-10 grid gap-6 border-y border-black/[0.08] py-7 lg:grid-cols-[1fr_auto] lg:items-center">
+            <div>
+              <p className="eyebrow">Teams & agencies</p>
+              <h2 className="mt-2 text-xl font-black tracking-[-0.025em] text-[#15233f]">Repeat event operations need a different model.</h2>
+              <p className="mt-2 max-w-3xl text-sm leading-6 text-[#667184]">Concurrent events, reusable organization models, portfolio readiness and integrations are handled through custom team access.</p>
+            </div>
+            <a className="btn-secondary" href="mailto:hello@runyourevent.com?subject=RunYourEvent%20team%20access">Discuss team access</a>
+          </div>
+
+          <div className="mt-10 max-w-3xl">
+            <p className="font-black text-[#15233f]">Necessary work is never hidden to force an upgrade.</p>
+            <p className="mt-2 text-sm leading-6 text-[#667184]">Essential is complete for a simpler event. Professional costs more because it adds deeper execution intelligence around approvals, risk, contingency, vendor scope and critical path.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+  )
+}
