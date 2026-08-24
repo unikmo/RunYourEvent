@@ -1,45 +1,189 @@
 import type { Metadata } from 'next'
-import { ArrowRight, CalendarClock, Check, GitBranch, Layers3, RefreshCw, ShieldCheck, UsersRound } from 'lucide-react'
+import { ArrowRight, Check } from 'lucide-react'
 
-export const metadata:Metadata={
-  title:'RunYourEvent | Company Event Execution Platform',
-  description:'Build the complete execution plan for your company event: workstreams, owners, deadlines, dependencies, completion criteria, readiness and Run of Show.',
-  alternates:{canonical:'/'},
+export const metadata: Metadata = {
+  title: 'RunYourEvent | Event Execution Platform',
+  description: 'Turn your event into clear workstreams, tasks, owners, dependencies and deadlines—from first decision to final delivery.',
+  alternates: { canonical: '/' },
 }
 
-const softwareSchema={
-  '@context':'https://schema.org','@type':'SoftwareApplication',name:'RunYourEvent',applicationCategory:'BusinessApplication',operatingSystem:'Web',
-  url:process.env.NEXT_PUBLIC_SITE_URL||'https://runyourevent.com',
-  description:'Event execution platform for turning fixed-date events into connected operating plans with workstreams, owners, dependencies, approvals, risks, readiness and Run of Show.',
-  offers:{'@type':'AggregateOffer',lowPrice:'19',highPrice:'39',priceCurrency:'USD',offerCount:'2'},
+const softwareSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'RunYourEvent',
+  applicationCategory: 'BusinessApplication',
+  operatingSystem: 'Web',
+  url: process.env.NEXT_PUBLIC_SITE_URL || 'https://runyourevent.com',
+  description: 'Event execution platform for turning fixed-date events into connected operating plans with owners, dependencies, approvals, risks, readiness and Run of Show.',
+  offers: { '@type': 'AggregateOffer', lowPrice: '19', highPrice: '39', priceCurrency: 'USD', offerCount: '2' },
 }
 
-const product=[
-  [CalendarClock,'Backward scheduling','Start from the fixed event date and build realistic target dates backwards.'],
-  [GitBranch,'Dependencies','See what cannot move until an earlier decision, approval or deliverable is complete.'],
-  [UsersRound,'Owners & collaboration','Assign work, invite editors or viewers, comment and keep accountability visible.'],
-  [ShieldCheck,'Readiness & risk','Track blocked, overdue, awaiting-approval and critical-path work before event day.'],
-  [RefreshCw,'Automatic replanning','Move an event or task date and recalculate the affected operating sequence.'],
-  [Layers3,'Run of Show','Operate the live event from exact cues, owners, locations, technical notes and contingencies.'],
+const steps = [
+  ['01', 'Describe the event', 'Tell us what is happening, when it happens and the constraints that matter.'],
+  ['02', 'Get the execution plan', 'RunYourEvent builds the workstreams, tasks, owners, dependencies and deadlines.'],
+  ['03', 'Run the event', 'Assign the work, track readiness and replan when reality changes.'],
 ]
 
-const funnels=[
-  ['Company & corporate events','Primary commercial use case','Build the complete execution plan across venue, program, production, guests, vendors and approvals.','/company-event-planning'],
-  ['Wedding planning','Largest consumer SEO funnel','Turn the fixed wedding date into an accountable checklist, timeline, vendor sequence and day-of Run of Show.','/wedding-planning-checklist'],
-  ['Family reunions','Hidden organic opportunity','Coordinate travel, accommodation, meals, activities and family responsibilities without one person carrying the plan.','/family-reunion-planning'],
-  ['Class reunions','Volunteer committee execution','Give outreach, attendance, venue, vendors, program and event-day responsibilities clear owners and dates.','/class-reunion-planning'],
+const audiences = [
+  ['Company events', 'Give every workstream an owner and every deadline visibility.', '/company-event-planning'],
+  ['Event teams & agencies', 'Standardize execution without forcing every event into the same template.', '/agencies'],
+  ['Weddings & private events', 'Know exactly what needs to happen next—and who owns it.', '/wedding-planning-checklist'],
+  ['Hotels & venues', 'Coordinate clients, suppliers and internal teams from one operating plan.', '/venues'],
 ]
 
-export default function HomePage(){return <main>
-  <script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(softwareSchema)}}/>
-  <section className="bg-[#fbfaf7]"><div className="shell grid min-h-[700px] items-center gap-12 py-16 lg:grid-cols-[1.04fr_.96fr]"><div><p className="eyebrow">Company event execution</p><h1 className="display mt-5 max-w-4xl text-5xl font-black leading-[.98] sm:text-7xl">Build the complete execution plan for your company event</h1><p className="mt-7 max-w-3xl text-lg leading-8 text-[#647084]">Enter your event and fixed date. RunYourEvent creates the workstreams, owners, deadlines, dependencies and completion criteria required to deliver it.</p><p className="mt-4 max-w-2xl text-base font-black leading-7 text-[#23324a]">Every task. Every owner. Every deadline.</p><div className="mt-8 flex flex-wrap gap-3"><a href="/custom" className="btn-primary">Build my execution plan <ArrowRight className="ml-2" size={16}/></a><a href="/company-event-planning" className="btn-secondary">See company events</a></div><div className="mt-7 flex flex-wrap gap-5 text-sm font-semibold text-[#788395]">{['Free preview','Complete plans from $19/event','Live execution workspace after purchase'].map(x=><span key={x} className="flex items-center gap-2"><Check size={15} className="text-[#a07f31]"/>{x}</span>)}</div></div>
-  <div className="panel overflow-hidden"><div className="bg-[#15233f] p-6 text-white"><p className="text-[10px] uppercase tracking-[.14em] text-white/45">350-person customer conference · fixed date</p><div className="mt-3 flex items-end justify-between gap-6"><div><p className="text-xs font-bold uppercase tracking-[.12em] text-[#efcd6d]">One event becomes</p><h2 className="mt-1 text-xl font-black">A live execution model</h2></div><div className="text-right"><p className="text-xs text-white/45">Readiness</p><p className="text-3xl font-black text-[#efcd6d]">72%</p></div></div></div><div className="p-6"><div className="grid grid-cols-2 gap-3 sm:grid-cols-4">{[['Tasks','47'],['Workstreams','7'],['Blocked','2'],['Approvals','4']].map(([l,v])=><div className="metric" key={l}><p className="text-[9px] uppercase text-[#9299a5]">{l}</p><p className="mt-1 text-lg font-black">{v}</p></div>)}</div><div className="mt-6 rounded-2xl border border-black/[.055] bg-[#fbfaf7] p-5"><p className="text-[10px] font-black uppercase tracking-[.12em] text-[#9a7b31]">Critical chain</p><div className="mt-4 space-y-3">{['Venue confirmed','Floorplan approved','AV quantities locked','Vendor PO released','Technical rehearsal'].map((x,i)=><div className="flex items-center gap-3" key={x}><span className="grid h-7 w-7 place-items-center rounded-full bg-[#f3ead2] text-[10px] font-black text-[#80631f]">{i+1}</span><span className="font-bold text-[#23324a]">{x}</span></div>)}</div></div><div className="mt-4 rounded-2xl border border-[#eadfbd] bg-[#fbf7ea] p-4"><p className="text-sm font-black text-[#5f4b1f]">Floorplan approval moved four days.</p><p className="mt-1 text-xs leading-5 text-[#8b7440]">RunYourEvent recalculates the dependent production sequence and exposes the remaining buffer.</p></div></div></div></div></section>
+const plans = [
+  ['Free preview', '$0', 'See the event architecture, complexity and recommended execution tier before paying.'],
+  ['Essential', '$19', 'A complete execution plan for a straightforward event. No subscription.'],
+  ['Professional', '$39', 'Deeper approvals, risks, contingencies, vendors and critical-path control.'],
+]
 
-  <section className="border-y border-black/[.055] bg-[#f5f2ea] py-20"><div className="shell"><p className="eyebrow">Event Execution Platform</p><div className="mt-4 grid gap-8 lg:grid-cols-[.72fr_1.28fr]"><div><h2 className="display text-4xl font-black sm:text-5xl">Planning intent in. Executable operating model out.</h2><p className="mt-5 text-base leading-7 text-[#687386]">RunYourEvent is not positioned as generic event-planning software. Search pages can meet people looking for checklists, templates and timelines, but the product differentiator remains execution: ownership, dependencies, completion criteria, readiness, replanning and live event control.</p></div><div className="grid gap-4 sm:grid-cols-2">{product.map(([Icon,t,b]:any)=><article key={t} className="rounded-[26px] border border-black/[.055] bg-white p-6"><span className="grid h-10 w-10 place-items-center rounded-xl bg-[#15233f] text-[#efcd6d]"><Icon size={17}/></span><h3 className="mt-4 font-black text-[#23324a]">{t}</h3><p className="mt-2 text-sm leading-6 text-[#687386]">{b}</p></article>)}</div></div></div></section>
+export default function HomePage() {
+  return (
+    <main className="bg-[#fcfbf8]">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }} />
 
-  <section className="bg-white py-24"><div className="shell"><p className="eyebrow">Focused acquisition architecture</p><h2 className="display mt-4 max-w-4xl text-4xl font-black sm:text-5xl">Company events lead the brand. Weddings lead consumer search. Reunions get their own execution funnels.</h2><div className="mt-10 grid gap-5 md:grid-cols-2">{funnels.map(([t,k,b,h])=><a key={t} href={h} className="group rounded-[28px] border border-black/[.055] bg-[#fbfaf7] p-7 transition hover:-translate-y-0.5 hover:border-[#c9aa57]"><p className="text-[10px] font-black uppercase tracking-[.13em] text-[#9a7b31]">{k}</p><h3 className="mt-3 text-2xl font-black text-[#23324a]">{t}</h3><p className="mt-3 text-sm leading-6 text-[#687386]">{b}</p><span className="mt-6 inline-flex items-center text-sm font-black text-[#9a7b31]">Explore <ArrowRight className="ml-2" size={14}/></span></a>)}</div></div></section>
+      <section className="border-b border-black/[0.06]">
+        <div className="shell grid min-h-[680px] items-center gap-14 py-16 lg:grid-cols-[1.02fr_.98fr] lg:py-20">
+          <div>
+            <p className="eyebrow">Event Execution Platform</p>
+            <h1 className="hero-title mt-5">Run your entire event without losing track of anything.</h1>
+            <p className="lede mt-7">Turn your event into clear workstreams, tasks, owners, dependencies and deadlines—from first decision to final delivery.</p>
+            <div className="mt-8 flex flex-wrap items-center gap-3">
+              <a href="/custom" className="btn-primary">Build my event plan <ArrowRight className="ml-2" size={16} /></a>
+              <a href="#how-it-works" className="btn-secondary">See how it works</a>
+            </div>
+            <div className="mt-7 flex flex-wrap gap-x-6 gap-y-2 text-sm font-semibold text-[#707b8c]">
+              {['Free preview', 'Plans from $19/event', 'No subscription required'].map(item => (
+                <span key={item} className="inline-flex items-center gap-2"><Check size={14} className="text-[#9a741c]" />{item}</span>
+              ))}
+            </div>
+          </div>
 
-  <section className="bg-[#15233f] py-24 text-white"><div className="shell grid gap-10 lg:grid-cols-[.8fr_1.2fr] lg:items-center"><div><p className="text-[10px] font-black uppercase tracking-[.14em] text-[#efcd6d]">Why execution matters</p><h2 className="display mt-4 text-4xl font-black sm:text-5xl">When reality changes, the plan should change with it.</h2><p className="mt-5 max-w-xl text-base leading-7 text-white/60">A static checklist tells you what existed when it was written. RunYourEvent keeps owners, status, downstream dates, blockers and the event-day sequence operational as the event moves.</p></div><div className="rounded-[30px] border border-white/10 bg-white/[.04] p-6 sm:p-8"><div className="grid gap-4 sm:grid-cols-3">{[['Task moves','Floorplan +4d'],['Dependencies move','2 downstream tasks'],['Readiness updates','Critical path exposed']].map(([t,s])=><div key={t} className="rounded-2xl border border-white/10 bg-white/[.05] p-4"><p className="text-xs font-black uppercase tracking-[.1em] text-white/45">{t}</p><p className="mt-2 text-lg font-black text-[#efcd6d]">{s}</p></div>)}</div></div></div></section>
+          <div className="panel overflow-hidden" aria-label="Example RunYourEvent execution workspace">
+            <div className="flex items-center justify-between border-b border-black/[0.06] bg-[#15233f] px-6 py-5 text-white">
+              <div>
+                <p className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-white/45">Customer conference</p>
+                <p className="mt-1 font-black">Berlin · 350 guests</p>
+              </div>
+              <div className="text-right">
+                <p className="text-[10px] uppercase tracking-[0.12em] text-white/45">Readiness</p>
+                <p className="mt-1 text-2xl font-black text-[#e7c66f]">72%</p>
+              </div>
+            </div>
+            <div className="p-6 sm:p-7">
+              <div className="grid grid-cols-4 gap-4 border-b border-black/[0.07] pb-6">
+                {[['Tasks', '47'], ['Streams', '7'], ['Blocked', '2'], ['Approvals', '4']].map(([label, value]) => (
+                  <div key={label} className="metric">
+                    <p className="text-[9px] font-bold uppercase tracking-[0.08em] text-[#8a93a2]">{label}</p>
+                    <p className="mt-1 text-lg font-black text-[#15233f]">{value}</p>
+                  </div>
+                ))}
+              </div>
+              <div className="pt-5">
+                <div className="flex items-center justify-between pb-3 text-[10px] font-extrabold uppercase tracking-[0.12em] text-[#8a671b]">
+                  <span>Critical sequence</span><span>Status</span>
+                </div>
+                <div className="divide-y divide-black/[0.07] border-y border-black/[0.07]">
+                  {[
+                    ['Venue confirmed', 'Done'],
+                    ['Floorplan approved', 'Late'],
+                    ['AV quantities locked', 'Blocked'],
+                    ['Technical rehearsal', 'Ready next'],
+                  ].map(([task, status]) => (
+                    <div key={task} className="flex items-center justify-between gap-5 py-4">
+                      <span className="text-sm font-bold text-[#24324a]">{task}</span>
+                      <span className="text-xs font-extrabold text-[#7b6841]">{status}</span>
+                    </div>
+                  ))}
+                </div>
+                <p className="mt-5 text-sm leading-6 text-[#667184]">When the floorplan slips, RunYourEvent exposes the downstream work that now needs attention.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-  <section className="bg-[#f5f2ea] py-24"><div className="shell text-center"><p className="eyebrow justify-center">Simple event pricing</p><h2 className="display mx-auto mt-4 max-w-4xl text-4xl font-black sm:text-5xl">Preview free. Complete execution plans from $19.</h2><p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-[#687386]">Essential covers complete execution structure for straightforward events. Professional adds deeper approval, risk, contingency, vendor and critical-path intelligence.</p><div className="mt-8 flex justify-center gap-3"><a href="/custom" className="btn-primary">Build my execution plan <ArrowRight className="ml-2" size={15}/></a><a href="/pricing" className="btn-secondary">See pricing</a></div></div></section>
-</main>}
+      <section id="how-it-works" className="section-pad bg-white">
+        <div className="shell">
+          <div className="max-w-3xl">
+            <p className="eyebrow">How it works</p>
+            <h2 className="section-title mt-4">From event idea to executable operating plan.</h2>
+          </div>
+          <div className="mt-12 grid border-y border-black/[0.07] md:grid-cols-3">
+            {steps.map(([number, title, body], index) => (
+              <article key={title} className={`py-8 md:px-8 ${index > 0 ? 'border-t border-black/[0.07] md:border-l md:border-t-0' : ''} ${index === 0 ? 'md:pl-0' : ''}`}>
+                <p className="text-xs font-black tracking-[0.12em] text-[#9a741c]">{number}</p>
+                <h3 className="mt-5 text-xl font-black tracking-[-0.025em] text-[#15233f]">{title}</h3>
+                <p className="mt-3 max-w-sm text-sm leading-6 text-[#667184]">{body}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section-pad bg-[#15233f] text-white">
+        <div className="shell grid gap-12 lg:grid-cols-[.82fr_1.18fr] lg:items-center">
+          <div>
+            <p className="text-[10px] font-extrabold uppercase tracking-[0.16em] text-[#e7c66f]">One event. One operating model.</p>
+            <h2 className="mt-4 max-w-xl text-4xl font-black leading-[1.02] tracking-[-0.045em] sm:text-5xl">See what changes before it becomes an event-day problem.</h2>
+            <p className="mt-6 max-w-lg text-base leading-7 text-white/62">A static checklist remembers work. RunYourEvent connects the work so a delay, approval or dependency has visible consequences.</p>
+          </div>
+          <div className="border-y border-white/12">
+            {[
+              ['Floorplan approval', 'moves +4 days'],
+              ['AV quantities', 'cannot lock yet'],
+              ['Vendor purchase order', 'moves downstream'],
+              ['Technical rehearsal', 'buffer becomes visible'],
+            ].map(([left, right], index) => (
+              <div key={left} className={`grid gap-2 py-5 sm:grid-cols-[1fr_auto] sm:items-center ${index > 0 ? 'border-t border-white/10' : ''}`}>
+                <p className="font-bold text-white/88">{left}</p>
+                <p className="text-sm font-extrabold text-[#e7c66f]">{right}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section-pad bg-[#f4f1e9]">
+        <div className="shell grid gap-12 lg:grid-cols-[.72fr_1.28fr]">
+          <div>
+            <p className="eyebrow">Built for real event work</p>
+            <h2 className="section-title mt-4">Different events. The same need for control.</h2>
+          </div>
+          <div className="rule-list bg-transparent">
+            {audiences.map(([title, body, href]) => (
+              <a key={title} href={href} className="group grid gap-3 py-6 sm:grid-cols-[.72fr_1.28fr_auto] sm:items-center">
+                <h3 className="text-lg font-black tracking-[-0.02em] text-[#15233f]">{title}</h3>
+                <p className="text-sm leading-6 text-[#667184]">{body}</p>
+                <ArrowRight size={16} className="text-[#9a741c] transition-transform duration-150 group-hover:translate-x-1" />
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section-pad bg-white">
+        <div className="shell">
+          <div className="max-w-3xl">
+            <p className="eyebrow">Simple event pricing</p>
+            <h2 className="section-title mt-4">Start free. Pay once when you need the complete plan.</h2>
+          </div>
+          <div className="mt-12 grid border-y border-black/[0.07] md:grid-cols-3">
+            {plans.map(([name, price, copy], index) => (
+              <article key={name} className={`py-8 md:px-8 ${index > 0 ? 'border-t border-black/[0.07] md:border-l md:border-t-0' : ''} ${index === 0 ? 'md:pl-0' : ''}`}>
+                <p className="text-sm font-black text-[#15233f]">{name}</p>
+                <p className="mt-4 text-4xl font-black tracking-[-0.04em] text-[#101827]">{price}</p>
+                <p className="mt-4 max-w-sm text-sm leading-6 text-[#667184]">{copy}</p>
+              </article>
+            ))}
+          </div>
+          <div className="mt-8 flex flex-wrap items-center gap-4">
+            <a href="/custom" className="btn-primary">Build my event plan <ArrowRight className="ml-2" size={16} /></a>
+            <a href="/pricing" className="text-link">Compare plans</a>
+            <span className="text-sm text-[#7b8493]">Teams & agencies: custom access available.</span>
+          </div>
+        </div>
+      </section>
+    </main>
+  )
+}
