@@ -17,6 +17,7 @@ export default function SiteFooter() {
             <p className="text-[10px] font-black uppercase tracking-[0.16em] text-white/34">Product</p>
             <nav className="mt-5 space-y-3 text-sm font-semibold text-white/60" aria-label="Product links">
               <a className="block transition-colors hover:text-white" href="/custom">Build event plan</a>
+              <a className="block transition-colors hover:text-white" href="/volunteer-engine">Volunteer Engine</a>
               <a className="block transition-colors hover:text-white" href="/event-execution-plan">How it works</a>
               <a className="block transition-colors hover:text-white" href="/templates">Templates</a>
               <a className="block transition-colors hover:text-white" href="/pricing">Pricing</a>
