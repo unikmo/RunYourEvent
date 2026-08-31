@@ -2,8 +2,8 @@ import type { Metadata } from 'next'
 import { ArrowRight, Check } from 'lucide-react'
 
 export const metadata: Metadata = {
-  title: { absolute: 'RunYourEvent Pricing | Plans from $19' },
-  description: 'Free event execution preview. Essential $19 per event. Professional $39 per event. No subscription required for a single event.',
+  title: { absolute: 'RunYourEvent Pricing | Event Plans & Volunteer Engine' },
+  description: 'Event execution plans from $19 plus Volunteer Engine recruitment: €200 per sports season or success-based placement fees for one-off events.',
   alternates: { canonical: '/pricing' },
 }
 
@@ -43,14 +43,15 @@ export default function PricingPage() {
         <div className="premium-halo" aria-hidden="true" />
         <div className="shell relative py-24 text-center sm:py-32">
           <p className="eyebrow">Pricing</p>
-          <h1 className="premium-hero mx-auto mt-7 max-w-5xl">Start free.<br /><span className="text-[#9a741c]">Pay once.</span></h1>
-          <p className="mx-auto mt-8 max-w-2xl text-lg leading-8 text-[#646f80]">No subscription is required for a single event. Price follows execution complexity—not the event label.</p>
+          <h1 className="premium-hero mx-auto mt-7 max-w-5xl">Start free.<br /><span className="text-[#9a741c]">Pay for what you use.</span></h1>
+          <p className="mx-auto mt-8 max-w-2xl text-lg leading-8 text-[#646f80]">Event execution plans are priced per event. Volunteer Engine recruitment uses a separate season or successful-placement model.</p>
         </div>
       </section>
 
       <section className="bg-white py-24 sm:py-28 lg:py-32">
         <div className="shell">
-          <div className="grid border-y border-black/[0.08] lg:grid-cols-3">
+          <p className="eyebrow">Event execution plans</p>
+          <div className="mt-8 grid border-y border-black/[0.08] lg:grid-cols-3">
             {plans.map((plan, index) => (
               <article key={plan.name} className={`flex flex-col py-9 lg:px-9 lg:py-11 ${index > 0 ? 'border-t border-black/[0.08] lg:border-l lg:border-t-0' : ''} ${index === 0 ? 'lg:pl-0' : ''}`}>
                 <p className="text-[10px] font-black uppercase tracking-[0.16em] text-[#8a671b]">{plan.eyebrow}</p>
@@ -84,6 +85,25 @@ export default function PricingPage() {
             <p className="mt-3 text-sm leading-6 text-[#667184]">Essential is complete for a simpler event. Professional costs more because it adds deeper execution intelligence around approvals, risk, contingency, vendor scope and critical path.</p>
           </div>
         </div>
+      </section>
+
+      <section className="border-y border-black/[0.06] bg-[#eeeae0] py-24 sm:py-28">
+        <div className="shell grid gap-12 lg:grid-cols-[.68fr_1.32fr]">
+          <div>
+            <p className="eyebrow">Volunteer Engine</p>
+            <h2 className="premium-section mt-5">Reliable hands.<br />A different pricing model.</h2>
+            <p className="mt-6 max-w-lg text-base leading-7 text-[#667184]">Volunteer recruitment is separate from the event-plan price. Clubs pay for the season; one-off organizers pay only for successful placements.</p>
+          </div>
+          <div className="divide-y divide-black/[0.09] border-y border-black/[0.09]">
+            {[
+              ['Seasonal sports club', '€200 / season', 'Recurring volunteer sourcing across the club season.'],
+              ['1–5 successful placements', '€25 each', 'One-off event placement fee.'],
+              ['6–15 successful placements', '€20 each', 'One-off event volume rate.'],
+              ['16+ successful placements', '€15 each', 'One-off event bulk rate.'],
+            ].map(([name,price,copy])=><div key={name} className="grid gap-3 py-6 sm:grid-cols-[.72fr_auto] sm:items-center"><div><p className="font-black text-[#182237]">{name}</p><p className="mt-1 text-sm leading-6 text-[#667184]">{copy}</p></div><p className="text-xl font-black tracking-[-0.03em] text-[#9a741c]">{price}</p></div>)}
+          </div>
+        </div>
+        <div className="shell mt-9"><a href="/volunteer-engine/organizers" className="btn-primary">Request volunteers <ArrowRight className="ml-2" size={15}/></a><a href="/volunteer-engine" className="text-link ml-5">See Volunteer Engine</a></div>
       </section>
     </main>
   )
