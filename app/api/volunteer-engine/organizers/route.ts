@@ -16,13 +16,20 @@ export async function POST(req:NextRequest){
     const contactEmail=email(body.email)
     const city=text(body.city,120)
     const pipeline=text(body.pipeline,30)
+    const coverageStatus=text(body.coverageStatus,30)
     const volunteersNeeded=Number.parseInt(String(body.volunteersNeeded||''),10)
-    if(organizationName.length<2||contactName.length<2||!contactEmail||city.length<2||!['sports_club','one_off_event'].includes(pipeline)||!Number.isInteger(volunteersNeeded)||volunteersNeeded<1||volunteersNeeded>500||body.responsibilityAck!==true){
-      return NextResponse.json({error:'Please complete the required organizer fields and responsibility acknowledgement.'},{status:400})
+    const protectionRequired=coverageStatus!=='existing_confirmed'
+    const protectionSelected=body.protectionSelected===true
+    const protectionAck=body.protectionAck===true
+    if(organizationName.length<2||contactName.length<2||!contactEmail||city.length<2||!['sports_club','one_off_event'].includes(pipeline)||!['existing_confirmed','not_covered','unknown'].includes(coverageStatus)||!Number.isInteger(volunteersNeeded)||volunteersNeeded<1||volunteersNeeded>500||body.responsibilityAck!==true){
+      return NextResponse.json({error:'Please complete the required organizer, coverage and responsibility fields.'},{status:400})
+    }
+    if(protectionRequired&&(!protectionSelected||!protectionAck)){
+      return NextResponse.json({error:'Volunteer Protection Plus must be accepted when equivalent existing volunteer coverage is not confirmed.'},{status:400})
     }
     const eventDate=/^\d{4}-\d{2}-\d{2}$/.test(text(body.eventDate,10))?text(body.eventDate,10):null
     const db=createServerClient()
-    const {data,error}=await db.rpc('rye_submit_volunteer_organizer_request',{
+    const {data,error}=await db.rpc('rye_submit_volunteer_organizer_request_v2',{
       p_organization_name:organizationName,
       p_contact_name:contactName,
       p_contact_email:contactEmail,
@@ -38,8 +45,11 @@ export async function POST(req:NextRequest){
       p_role_examples:text(body.roleExamples,1500)||null,
       p_notes:text(body.notes,2000)||null,
       p_responsibility_ack:true,
+      p_coverage_status:coverageStatus,
+      p_protection_selected:protectionSelected,
+      p_protection_ack:protectionAck,
     })
     if(error||!data){console.error('Volunteer organizer intake failed',error);return NextResponse.json({error:'The volunteer request could not be saved. Please try again.'},{status:503})}
-    return NextResponse.json({ok:true,requestId:data})
+    return NextResponse.json({ok:true,requestId:data,protectionRequired,protectionSelected})
   }catch(error){console.error('Volunteer organizer intake failed',error);return NextResponse.json({error:'The volunteer request could not be submitted.'},{status:500})}
 }
