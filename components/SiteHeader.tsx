@@ -7,8 +7,9 @@ export default function SiteHeader() {
           <span className="text-[17px] font-black tracking-[-0.045em] text-[#101827]">RunYourEvent</span>
         </a>
 
-        <nav className="hidden items-center gap-8 text-[13px] font-bold text-[#657184] lg:flex" aria-label="Primary">
+        <nav className="hidden items-center gap-7 text-[13px] font-bold text-[#657184] lg:flex" aria-label="Primary">
           <a href="/#product" className="transition-colors hover:text-[#101827]">Product</a>
+          <a href="/volunteer-engine" className="transition-colors hover:text-[#101827]">Volunteer Engine</a>
           <a href="/event-types" className="transition-colors hover:text-[#101827]">Event types</a>
           <a href="/resources" className="transition-colors hover:text-[#101827]">Resources</a>
           <a href="/pricing" className="transition-colors hover:text-[#101827]">Pricing</a>
