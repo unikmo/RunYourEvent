@@ -9,8 +9,11 @@ export default function CreateMatchdayPage() {
   const [kickoff, setKickoff] = useState('15:00')
   const [club, setClub] = useState('FC Musterstadt')
   const [date, setDate] = useState('')
+  const [expectedVisitors, setExpectedVisitors] = useState('250')
   const [showPlan, setShowPlan] = useState(false)
-  const plan = useMemo(() => buildSportsEventPlan(eventType, kickoff), [eventType, kickoff])
+
+  const visitorCount = Math.min(50000, Math.max(1, Number(expectedVisitors) || 250))
+  const plan = useMemo(() => buildSportsEventPlan(eventType, kickoff, visitorCount), [eventType, kickoff, visitorCount])
 
   return (
     <main className="min-h-screen bg-[#f7faf6]">
@@ -38,6 +41,11 @@ export default function CreateMatchdayPage() {
                 </div>
                 <div><label className="label">Verein</label><input className="input" value={club} onChange={e => setClub(e.target.value.slice(0,100))} /></div>
                 <div><label className="label">Datum</label><input type="date" className="input" value={date} onChange={e => setDate(e.target.value)} /></div>
+                <div>
+                  <label className="label">Erwartete Besucher / Zuschauer</label>
+                  <input type="number" min="1" max="50000" step="10" className="input" value={expectedVisitors} onChange={e => setExpectedVisitors(e.target.value)} />
+                  <p className="field-help">RYE nutzt die Schätzung, um publikumsnahe Helferaufgaben und Helferzahlen zu skalieren.</p>
+                </div>
                 <div><label className="label">Anpfiff / Start</label><input type="time" className="input" value={kickoff} onChange={e => setKickoff(e.target.value)} /></div>
               </div>
               <button type="button" className="btn-primary mt-8" onClick={() => setShowPlan(true)}>Event aufteilen <ArrowRight className="ml-2" size={16} /></button>
@@ -48,9 +56,9 @@ export default function CreateMatchdayPage() {
               <p className="text-[10px] font-black uppercase tracking-[0.16em] text-[#91d09e]">RYE-Regeln</p>
               <h2 className="mt-3 text-2xl font-black tracking-[-0.04em]">Kurze Aufgaben statt Dauerverpflichtung.</h2>
               <div className="mt-7 space-y-5 text-sm leading-6 text-white/66">
+                <p className="flex gap-3"><Users size={18} className="mt-0.5 shrink-0 text-[#91d09e]" />Besucherzahl skaliert Empfang, Verpflegung, Aktivitäten, Aufräumen und andere publikumsnahe Aufgaben.</p>
                 <p className="flex gap-3"><Clock3 size={18} className="mt-0.5 shrink-0 text-[#91d09e]" />2 Stunden sind der Standard. 4 Stunden sind das Maximum.</p>
-                <p className="flex gap-3"><Users size={18} className="mt-0.5 shrink-0 text-[#91d09e]" />RYE trennt Vereinsrollen, betreute Helferrollen und offene Helferaufgaben.</p>
-                <p className="flex gap-3"><ShieldCheck size={18} className="mt-0.5 shrink-0 text-[#91d09e]" />Sicherheits- und verantwortliche Clubrollen werden nicht als offene Helferjobs ausgegeben.</p>
+                <p className="flex gap-3"><ShieldCheck size={18} className="mt-0.5 shrink-0 text-[#91d09e]" />Sicherheits- und verantwortliche Clubrollen werden nicht automatisch aus einer Besucherformel abgeleitet.</p>
               </div>
             </aside>
           </div>
@@ -60,6 +68,7 @@ export default function CreateMatchdayPage() {
               <div className="border-b border-black/[0.06] bg-[#102218] p-6 text-white sm:p-8">
                 <p className="text-[10px] font-black uppercase tracking-[0.16em] text-[#91d09e]">{plan.eventLabel}</p>
                 <h2 className="mt-2 text-2xl font-black tracking-[-0.035em]">{club || 'Euer Verein'} · {kickoff} Uhr</h2>
+                <p className="mt-2 text-sm font-bold text-white/58">{plan.expectedVisitors.toLocaleString('de-DE')} Besucher erwartet · {plan.attendanceBand}</p>
                 <div className="mt-6 grid grid-cols-2 gap-2 sm:grid-cols-4">
                   {[
                     [String(plan.tasks.length), 'Aufgaben'],
@@ -92,6 +101,7 @@ export default function CreateMatchdayPage() {
                 <p className="club-eyebrow">Ergebnis</p>
                 <h3 className="mt-3 text-xl font-black tracking-[-0.03em] text-[#173020]">Der Plan ist geteilt.</h3>
                 <div className="mt-5 space-y-3 text-sm font-bold text-[#617067]">
+                  <p className="flex items-center gap-2"><Check size={15} className="text-[#25823d]" />Helferbedarf auf {plan.expectedVisitors.toLocaleString('de-DE')} Besucher skaliert</p>
                   <p className="flex items-center gap-2"><Check size={15} className="text-[#25823d]" />Clubrollen geschützt</p>
                   <p className="flex items-center gap-2"><Check size={15} className="text-[#25823d]" />Lange Aufgaben automatisch geteilt</p>
                   <p className="flex items-center gap-2"><Check size={15} className="text-[#25823d]" />Anerkennung je Schicht hinterlegt</p>
