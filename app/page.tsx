@@ -25,75 +25,99 @@ const helperCards = [
   { title: 'Aufräumen', time: '17:00–19:00', places: '3 Plätze frei', thanks: 'Essen & Getränk' },
 ]
 
+function MatchdayPlanCard() {
+  return (
+    <div className="club-demo-card" aria-label="Beispiel eines organisierten Heimspiels">
+      <div className="flex items-start justify-between gap-4 border-b border-black/[0.06] p-5 sm:p-6">
+        <div>
+          <p className="text-[10px] font-black uppercase tracking-[0.16em] text-[#6d7a70]">Beispiel-Heimspiel</p>
+          <p className="mt-1 text-xl font-black tracking-[-0.03em] text-[#102218]">FC Musterstadt · Samstag 15:00</p>
+        </div>
+        <span className="rounded-full bg-[#e7f5e8] px-3 py-1.5 text-xs font-black text-[#237338]">75% gefüllt</span>
+      </div>
+      <div className="grid grid-cols-3 border-b border-black/[0.06] bg-[#f7faf6]">
+        {[
+          ['23', 'Aufgaben'],
+          ['8', 'Helferschichten'],
+          ['6', 'besetzt'],
+        ].map(([value, label]) => (
+          <div key={label} className="border-r border-black/[0.06] p-4 last:border-r-0 sm:p-5">
+            <p className="text-2xl font-black tracking-[-0.04em] text-[#102218]">{value}</p>
+            <p className="mt-1 text-[11px] font-bold text-[#748078]">{label}</p>
+          </div>
+        ))}
+      </div>
+      <div className="divide-y divide-black/[0.06] p-2 sm:p-3">
+        {[
+          ['Familien willkommen', '14:15–16:15', 'Voll'],
+          ['Kids Challenge', '14:30–16:30', '1 frei'],
+          ['Verlosung', '15:00–16:30', '1 frei'],
+          ['Aufräumen', '17:00–19:00', '3 frei'],
+        ].map(([task, time, status]) => (
+          <div key={task} className="grid grid-cols-[1fr_auto] items-center gap-4 px-3 py-3.5">
+            <div><p className="font-extrabold text-[#17271d]">{task}</p><p className="mt-0.5 text-xs text-[#7a867d]">{time}</p></div>
+            <span className={`rounded-full px-2.5 py-1 text-[11px] font-black ${status === 'Voll' ? 'bg-[#edf1ed] text-[#68736a]' : 'bg-[#fff2da] text-[#8a5b0b]'}`}>{status}</span>
+          </div>
+        ))}
+      </div>
+      <div className="flex items-center justify-between gap-3 border-t border-black/[0.06] p-5 sm:p-6">
+        <p className="text-sm font-bold text-[#627067]">Offene Schichten direkt per WhatsApp oder QR teilen.</p>
+        <Share2 size={18} className="shrink-0 text-[#25823d]" />
+      </div>
+    </div>
+  )
+}
+
 export default function HomePage() {
   return (
     <main className="overflow-hidden bg-white">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
 
       <section className="relative border-b border-black/[0.06] bg-[#fbfcf9]">
-        <div className="club-halo" aria-hidden="true" />
-        <div className="shell relative grid gap-12 py-16 sm:py-20 lg:grid-cols-[.9fr_1.1fr] lg:items-center lg:py-24">
-          <div className="max-w-2xl">
+        <div className="shell grid gap-10 py-14 sm:py-16 lg:grid-cols-[.82fr_1.18fr] lg:items-center lg:py-20">
+          <div className="max-w-xl">
             <p className="club-eyebrow">Für Sportvereine</p>
-            <h1 className="club-hero mt-5">Dein Spieltag.<br /><span>Alle Aufgaben.<br />Alle Helfer.</span></h1>
-            <p className="mt-6 max-w-xl text-lg leading-8 text-[#5f6c63]">RunYourEvent plant euren Spieltag, teilt Aufgaben auf und macht offene Aufgaben zu einfachen Helferschichten.</p>
+            <h1 className="club-hero mt-5">Dein Spieltag.<br />Alle Aufgaben.<br />Alle Helfer.</h1>
+            <p className="mt-6 max-w-lg text-lg leading-8 text-[#5f6c63]">RYE plant euren Spieltag, teilt Aufgaben auf und macht offene Arbeit zu klaren Helferschichten.</p>
             <div className="mt-8 flex flex-wrap items-center gap-3">
               <a href="/vereine/spieltag-erstellen" className="btn-primary">Spieltag erstellen <ArrowRight className="ml-2" size={16} /></a>
-              <a href="/helfen" className="btn-secondary">2 Stunden helfen</a>
+              <a href="/helfen" className="text-link !no-underline">2 Stunden helfen</a>
             </div>
-            <div className="mt-7 flex flex-wrap gap-x-6 gap-y-2 text-sm font-semibold text-[#647168]">
-              {['2 Stunden als Standard', 'max. 4 Stunden pro Helferschicht', '200 € / Verein / Jahr'].map(item => (
-                <span key={item} className="inline-flex items-center gap-2"><Check size={15} className="text-[#25823d]" />{item}</span>
-              ))}
-            </div>
+            <p className="mt-6 text-sm font-semibold text-[#647168]">2 Stunden als Standard · max. 4 Stunden · 200 € / Verein / Jahr</p>
           </div>
 
-          <div className="club-demo-card" aria-label="Beispiel eines organisierten Heimspiels">
-            <div className="flex items-start justify-between gap-4 border-b border-black/[0.06] p-5 sm:p-6">
-              <div>
-                <p className="text-[10px] font-black uppercase tracking-[0.16em] text-[#6d7a70]">Beispiel-Heimspiel</p>
-                <p className="mt-1 text-xl font-black tracking-[-0.03em] text-[#102218]">FC Musterstadt · Samstag 15:00</p>
-              </div>
-              <span className="rounded-full bg-[#e7f5e8] px-3 py-1.5 text-xs font-black text-[#237338]">75% gefüllt</span>
-            </div>
-            <div className="grid grid-cols-3 border-b border-black/[0.06] bg-[#f7faf6]">
-              {[
-                ['23', 'Aufgaben'],
-                ['8', 'Helferschichten'],
-                ['6', 'besetzt'],
-              ].map(([value, label]) => (
-                <div key={label} className="border-r border-black/[0.06] p-4 last:border-r-0 sm:p-5">
-                  <p className="text-2xl font-black tracking-[-0.04em] text-[#102218]">{value}</p>
-                  <p className="mt-1 text-[11px] font-bold text-[#748078]">{label}</p>
-                </div>
-              ))}
-            </div>
-            <div className="divide-y divide-black/[0.06] p-2 sm:p-3">
-              {[
-                ['Familien willkommen', '14:15–16:15', 'Voll'],
-                ['Kids Challenge', '14:30–16:30', '1 frei'],
-                ['Verlosung', '15:00–16:30', '1 frei'],
-                ['Aufräumen', '17:00–19:00', '3 frei'],
-              ].map(([task, time, status]) => (
-                <div key={task} className="grid grid-cols-[1fr_auto] items-center gap-4 px-3 py-3.5">
-                  <div><p className="font-extrabold text-[#17271d]">{task}</p><p className="mt-0.5 text-xs text-[#7a867d]">{time}</p></div>
-                  <span className={`rounded-full px-2.5 py-1 text-[11px] font-black ${status === 'Voll' ? 'bg-[#edf1ed] text-[#68736a]' : 'bg-[#fff2da] text-[#8a5b0b]'}`}>{status}</span>
-                </div>
-              ))}
-            </div>
-            <div className="flex items-center justify-between gap-3 border-t border-black/[0.06] p-5 sm:p-6">
-              <p className="text-sm font-bold text-[#627067]">Offene Schichten direkt per WhatsApp oder QR teilen.</p>
-              <Share2 size={18} className="shrink-0 text-[#25823d]" />
-            </div>
-          </div>
+          <figure className="relative min-h-[430px] overflow-hidden rounded-[28px] bg-[#dfe7df] shadow-[0_28px_80px_rgba(21,62,31,0.10)] sm:min-h-[500px]">
+            <img
+              src="https://images.pexels.com/photos/9519534/pexels-photo-9519534.jpeg?auto=compress&cs=tinysrgb&w=1600"
+              alt="Fußballerinnen und Fußballer sitzen gemeinsam mit einem Ball auf dem Rasen"
+              className="absolute inset-0 h-full w-full object-cover object-center"
+              fetchPriority="high"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#102218]/72 via-transparent to-transparent" aria-hidden="true" />
+            <figcaption className="absolute inset-x-0 bottom-0 p-5 text-white sm:p-7">
+              <p className="text-[10px] font-black uppercase tracking-[0.16em] text-white/72">Samstag. Heimspiel.</p>
+              <p className="mt-2 max-w-md text-xl font-black tracking-[-0.03em] sm:text-2xl">Viele kleine Aufgaben. Ein klarer Plan.</p>
+            </figcaption>
+          </figure>
         </div>
       </section>
 
       <section id="so-funktionierts" className="section-pad bg-white">
+        <div className="shell grid gap-10 lg:grid-cols-[.74fr_1.26fr] lg:items-center">
+          <div className="max-w-md">
+            <p className="club-eyebrow">Ein Spieltag. Klar organisiert.</p>
+            <h2 className="club-section mt-4">RYE macht aus einem Event einen machbaren Ablauf.</h2>
+            <p className="mt-5 text-base leading-7 text-[#637067]">Aufgaben, Zeiten, Verantwortliche und offene Helferschichten werden in einem Plan zusammengeführt.</p>
+          </div>
+          <MatchdayPlanCard />
+        </div>
+      </section>
+
+      <section className="section-pad border-y border-black/[0.06] bg-[#f6f8f4]">
         <div className="shell">
           <div className="mx-auto max-w-2xl text-center">
-            <p className="club-eyebrow">Ein Event. Drei Schritte.</p>
-            <h2 className="club-section mt-4">Weniger organisieren.<br />Mehr Spieltag.</h2>
+            <p className="club-eyebrow">So funktioniert’s</p>
+            <h2 className="club-section mt-4">Ein Event. Drei Schritte.</h2>
           </div>
           <div className="mt-12 grid gap-4 md:grid-cols-3">
             {[
@@ -111,12 +135,12 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="section-pad border-y border-black/[0.06] bg-[#f6f8f4]">
+      <section className="section-pad bg-white">
         <div className="shell grid gap-10 lg:grid-cols-[.72fr_1.28fr] lg:items-center">
           <div className="max-w-md">
             <p className="club-eyebrow">Für Helfer</p>
             <h2 className="club-section mt-4">2 Stunden helfen.<br />Fertig.</h2>
-            <p className="mt-5 text-base leading-7 text-[#637067]">Keine Dauerverpflichtung. Eine Aufgabe. Ein Termin. Ein klarer Zeitraum. Längere Aufgaben teilt RunYourEvent in Schichten; vier Stunden sind das Maximum.</p>
+            <p className="mt-5 text-base leading-7 text-[#637067]">Keine Dauerverpflichtung. Eine Aufgabe. Ein Termin. Ein klarer Zeitraum. Längere Aufgaben teilt RYE in Schichten; vier Stunden sind das Maximum.</p>
             <a href="/helfen" className="btn-primary mt-7">Offene Aufgaben ansehen <ArrowRight className="ml-2" size={16} /></a>
           </div>
           <div className="grid gap-4 sm:grid-cols-3">
@@ -133,7 +157,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="section-pad bg-white">
+      <section className="section-pad border-y border-black/[0.06] bg-[#f6f8f4]">
         <div className="shell">
           <div className="mx-auto max-w-3xl text-center">
             <p className="club-eyebrow">Die Logik bleibt im Hintergrund</p>
@@ -158,7 +182,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section id="preis" className="pb-20 sm:pb-24 lg:pb-28">
+      <section id="preis" className="py-20 sm:py-24">
         <div className="shell">
           <div className="rounded-[28px] border border-[#d9e6da] bg-[#f1f7f0] p-6 sm:p-9 lg:flex lg:items-center lg:justify-between lg:gap-10">
             <div>
