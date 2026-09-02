@@ -15,7 +15,7 @@ export default function SiteHeader() {
           <a href="/helfen" className="transition-colors hover:text-[#102218]">2 Stunden helfen</a>
           <a href="/#so-funktionierts" className="transition-colors hover:text-[#102218]">So funktioniert’s</a>
           <a href="/#preis" className="transition-colors hover:text-[#102218]">Preis</a>
-          <a href="/my-events" className="transition-colors hover:text-[#102218]">Anmelden</a>
+          <a href="/my-events" className="transition-colors hover:text-[#102218]">Meine Spieltage</a>
         </nav>
 
         <a href="/vereine/spieltag-erstellen" className="btn-primary !min-h-10 !px-4 !py-2.5">
