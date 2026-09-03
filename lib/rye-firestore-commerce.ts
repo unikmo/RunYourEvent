@@ -105,17 +105,17 @@ export async function markCheckoutPaid(input: {
   customerEmail?: string | null
 }) {
   const orders = await listFirestoreDocuments(RYE_COLLECTIONS.orders)
-  let order = orders
+  const prepared = orders
     .filter(row => row.draft_token === input.draftToken && row.tier === input.tier && row.status === 'checkout_created')
     .sort((a, b) => String(b.created_at || '').localeCompare(String(a.created_at || '')))[0]
 
-  if (!order) {
-    order = orders.find(row => row.stripe_checkout_session_id === input.stripeSessionId && row.status === 'paid')
-    if (order) return order
+  if (!prepared) {
+    const alreadyPaid = orders.find(row => row.stripe_checkout_session_id === input.stripeSessionId && row.status === 'paid')
+    if (alreadyPaid) return alreadyPaid
     throw new Error('Prepared order not found')
   }
 
-  const orderId = String(order._firestoreId || order.id)
+  const orderId = String(prepared._firestoreId || prepared.id)
   const verifiedAt = new Date().toISOString()
   const updated = await patchFirestoreDocument(RYE_COLLECTIONS.orders, orderId, {
     status: 'paid',
@@ -127,7 +127,7 @@ export async function markCheckoutPaid(input: {
   await patchFirestoreDocument(RYE_COLLECTIONS.drafts, input.draftToken, {
     expires_at: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString(),
   })
-  await recordConversion('purchase_completed', input.draftToken, { tier: input.tier, session: input.stripeSessionId }, String(order.event_segment || 'other'))
+  await recordConversion('purchase_completed', input.draftToken, { tier: input.tier, session: input.stripeSessionId }, String(prepared.event_segment || 'other'))
   return updated
 }
 
