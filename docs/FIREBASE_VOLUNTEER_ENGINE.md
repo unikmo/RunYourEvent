@@ -42,7 +42,7 @@ RYE_FIREBASE_MIRROR_ENABLED=false
 
 Do not prefix service-account values with `NEXT_PUBLIC_`.
 
-For Vercel, `FIREBASE_PRIVATE_KEY_BASE64` is recommended because it avoids multiline PEM formatting issues. Preview credentials should be scoped to the `firebase-volunteer-integration` preview branch. Environment-variable changes require a fresh preview deployment before they are available at runtime.
+For Vercel, `FIREBASE_PRIVATE_KEY_BASE64` is recommended because it avoids multiline PEM formatting issues. The server-side parser accepts Base64 of the PEM private key and common service-account JSON encodings without exposing the credential to browser code. Preview credentials should be scoped to the `firebase-volunteer-integration` preview branch. Environment-variable changes require a fresh preview deployment before they are available at runtime.
 
 ## Health check
 
