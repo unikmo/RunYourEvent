@@ -41,7 +41,7 @@ export async function createAdminSession(email: string, password: string) {
     email: expected,
     created_at: now(),
     expires_at: expiresAt,
-  }, sessionId(token))
+  }, sessionId(token) as any)
   return { sessionToken: token, expiresAt }
 }
 
