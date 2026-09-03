@@ -18,6 +18,18 @@ function clientEmail() {
   return process.env.FIREBASE_CLIENT_EMAIL?.trim() || DEFAULT_FIREBASE_CLIENT_EMAIL
 }
 
+function privateKeyFromServiceAccountJson(value: string) {
+  try {
+    const serviceAccount = JSON.parse(value) as { private_key?: string }
+    if (serviceAccount.private_key?.includes('-----BEGIN PRIVATE KEY-----')) {
+      return serviceAccount.private_key.replace(/\\n/g, '\n').trim()
+    }
+  } catch {
+    // Not service-account JSON.
+  }
+  return null
+}
+
 function normalizePrivateKey(value: string) {
   let candidate = value.trim()
 
@@ -32,29 +44,26 @@ function normalizePrivateKey(value: string) {
     candidate = candidate.slice('FIREBASE_PRIVATE_KEY_BASE64='.length).trim()
   }
 
-  if (candidate.includes('-----BEGIN PRIVATE KEY-----')) {
+  const rawJsonKey = candidate.startsWith('{') ? privateKeyFromServiceAccountJson(candidate) : null
+  if (rawJsonKey) return rawJsonKey
+
+  if (candidate.startsWith('-----BEGIN PRIVATE KEY-----')) {
     return candidate.replace(/\\n/g, '\n').trim()
   }
 
   const compact = candidate.replace(/\s+/g, '')
   const decoded = Buffer.from(compact, 'base64').toString('utf8').trim()
 
-  if (decoded.includes('-----BEGIN PRIVATE KEY-----')) {
+  const decodedJsonKey = decoded.startsWith('{') ? privateKeyFromServiceAccountJson(decoded) : null
+  if (decodedJsonKey) return decodedJsonKey
+
+  if (decoded.startsWith('-----BEGIN PRIVATE KEY-----')) {
     return decoded.replace(/\\n/g, '\n').trim()
   }
 
-  if (decoded.startsWith('{')) {
-    try {
-      const serviceAccount = JSON.parse(decoded) as { private_key?: string }
-      if (serviceAccount.private_key?.includes('-----BEGIN PRIVATE KEY-----')) {
-        return serviceAccount.private_key.replace(/\\n/g, '\n').trim()
-      }
-    } catch {
-      // Fall through to the explicit format error below.
-    }
-  }
-
-  throw new Error('Firebase private key is not a supported PEM, base64 PEM, or base64 service-account JSON value.')
+  throw new Error(
+    'Firebase private key is not a supported PEM, service-account JSON, base64 PEM, or base64 service-account JSON value.',
+  )
 }
 
 function privateKey() {
