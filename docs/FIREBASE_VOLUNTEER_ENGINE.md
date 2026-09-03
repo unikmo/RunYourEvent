@@ -4,7 +4,7 @@ RunYourEvent keeps Supabase as the current system of record and can mirror Volun
 
 ## What is mirrored
 
-When `RYE_FIREBASE_MIRROR_ENABLED=true`, the server mirrors:
+When Firebase credentials are configured, the server mirrors:
 
 - volunteer registrations → `rye_volunteer_profiles`
 - organizer / club requests → `rye_volunteer_organizer_requests`
@@ -19,26 +19,34 @@ The existing Volunteer Engine already uses Supabase RPCs for invitations, QR att
 
 ## Firebase setup
 
-1. Create or select a Firebase project.
-2. Enable **Cloud Firestore** and choose the desired region before writing production data.
-3. Create a server service account with Firestore access.
-4. Add the following server-only environment variables to Vercel and local development:
+RunYourEvent currently defaults to:
+
+- Firebase project: `ryevent`
+- Firestore database: `(default)`
+- service account email: `firebase-adminsdk-fbsvc@ryevent.iam.gserviceaccount.com`
+
+The required server-side secret is:
 
 ```env
-RYE_FIREBASE_MIRROR_ENABLED=true
-FIREBASE_PROJECT_ID=your-project-id
-FIREBASE_CLIENT_EMAIL=firebase-adminsdk-xxxxx@your-project-id.iam.gserviceaccount.com
 FIREBASE_PRIVATE_KEY_BASE64=base64-encoded-private-key
+```
+
+Optional overrides remain available:
+
+```env
+FIREBASE_PROJECT_ID=ryevent
+FIREBASE_CLIENT_EMAIL=firebase-adminsdk-fbsvc@ryevent.iam.gserviceaccount.com
 FIREBASE_DATABASE_ID=(default)
+RYE_FIREBASE_MIRROR_ENABLED=false
 ```
 
 Do not prefix service-account values with `NEXT_PUBLIC_`.
 
-For Vercel, `FIREBASE_PRIVATE_KEY_BASE64` is recommended because it avoids multiline PEM formatting issues.
+For Vercel, `FIREBASE_PRIVATE_KEY_BASE64` is recommended because it avoids multiline PEM formatting issues. Preview credentials should be scoped to the `firebase-volunteer-integration` preview branch. Environment-variable changes require a fresh preview deployment before they are available at runtime.
 
 ## Health check
 
-After the variables are configured and the preview is deployed:
+After the variables are configured and the preview is redeployed:
 
 ```text
 GET /api/health/firebase
