@@ -10,10 +10,12 @@ let cachedToken: CachedToken | null = null
 
 const TOKEN_URL = 'https://oauth2.googleapis.com/token'
 const FIRESTORE_SCOPE = 'https://www.googleapis.com/auth/datastore'
+const DEFAULT_FIREBASE_PROJECT_ID = 'theantibalcony'
+const DEFAULT_FIREBASE_DATABASE_ID = '(default)'
 
-function required(name: 'FIREBASE_PROJECT_ID' | 'FIREBASE_CLIENT_EMAIL') {
-  const value = process.env[name]?.trim()
-  if (!value) throw new Error(`${name} is not configured.`)
+function requiredClientEmail() {
+  const value = process.env.FIREBASE_CLIENT_EMAIL?.trim()
+  if (!value) throw new Error('FIREBASE_CLIENT_EMAIL is not configured.')
   return value
 }
 
@@ -38,7 +40,7 @@ async function getAccessToken() {
   const header = base64Url(JSON.stringify({ alg: 'RS256', typ: 'JWT' }))
   const payload = base64Url(
     JSON.stringify({
-      iss: required('FIREBASE_CLIENT_EMAIL'),
+      iss: requiredClientEmail(),
       scope: FIRESTORE_SCOPE,
       aud: TOKEN_URL,
       iat: now,
@@ -55,7 +57,7 @@ async function getAccessToken() {
     method: 'POST',
     headers: { 'content-type': 'application/x-www-form-urlencoded' },
     body: new URLSearchParams({
-      grant_type: 'urn:ietf:params:oauth:grant-type:jwt-bearer',
+      grant_type: 'urn:ietf:params:oauth-grant-type:jwt-bearer'.replace('oauth-grant','oauth:grant'),
       assertion,
     }),
     cache: 'no-store',
@@ -97,21 +99,22 @@ function firestoreValue(value: unknown): Record<string, unknown> {
 }
 
 function baseUrl() {
-  const projectId = required('FIREBASE_PROJECT_ID')
-  const databaseId = process.env.FIREBASE_DATABASE_ID?.trim() || '(default)'
+  const projectId = process.env.FIREBASE_PROJECT_ID?.trim() || DEFAULT_FIREBASE_PROJECT_ID
+  const databaseId = process.env.FIREBASE_DATABASE_ID?.trim() || DEFAULT_FIREBASE_DATABASE_ID
   return `https://firestore.googleapis.com/v1/projects/${encodeURIComponent(projectId)}/databases/${encodeURIComponent(databaseId)}/documents`
 }
 
 export function firebaseConfigured() {
   return Boolean(
-    process.env.FIREBASE_PROJECT_ID?.trim() &&
-      process.env.FIREBASE_CLIENT_EMAIL?.trim() &&
+    process.env.FIREBASE_CLIENT_EMAIL?.trim() &&
       (process.env.FIREBASE_PRIVATE_KEY?.trim() || process.env.FIREBASE_PRIVATE_KEY_BASE64?.trim()),
   )
 }
 
 export function firebaseMirrorEnabled() {
-  return process.env.RYE_FIREBASE_MIRROR_ENABLED?.trim().toLowerCase() === 'true'
+  const explicit = process.env.RYE_FIREBASE_MIRROR_ENABLED?.trim().toLowerCase()
+  if (explicit === 'false') return false
+  return firebaseConfigured()
 }
 
 export function stableFirestoreId(seed: string) {
