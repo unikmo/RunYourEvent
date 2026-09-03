@@ -1,6 +1,6 @@
 import { createHash, createSign, randomUUID } from 'node:crypto'
 
-export type FirestoreData = Record<string, unknown>
+export type FirestoreData = any
 
 type CachedToken = { value: string; expiresAt: number }
 let cachedToken: CachedToken | null = null
@@ -246,7 +246,7 @@ export async function patchFirestoreDocument(collection: string, documentId: str
   return decodeFirestoreDocument(await response.json())
 }
 
-export async function createFirestoreDocument(collection: string, data: FirestoreData, documentId = randomUUID()) {
+export async function createFirestoreDocument(collection: string, data: FirestoreData, documentId: string = randomUUID()) {
   return putFirestoreDocument(collection, documentId, { ...data, id: data.id || documentId })
 }
 
