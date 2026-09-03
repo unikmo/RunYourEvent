@@ -1,7 +1,9 @@
 import { createHash, createSign } from 'node:crypto'
 
 type FirestorePrimitive = string | number | boolean | null | Date
-export type FirestoreData = Record<string, FirestorePrimitive | FirestorePrimitive[] | FirestoreData | undefined>
+export interface FirestoreData {
+  [key: string]: FirestorePrimitive | FirestorePrimitive[] | FirestoreData | undefined
+}
 
 type CachedToken = { value: string; expiresAt: number }
 let cachedToken: CachedToken | null = null
