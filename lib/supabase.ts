@@ -1,27 +1,68 @@
-import { createClient, SupabaseClient } from '@supabase/supabase-js'
+type QueryResult<T = any> = { data: T; error: null | { message: string } }
 
-// Lazy singleton — createClient is never called at module load time,
-// only on first actual use. This prevents build crashes during Next.js
-// "collect page data" / static export phases where env vars may not
-// be injected yet, and avoids supabase-js URL validation throwing.
-let _client: SupabaseClient | null = null
+class FirestoreReadQuery {
+  private filterField = ''
+  private filterValue = ''
+  private orderField = ''
 
-function getClient(): SupabaseClient {
-  if (!_client) {
-    _client = createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-    )
+  constructor(private table: string) {}
+
+  select(_columns = '*') {
+    return this
   }
-  return _client
+
+  eq(field: string, value: unknown) {
+    this.filterField = field
+    this.filterValue = String(value ?? '')
+    return this
+  }
+
+  order(field: string, _options?: { ascending?: boolean }) {
+    this.orderField = field
+    return this
+  }
+
+  private async execute(single: boolean): Promise<QueryResult> {
+    const params = new URLSearchParams()
+    if (this.filterField) {
+      params.set('field', this.filterField)
+      params.set('value', this.filterValue)
+    }
+    if (this.orderField) params.set('order', this.orderField)
+    if (single) params.set('single', '1')
+
+    try {
+      const response = await fetch(`/api/data/${encodeURIComponent(this.table)}?${params.toString()}`, { cache: 'no-store' })
+      const body = await response.json()
+      return {
+        data: body?.data ?? (single ? null : []),
+        error: body?.error || (response.ok ? null : { message: 'Data could not be loaded.' }),
+      }
+    } catch {
+      return { data: single ? null : [], error: { message: 'Data could not be loaded.' } }
+    }
+  }
+
+  single() {
+    return this.execute(true)
+  }
+
+  maybeSingle() {
+    return this.execute(true)
+  }
+
+  then<TResult1 = QueryResult, TResult2 = never>(
+    onfulfilled?: ((value: QueryResult) => TResult1 | PromiseLike<TResult1>) | null,
+    onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | null,
+  ) {
+    return this.execute(false).then(onfulfilled, onrejected)
+  }
 }
 
-export const supabase = new Proxy({} as SupabaseClient, {
-  get(_target, prop: string) {
-    const client = getClient()
-    const value = (client as any)[prop]
-    return typeof value === 'function' ? value.bind(client) : value
+export const supabase = {
+  from(table: string) {
+    return new FirestoreReadQuery(table)
   },
-})
+}
 
-export { supabase as default }
+export default supabase
