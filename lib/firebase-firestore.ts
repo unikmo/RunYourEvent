@@ -12,11 +12,10 @@ const TOKEN_URL = 'https://oauth2.googleapis.com/token'
 const FIRESTORE_SCOPE = 'https://www.googleapis.com/auth/datastore'
 const DEFAULT_FIREBASE_PROJECT_ID = 'ryevent'
 const DEFAULT_FIREBASE_DATABASE_ID = '(default)'
+const DEFAULT_FIREBASE_CLIENT_EMAIL = 'firebase-adminsdk-fbsvc@ryevent.iam.gserviceaccount.com'
 
-function requiredClientEmail() {
-  const value = process.env.FIREBASE_CLIENT_EMAIL?.trim()
-  if (!value) throw new Error('FIREBASE_CLIENT_EMAIL is not configured.')
-  return value
+function clientEmail() {
+  return process.env.FIREBASE_CLIENT_EMAIL?.trim() || DEFAULT_FIREBASE_CLIENT_EMAIL
 }
 
 function privateKey() {
@@ -40,7 +39,7 @@ async function getAccessToken() {
   const header = base64Url(JSON.stringify({ alg: 'RS256', typ: 'JWT' }))
   const payload = base64Url(
     JSON.stringify({
-      iss: requiredClientEmail(),
+      iss: clientEmail(),
       scope: FIRESTORE_SCOPE,
       aud: TOKEN_URL,
       iat: now,
@@ -105,10 +104,7 @@ function baseUrl() {
 }
 
 export function firebaseConfigured() {
-  return Boolean(
-    process.env.FIREBASE_CLIENT_EMAIL?.trim() &&
-      (process.env.FIREBASE_PRIVATE_KEY?.trim() || process.env.FIREBASE_PRIVATE_KEY_BASE64?.trim()),
-  )
+  return Boolean(process.env.FIREBASE_PRIVATE_KEY?.trim() || process.env.FIREBASE_PRIVATE_KEY_BASE64?.trim())
 }
 
 export function firebaseMirrorEnabled() {
