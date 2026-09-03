@@ -5,6 +5,7 @@
 2. **Vercel account** — vercel.com (sign in with GitHub)
 3. **Supabase account** — supabase.com
 4. **Anthropic API key** — console.anthropic.com
+5. **Firebase project** — optional Volunteer Engine mirror
 
 ---
 
@@ -44,86 +45,99 @@ git push -u origin main
 **Seed the data:**
 1. Click **New query** again
 2. Copy and paste the contents of `supabase/seed.sql`
-3. Click **Run** (this inserts 267 events and 486 tasks)
+3. Click **Run**
 
 **Get your API keys:**
-1. Supabase → **Settings** (gear icon) → **API**
-2. Copy **Project URL** → this is your `NEXT_PUBLIC_SUPABASE_URL`
-3. Copy **anon public** key → this is your `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+1. Supabase → **Settings** → **API**
+2. Copy **Project URL** → `NEXT_PUBLIC_SUPABASE_URL`
+3. Copy **anon public** key → `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 
 ---
 
-## Step 3 — Anthropic API Key
+## Step 3 — Firebase Firestore for Volunteer Engine
+
+Firebase can be enabled as a **server-side mirror** for volunteer recruiting while Supabase remains the current system of record.
+
+Mirrored collections:
+
+- `rye_volunteer_profiles`
+- `rye_volunteer_organizer_requests`
+- `rye_volunteer_opportunities`
+- `rye_volunteer_activity`
+
+Add these server-only variables:
+
+```env
+RYE_FIREBASE_MIRROR_ENABLED=true
+FIREBASE_PROJECT_ID=your-project-id
+FIREBASE_CLIENT_EMAIL=firebase-adminsdk-xxxxx@your-project-id.iam.gserviceaccount.com
+FIREBASE_PRIVATE_KEY_BASE64=base64-encoded-private-key
+FIREBASE_DATABASE_ID=(default)
+```
+
+Then verify:
+
+```text
+GET /api/health/firebase
+```
+
+See `docs/FIREBASE_VOLUNTEER_ENGINE.md` for the rollout and security model.
+
+---
+
+## Step 4 — Anthropic API Key
 
 1. Go to **console.anthropic.com**
 2. Sign in → **API Keys** → **Create Key**
-3. Copy the key (starts with `sk-ant-...`)
+3. Copy the key
 
 ---
 
-## Step 4 — Vercel Deployment
+## Step 5 — Vercel Deployment
 
 1. Go to **vercel.com** → Sign in with GitHub
-2. Click **New Project** → Import `event-engine` from GitHub
-3. Click **Environment Variables** — add these:
-
-| Variable | Value |
-|----------|-------|
-| `NEXT_PUBLIC_SUPABASE_URL` | Your Supabase project URL |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Your Supabase anon key |
-| `ANTHROPIC_API_KEY` | Your Anthropic API key |
-
-4. Click **Deploy**
-5. Wait ~2 minutes — your app is live! 🎉
-
-Vercel gives you a URL like: `event-engine-abc123.vercel.app`
+2. Click **New Project** → Import the repository
+3. Add the required environment variables
+4. Deploy first to preview
+5. Verify database health and recruiting flows before production
 
 ---
 
 ## Local Development
 
 ```bash
-# Install dependencies
 npm install
-
-# Copy environment file
 cp .env.local.example .env.local
-# Edit .env.local with your keys
-
-# Run the development server
 npm run dev
-
-# Open http://localhost:3000
 ```
+
+Open `http://localhost:3000`.
 
 ---
 
 ## What's included
 
-- **354 event types** across 27 categories
-- **1,385 pre-built tasks** for 79 events  
-- **AI generation** for any event via Anthropic API
-- **Volunteer task claiming** — tap to claim any task
-- **Budget levels** — 5 levels from Cost-Efficient to Extravagant
-- **Smart intake** — 5 questions shape the blueprint
-- **Share links** — share your blueprint with volunteers
-- **Print-ready** output
+- event planning and blueprint generation
+- AI generation via Anthropic
+- Volunteer Engine for organizers, micro-shifts, invitations and attendance
+- optional Firebase Firestore mirror for recruiting data
+- Supabase-backed operational workflows
+- share links and event collaboration
 
 ## Project Structure
 
-```
+```text
 app/
-  page.tsx              → Homepage with search
-  events/[id]/page.tsx  → Event detail + blueprint generator
-  browse/[category]/    → Category browse
-  custom/page.tsx       → AI custom event builder
-  api/generate/         → Anthropic API route
+  api/volunteer-engine/        → public Volunteer Engine APIs
+  api/admin/volunteer-engine/  → admin Volunteer Engine APIs
+  api/health/firebase/         → Firebase connectivity check
 lib/
-  supabase.ts           → Database client
-  anthropic.ts          → AI generation
-types/
-  index.ts              → TypeScript types
+  supabase.ts                  → Supabase client
+  supabase-server.ts           → server Supabase helpers
+  firebase-firestore.ts        → server-only Firestore REST client
+  firebase-volunteer-mirror.ts → Volunteer Engine Firestore mirror
 supabase/
-  schema.sql            → Database schema
-  seed.sql              → 267 events + tasks
+  migrations/                  → operational database migrations
+docs/
+  FIREBASE_VOLUNTEER_ENGINE.md → Firebase rollout notes
 ```

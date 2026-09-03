@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createServerClient } from '@/lib/supabase-server'
+import { mirrorVolunteerProfileToFirebase, safeFirebaseMirror } from '@/lib/firebase-volunteer-mirror'
 
 export const runtime='nodejs'
 export const dynamic='force-dynamic'
@@ -15,7 +16,11 @@ export async function POST(req:NextRequest){
     const lastName=text(body.lastName,80)
     const contactEmail=email(body.email)
     const city=text(body.city,120)
+    const postalCode=text(body.postalCode,30)||null
     const ageBand=text(body.ageBand,20)
+    const schoolOrUniversity=text(body.schoolOrUniversity,160)||null
+    const interests=text(body.interests,1500)||null
+    const availability=text(body.availability,1500)||null
     const validAge=['16_17','18_20','21_25','26_plus'].includes(ageBand)
     if(!firstName||!lastName||!contactEmail||city.length<2||!validAge||body.privacyAck!==true){
       return NextResponse.json({error:'Please complete the required registration fields.'},{status:400})
@@ -29,15 +34,31 @@ export async function POST(req:NextRequest){
       p_last_name:lastName,
       p_email:contactEmail,
       p_city:city,
-      p_postal_code:text(body.postalCode,30)||null,
+      p_postal_code:postalCode,
       p_age_band:ageBand,
-      p_school_or_university:text(body.schoolOrUniversity,160)||null,
-      p_interests:text(body.interests,1500)||null,
-      p_availability:text(body.availability,1500)||null,
+      p_school_or_university:schoolOrUniversity,
+      p_interests:interests,
+      p_availability:availability,
       p_guardian_consent_ready:body.guardianConsentReady===true,
       p_privacy_ack:true,
     })
     if(error||!data){console.error('Volunteer registration failed',error);return NextResponse.json({error:'The volunteer profile could not be saved. Please try again.'},{status:503})}
+
+    await safeFirebaseMirror(mirrorVolunteerProfileToFirebase({
+      supabaseId:String(data),
+      firstName,
+      lastName,
+      email:contactEmail,
+      city,
+      postalCode,
+      ageBand,
+      schoolOrUniversity,
+      interests,
+      availability,
+      guardianConsentReady:body.guardianConsentReady===true,
+      privacyAck:true,
+    }),'volunteer profile')
+
     return NextResponse.json({ok:true,profileId:data})
   }catch(error){console.error('Volunteer registration failed',error);return NextResponse.json({error:'Registration could not be submitted.'},{status:500})}
 }
