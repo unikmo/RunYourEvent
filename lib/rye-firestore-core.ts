@@ -51,7 +51,7 @@ export async function listEventCategories() {
     const name = text(event.category)
     if (name) counts.set(name, (counts.get(name) || 0) + 1)
   }
-  return [...counts.entries()].map(([name, event_count]) => ({ name, event_count, events_with_tasks: 0 })).sort((a, b) => a.name.localeCompare(b.name))
+  return Array.from(counts.entries()).map(([name, event_count]) => ({ name, event_count, events_with_tasks: 0 })).sort((a, b) => a.name.localeCompare(b.name))
 }
 
 export async function listEventsByCategory(category: string) {
