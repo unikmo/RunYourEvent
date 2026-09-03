@@ -10,7 +10,7 @@ let cachedToken: CachedToken | null = null
 
 const TOKEN_URL = 'https://oauth2.googleapis.com/token'
 const FIRESTORE_SCOPE = 'https://www.googleapis.com/auth/datastore'
-const DEFAULT_FIREBASE_PROJECT_ID = 'theantibalcony'
+const DEFAULT_FIREBASE_PROJECT_ID = 'ryevent'
 const DEFAULT_FIREBASE_DATABASE_ID = '(default)'
 
 function requiredClientEmail() {
