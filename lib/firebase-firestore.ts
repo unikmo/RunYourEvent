@@ -1,9 +1,6 @@
-import { createHash, createSign } from 'node:crypto'
+import { createHash, createSign, randomUUID } from 'node:crypto'
 
-type FirestorePrimitive = string | number | boolean | null | Date
-export interface FirestoreData {
-  [key: string]: FirestorePrimitive | FirestorePrimitive[] | FirestoreData | undefined
-}
+export type FirestoreData = Record<string, unknown>
 
 type CachedToken = { value: string; expiresAt: number }
 let cachedToken: CachedToken | null = null
@@ -126,7 +123,7 @@ async function getAccessToken() {
 }
 
 function firestoreValue(value: unknown): Record<string, unknown> {
-  if (value === null) return { nullValue: null }
+  if (value === null || value === undefined) return { nullValue: null }
   if (value instanceof Date) return { timestampValue: value.toISOString() }
   if (typeof value === 'string') return { stringValue: value }
   if (typeof value === 'boolean') return { booleanValue: value }
@@ -145,10 +142,52 @@ function firestoreValue(value: unknown): Record<string, unknown> {
   throw new Error(`Unsupported Firestore value type: ${typeof value}`)
 }
 
+function decodeFirestoreValue(value: any): unknown {
+  if (!value || typeof value !== 'object') return null
+  if ('nullValue' in value) return null
+  if ('stringValue' in value) return value.stringValue
+  if ('booleanValue' in value) return Boolean(value.booleanValue)
+  if ('integerValue' in value) return Number(value.integerValue)
+  if ('doubleValue' in value) return Number(value.doubleValue)
+  if ('timestampValue' in value) return value.timestampValue
+  if ('arrayValue' in value) return (value.arrayValue?.values || []).map(decodeFirestoreValue)
+  if ('mapValue' in value) {
+    return Object.fromEntries(
+      Object.entries(value.mapValue?.fields || {}).map(([key, item]) => [key, decodeFirestoreValue(item)]),
+    )
+  }
+  return null
+}
+
+function decodeFirestoreDocument(document: any): FirestoreData {
+  const documentId = typeof document?.name === 'string' ? document.name.split('/').pop() : undefined
+  const fields = Object.fromEntries(
+    Object.entries(document?.fields || {}).map(([key, value]) => [key, decodeFirestoreValue(value)]),
+  )
+  return { ...fields, id: fields.id || documentId, _firestoreId: documentId }
+}
+
+function assertName(value: string, label: string) {
+  if (!/^[A-Za-z0-9_-]+$/.test(value)) throw new Error(`Invalid Firestore ${label}.`)
+}
+
 function baseUrl() {
   const projectId = process.env.FIREBASE_PROJECT_ID?.trim() || DEFAULT_FIREBASE_PROJECT_ID
   const databaseId = DEFAULT_FIREBASE_DATABASE_ID
   return `https://firestore.googleapis.com/v1/projects/${encodeURIComponent(projectId)}/databases/${encodeURIComponent(databaseId)}/documents`
+}
+
+async function authedFetch(url: string, init: RequestInit = {}) {
+  const token = await getAccessToken()
+  return fetch(url, {
+    ...init,
+    headers: {
+      authorization: `Bearer ${token}`,
+      ...(init.body ? { 'content-type': 'application/json' } : {}),
+      ...(init.headers || {}),
+    },
+    cache: 'no-store',
+  })
 }
 
 export function firebaseConfigured() {
@@ -166,39 +205,97 @@ export function stableFirestoreId(seed: string) {
 }
 
 export async function putFirestoreDocument(collection: string, documentId: string, data: FirestoreData) {
-  if (!/^[A-Za-z0-9_-]+$/.test(collection)) throw new Error('Invalid Firestore collection name.')
-  if (!/^[A-Za-z0-9_-]+$/.test(documentId)) throw new Error('Invalid Firestore document id.')
+  assertName(collection, 'collection name')
+  assertName(documentId, 'document id')
 
-  const token = await getAccessToken()
   const fields = Object.fromEntries(
     Object.entries(data)
       .filter(([, value]) => value !== undefined)
       .map(([key, value]) => [key, firestoreValue(value)]),
   )
 
-  const response = await fetch(`${baseUrl()}/${collection}/${documentId}`, {
+  const response = await authedFetch(`${baseUrl()}/${collection}/${documentId}`, {
     method: 'PATCH',
-    headers: {
-      authorization: `Bearer ${token}`,
-      'content-type': 'application/json',
-    },
     body: JSON.stringify({ fields }),
-    cache: 'no-store',
   })
 
   if (!response.ok) {
     const detail = await response.text()
     throw new Error(`Firestore write failed (${response.status}): ${detail.slice(0, 500)}`)
   }
-  return response.json()
+  return decodeFirestoreDocument(await response.json())
+}
+
+export async function patchFirestoreDocument(collection: string, documentId: string, patch: FirestoreData) {
+  assertName(collection, 'collection name')
+  assertName(documentId, 'document id')
+  const entries = Object.entries(patch).filter(([, value]) => value !== undefined)
+  if (!entries.length) return getFirestoreDocument(collection, documentId)
+
+  const query = new URLSearchParams()
+  for (const [key] of entries) query.append('updateMask.fieldPaths', key)
+  const fields = Object.fromEntries(entries.map(([key, value]) => [key, firestoreValue(value)]))
+  const response = await authedFetch(`${baseUrl()}/${collection}/${documentId}?${query.toString()}`, {
+    method: 'PATCH',
+    body: JSON.stringify({ fields }),
+  })
+  if (!response.ok) {
+    const detail = await response.text()
+    throw new Error(`Firestore patch failed (${response.status}): ${detail.slice(0, 500)}`)
+  }
+  return decodeFirestoreDocument(await response.json())
+}
+
+export async function createFirestoreDocument(collection: string, data: FirestoreData, documentId = randomUUID()) {
+  return putFirestoreDocument(collection, documentId, { ...data, id: data.id || documentId })
+}
+
+export async function getFirestoreDocument(collection: string, documentId: string) {
+  assertName(collection, 'collection name')
+  assertName(documentId, 'document id')
+  const response = await authedFetch(`${baseUrl()}/${collection}/${documentId}`)
+  if (response.status === 404) return null
+  if (!response.ok) {
+    const detail = await response.text()
+    throw new Error(`Firestore read failed (${response.status}): ${detail.slice(0, 500)}`)
+  }
+  return decodeFirestoreDocument(await response.json())
+}
+
+export async function listFirestoreDocuments(collection: string, pageSize = 1000) {
+  assertName(collection, 'collection name')
+  const documents: FirestoreData[] = []
+  let pageToken = ''
+  do {
+    const query = new URLSearchParams({ pageSize: String(Math.max(1, Math.min(1000, pageSize))) })
+    if (pageToken) query.set('pageToken', pageToken)
+    const response = await authedFetch(`${baseUrl()}/${collection}?${query.toString()}`)
+    if (response.status === 404) return documents
+    if (!response.ok) {
+      const detail = await response.text()
+      throw new Error(`Firestore list failed (${response.status}): ${detail.slice(0, 500)}`)
+    }
+    const body = (await response.json()) as { documents?: unknown[]; nextPageToken?: string }
+    documents.push(...(body.documents || []).map(decodeFirestoreDocument))
+    pageToken = body.nextPageToken || ''
+  } while (pageToken)
+  return documents
+}
+
+export async function deleteFirestoreDocument(collection: string, documentId: string) {
+  assertName(collection, 'collection name')
+  assertName(documentId, 'document id')
+  const response = await authedFetch(`${baseUrl()}/${collection}/${documentId}`, { method: 'DELETE' })
+  if (response.status === 404) return false
+  if (!response.ok) {
+    const detail = await response.text()
+    throw new Error(`Firestore delete failed (${response.status}): ${detail.slice(0, 500)}`)
+  }
+  return true
 }
 
 export async function pingFirebaseFirestore() {
-  const token = await getAccessToken()
-  const response = await fetch(`${baseUrl()}/rye_volunteer_profiles?pageSize=1`, {
-    headers: { authorization: `Bearer ${token}` },
-    cache: 'no-store',
-  })
+  const response = await authedFetch(`${baseUrl()}/rye_events?pageSize=1`)
   if (!response.ok) {
     const detail = await response.text()
     throw new Error(`Firestore health check failed (${response.status}): ${detail.slice(0, 300)}`)
