@@ -57,7 +57,7 @@ async function getAccessToken() {
     method: 'POST',
     headers: { 'content-type': 'application/x-www-form-urlencoded' },
     body: new URLSearchParams({
-      grant_type: 'urn:ietf:params:oauth-grant-type:jwt-bearer'.replace('oauth-grant','oauth:grant'),
+      grant_type: 'urn:ietf:params:oauth:grant-type:jwt-bearer',
       assertion,
     }),
     cache: 'no-store',
