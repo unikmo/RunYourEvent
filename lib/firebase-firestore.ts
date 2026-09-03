@@ -147,7 +147,7 @@ function firestoreValue(value: unknown): Record<string, unknown> {
 
 function baseUrl() {
   const projectId = process.env.FIREBASE_PROJECT_ID?.trim() || DEFAULT_FIREBASE_PROJECT_ID
-  const databaseId = process.env.FIREBASE_DATABASE_ID?.trim() || DEFAULT_FIREBASE_DATABASE_ID
+  const databaseId = DEFAULT_FIREBASE_DATABASE_ID
   return `https://firestore.googleapis.com/v1/projects/${encodeURIComponent(projectId)}/databases/${encodeURIComponent(databaseId)}/documents`
 }
 
