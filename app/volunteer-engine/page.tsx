@@ -3,7 +3,7 @@ import { ArrowRight, Check } from 'lucide-react'
 
 export const metadata: Metadata = {
   title: 'Sports Volunteering | 2–4 Hour Activities',
-  description: 'RunYourEvent connects sports clubs with volunteers for clear 2–4 hour activities. Clubs pay €8 per completed volunteer. Students can earn a certificate after 20 verified hours.',
+  description: 'RunYourEvent connects sports clubs with volunteers for clear 2–4 hour activities. Clubs pay €10 per completed volunteer. Students can earn a certificate after 20 verified hours.',
   alternates: { canonical: '/volunteer-engine' },
 }
 
@@ -40,7 +40,7 @@ export default function VolunteerEnginePage() {
 
       <section className="bg-white py-24 sm:py-28 lg:py-32">
         <div className="shell grid gap-12 lg:grid-cols-2">
-          <div><p className="eyebrow">Sports clubs</p><h2 className="premium-section mt-5">€8 per completed volunteer.</h2><p className="mt-6 max-w-xl text-base leading-7 text-[#667184]">Post a concrete activity. We match and invite local volunteers. You pay the €8 volunteer fee only after the activity is completed.</p><a href="/volunteer-engine/organizers" className="btn-primary mt-8">Request volunteers <ArrowRight className="ml-2" size={16}/></a></div>
+          <div><p className="eyebrow">Sports clubs</p><h2 className="premium-section mt-5">€10 per completed volunteer.</h2><p className="mt-6 max-w-xl text-base leading-7 text-[#667184]">Post a concrete activity. We match and invite local volunteers. You pay the €10 volunteer fee only after the activity is completed.</p><a href="/volunteer-engine/organizers" className="btn-primary mt-8">Request volunteers <ArrowRight className="ml-2" size={16}/></a></div>
           <div><p className="eyebrow">Students</p><h2 className="premium-section mt-5">20 verified hours.<br />One certificate.</h2><p className="mt-6 max-w-xl text-base leading-7 text-[#667184]">Verified time accumulates across sports activities. At 20 hours, students become eligible for a RunYourEvent Sports Volunteer Certificate.</p><a href="/volunteer-engine/volunteers" className="btn-secondary mt-8">Join the volunteer pool</a></div>
         </div>
       </section>
@@ -56,7 +56,7 @@ export default function VolunteerEnginePage() {
               ['4','Hours build','Verified time counts toward the 20-hour student certificate.'],
             ].map(([n,title,body],i) => <article key={n} className={'py-8 md:px-7 ' + (i>0?'border-t border-black/[0.08] md:border-l md:border-t-0':'')}><p className="text-xs font-black text-[#9a741c]">{n}</p><h3 className="mt-5 font-black text-[#182237]">{title}</h3><p className="mt-3 text-sm leading-6 text-[#667184]">{body}</p></article>)}
           </div>
-          <div className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm font-semibold text-[#667184]"><span className="inline-flex items-center gap-2"><Check size={14} className="text-[#9a741c]"/>2–4 hours per activity</span><span className="inline-flex items-center gap-2"><Check size={14} className="text-[#9a741c]"/>€8 per completed volunteer</span><span className="inline-flex items-center gap-2"><Check size={14} className="text-[#9a741c]"/>20 verified hours for certificate eligibility</span></div>
+          <div className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm font-semibold text-[#667184]"><span className="inline-flex items-center gap-2"><Check size={14} className="text-[#9a741c]"/>2–4 hours per activity</span><span className="inline-flex items-center gap-2"><Check size={14} className="text-[#9a741c]"/>€10 per completed volunteer</span><span className="inline-flex items-center gap-2"><Check size={14} className="text-[#9a741c]"/>20 verified hours for certificate eligibility</span></div>
         </div>
       </section>
     </main>
