@@ -10,7 +10,7 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://runyourevent.com'
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: { default: 'RunYourEvent | Sports Volunteer Platform', template: '%s | RunYourEvent' },
-  description: 'Sports clubs post clear 2–4 hour volunteer activities. RunYourEvent helps supply volunteers. Clubs pay €8 per completed volunteer. Students can earn a certificate after 20 verified hours.',
+  description: 'Sports clubs post clear 2–4 hour volunteer activities. RunYourEvent helps supply volunteers. Clubs pay €10 per completed volunteer. Students can earn a certificate after 20 verified hours.',
   applicationName: 'RunYourEvent',
   category: 'Sports Volunteer Platform',
   keywords: ['sports volunteering','sports club volunteers','football volunteers','2 hour volunteering','student volunteer hours','community service certificate','matchday volunteers','sports volunteer platform'],
