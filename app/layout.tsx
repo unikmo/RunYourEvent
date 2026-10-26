@@ -9,54 +9,17 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://runyourevent.com'
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: {
-    default: 'RunYourEvent | Event Execution Platform',
-    template: '%s | RunYourEvent',
-  },
-  description:
-    'Turn an event idea into an executable operating plan with clear workstreams, tasks, owners, dependencies, approvals, risks and deadlines.',
+  title: { default: 'RunYourEvent | Sports Volunteer Platform', template: '%s | RunYourEvent' },
+  description: 'Sports clubs post clear 2–4 hour volunteer activities. RunYourEvent helps supply volunteers. Clubs pay €8 per completed volunteer. Students can earn a certificate after 20 verified hours.',
   applicationName: 'RunYourEvent',
-  category: 'Event Execution Platform',
-  keywords: [
-    'event execution software',
-    'event operations software',
-    'event task management',
-    'event execution plan',
-    'event timeline software',
-    'corporate event operations',
-    'event agency software',
-    'event planning templates',
-    'wedding task management',
-  ],
+  category: 'Sports Volunteer Platform',
+  keywords: ['sports volunteering','sports club volunteers','football volunteers','2 hour volunteering','student volunteer hours','community service certificate','matchday volunteers','sports volunteer platform'],
   alternates: { canonical: '/' },
-  openGraph: {
-    type: 'website',
-    url: '/',
-    siteName: 'RunYourEvent',
-    title: 'RunYourEvent | Event Execution Platform',
-    description: 'Plan it. Assign it. Run it. Turn an event into a connected operating plan from first decision to final delivery.',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'RunYourEvent | Event Execution Platform',
-    description: 'Every task. Every owner. Every deadline.',
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1, 'max-video-preview': -1 },
-  },
+  openGraph: { type:'website', url:'/', siteName:'RunYourEvent', title:'RunYourEvent | Sports Volunteer Platform', description:'Give 2–4 hours. Help sport happen.' },
+  twitter: { card:'summary_large_image', title:'RunYourEvent | Sports Volunteer Platform', description:'Sports volunteering in clear 2–4 hour activities.' },
+  robots: { index:true, follow:true, googleBot:{index:true,follow:true,'max-image-preview':'large','max-snippet':-1,'max-video-preview':-1} },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <html lang="en">
-      <body className={`${inter.className} min-h-screen`}>
-        <a className="skip-link" href="#main-content">Skip to content</a>
-        <SiteHeader />
-        <div id="main-content">{children}</div>
-        <SiteFooter />
-      </body>
-    </html>
-  )
+  return <html lang="en"><body className={inter.className + ' min-h-screen'}><a className="skip-link" href="#main-content">Skip to content</a><SiteHeader/><div id="main-content">{children}</div><SiteFooter/></body></html>
 }
