@@ -13,12 +13,12 @@ export default async function Page({searchParams}:{searchParams:Promise<{event?:
     const db=createServerClient(); const result=await db.rpc('rye_volunteer_event_status',{p_invite_token:inviteToken,p_event_code:eventCode}); if(!result.error) data=result.data
   }
   return <main className="bg-[#f7f5ef]"><section className="shell max-w-3xl py-20 sm:py-24">
-    <p className="eyebrow">Volunteer Engine · Event attendance</p>
-    <h1 className="premium-section mt-5">Event-day check-in.</h1>
-    {!data?<div className="mt-8 border-y border-black/[0.08] py-6"><p className="text-sm font-black text-[#182237]">This device is not signed in for this shift.</p><p className="mt-2 text-sm leading-6 text-[#667184]">Open the personal RunYourEvent shift invitation you accepted, then scan the event QR again on the same device. The QR alone cannot create attendance for an unassigned person.</p></div>:<>
-      <div className="mt-8 divide-y divide-black/[0.08] border-y border-black/[0.08]"><div className="py-5"><p className="text-[10px] font-black uppercase tracking-[.12em] text-[#8a671b]">Shift</p><p className="mt-2 text-lg font-black text-[#182237]">{data.title}</p><p className="mt-1 text-sm text-[#667184]">{data.organizationName} · {data.venue}</p></div></div>
+    <p className="eyebrow">Sports volunteer activity · Attendance</p>
+    <h1 className="premium-section mt-5">Activity check-in.</h1>
+    {!data?<div className="mt-8 border-y border-black/[0.08] py-6"><p className="text-sm font-black text-[#182237]">This device is not signed in for this activity.</p><p className="mt-2 text-sm leading-6 text-[#667184]">Open the personal RunYourEvent activity invitation you accepted, then scan the club QR again on the same device.</p></div>:<>
+      <div className="mt-8 divide-y divide-black/[0.08] border-y border-black/[0.08]"><div className="py-5"><p className="text-[10px] font-black uppercase tracking-[.12em] text-[#8a671b]">Activity</p><p className="mt-2 text-lg font-black text-[#182237]">{data.title}</p><p className="mt-1 text-sm text-[#667184]">{data.organizationName} · {data.venue}</p></div></div>
       <VolunteerAttendanceActions eventCode={eventCode} initial={data}/>
-      <p className="mt-5 text-xs leading-5 text-[#7b8493]">For one-off events, a successful placement becomes billable only when the assigned volunteer checks in. Check-out records time for organizer verification and volunteer points.</p>
+      <p className="mt-5 text-xs leading-5 text-[#7b8493]">Check-in records arrival. Check-out records completion and volunteer time. The €8 organizer platform fee applies only after the volunteer completes the activity.</p>
     </>}
   </section></main>
 }
