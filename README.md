@@ -9,8 +9,8 @@ RunYourEvent is a **sports volunteer platform** built around clear **2–4 hour 
 - RunYourEvent helps match and invite suitable local volunteers.
 - Volunteers accept or decline a specific activity.
 - Attendance is recorded with personal invitation links plus event QR check-in/check-out.
-- The organizer pays **€8 per volunteer who completes the activity**.
-- Invitation, acceptance or a no-show does not create the €8 platform fee.
+- The organizer pays **€10 per volunteer who completes the activity**.
+- Invitation, acceptance or a no-show does not create the €10 platform fee.
 
 ### For volunteers
 - Join free.
@@ -41,7 +41,7 @@ Clubs already have calendars, spreadsheets, WhatsApp groups and low-cost helper-
 
 ## Commercial model
 
-- **€8 per completed volunteer activity**
+- **€10 per completed volunteer activity**
 - Volunteer signup: free
 - Separate Volunteer Protection charge may apply where offered/required, subject to insurer terms and availability.
 
