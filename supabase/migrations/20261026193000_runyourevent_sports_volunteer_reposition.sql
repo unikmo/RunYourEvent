@@ -1,5 +1,5 @@
 -- Reposition RunYourEvent as a sports-volunteer marketplace.
--- Commercial model: EUR 8 per completed volunteer activity.
+-- Commercial model: EUR 10 per completed volunteer activity.
 -- Student certificate: 20 verified volunteer hours.
 
 create or replace view public.rye_volunteer_progress as
@@ -55,7 +55,7 @@ with counts as (
   where r.pipeline='one_off_event'
   group by r.id,r.organization_name,r.contact_email
 ), calc as (
-  select *,case when successful_placements>0 then 800 else 0 end unit_fee_cents
+  select *,case when successful_placements>0 then 1000 else 0 end unit_fee_cents
   from counts
 ), protection as (
   select
