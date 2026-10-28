@@ -195,3 +195,9 @@ summary:focus-visible {
     scroll-behavior: auto !important;
   }
 }
+
+/* German compounds must wrap within narrow screens and form panels. */
+html[lang="de"] :is(h1, h2, h3, .label) {
+  overflow-wrap: anywhere;
+  hyphens: auto;
+}

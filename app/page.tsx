@@ -28,7 +28,7 @@ export default function HomePage() {
         <div className="shell relative grid items-start gap-9 py-8 sm:gap-12 sm:py-12 lg:grid-cols-[1.15fr_.85fr] lg:gap-14 lg:py-14">
           <div>
             <p className="eyebrow">Gemeinsam für den Sport vor Ort.</p>
-            <h1 id="home-heading" className="home-hero mt-4">Dein Verein.<br/><span className="text-[#9a741c]">Gemeinsam mehr bewegen.</span></h1>
+            <h1 id="home-heading" className="home-hero mt-4">Dein Verein.<br/><span className="text-[#9a741c]">Deine Hilfe zählt.</span></h1>
             <p className="mt-5 max-w-xl text-base leading-7 text-[#646f80] sm:text-lg">Hilf bei einem Sportverein mit, bring dein Team mit oder finde Unterstützung für deinen Verein.</p>
             <div className="mt-6 flex flex-wrap gap-3" aria-label="So kannst du mitmachen">
               <a href="/activities" className="btn-primary">Einsatz finden <ArrowRight className="ml-2" size={16}/></a>
