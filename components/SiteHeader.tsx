@@ -11,7 +11,7 @@ export default function SiteHeader() {
           <a href="/activities" className="transition-colors hover:text-[#101827]">Find activities</a>
           <a href="/opportunities" className="transition-colors hover:text-[#101827]">Sponsors</a>
           <a href="/corporate" className="transition-colors hover:text-[#101827]">Companies</a>
-          <a href="/pricing" className="transition-colors hover:text-[#101827]">Pricing</a>
+          <a href="/champsboard" className="transition-colors hover:text-[#101827]">Champsboard</a><a href="/notifications" className="transition-colors hover:text-[#101827]">Updates</a><a href="/pricing" className="transition-colors hover:text-[#101827]">Pricing</a>
           <a href="/volunteer" className="transition-colors hover:text-[#101827]">My volunteer passport</a>
         </nav>
         <div className="flex items-center gap-2">
@@ -19,7 +19,7 @@ export default function SiteHeader() {
           <a href="/club" className="btn-primary !min-h-10 !px-4 !py-2.5">Post activity</a>
         </div>
       </div>
-      <details className="shell border-t border-black/[0.06] py-2 xl:hidden"><summary className="cursor-pointer py-2 text-sm font-bold">Explore RunYourEvent</summary><nav aria-label="Mobile" className="grid grid-cols-2 gap-4 py-4 text-sm font-bold">{[['/volunteer','My volunteer passport'],['/access','Sign in'],['/club','Club workspace'],['/activities','Find activities'],['/opportunities','Sponsor club needs'],['/seasonal-needs','Seasonal club needs'],['/sponsors','For sponsors'],['/corporate','For companies'],['/recognition','Recognition'],['/pricing','Pricing']].map(([href,label])=><a key={href} href={href}>{label}</a>)}</nav></details>
+      <details className="shell border-t border-black/[0.06] py-2 xl:hidden"><summary className="cursor-pointer py-2 text-sm font-bold">Explore RunYourEvent</summary><nav aria-label="Mobile" className="grid grid-cols-2 gap-4 py-4 text-sm font-bold">{[['/volunteer','My volunteer passport'],['/access','Sign in'],['/club','Club workspace'],['/activities','Find activities'],['/opportunities','Sponsor club needs'],['/seasonal-needs','Seasonal club needs'],['/sponsors','For sponsors'],['/corporate','For companies'],['/champsboard','Champsboard'],['/recognition','Recognition'],['/notifications','Updates & matching'],['/billing','Club billing'],['/pricing','Pricing']].map(([href,label])=><a key={href} href={href}>{label}</a>)}</nav></details>
     </header>
   )
 }

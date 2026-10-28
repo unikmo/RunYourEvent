@@ -1,0 +1,6 @@
+import {redirect} from 'next/navigation'
+import {getAdminSession} from '@/lib/admin-auth'
+import {createServerClient} from '@/lib/supabase-server'
+import AutomationConsole from '@/components/AutomationConsole'
+export const dynamic='force-dynamic'
+export default async function Page(){const s=await getAdminSession();if(!s)redirect('/admin/login');const {data,error}=await createServerClient().rpc('rye_automation_dashboard',{p_token:s.token});return <main className="shell section-pad"><p className="eyebrow">Founder exception console</p><h1 className="premium-section mt-5">Automation and billing.</h1><p className="lede mt-6">Routine matching, reminders and invoicing run through the platform. Review delivery failures, disputed records and exceptional payments here.</p>{error||!data?<p className="mt-8">Automation data is unavailable until the database is active.</p>:<AutomationConsole data={data} config={{InvoiceIdentity:!!(process.env.BILLING_SELLER_NAME&&process.env.BILLING_SELLER_ADDRESS&&process.env.BILLING_TAX_NOTE),BankInstructions:!!process.env.BILLING_PAYMENT_INSTRUCTIONS,SMTP:!!(process.env.SMTP_HOST&&process.env.SMTP_FROM),Worker:!!process.env.CRON_SECRET,ServiceAccess:!!process.env.SUPABASE_SERVICE_ROLE_KEY,TaxSetup:process.env.BILLING_TAX_BPS!==undefined}}/>}</main>}

@@ -1,0 +1,5 @@
+import {NextRequest,NextResponse} from 'next/server'
+import {cookies} from 'next/headers'
+import {createServerClient} from '@/lib/supabase-server'
+import {isSameOrigin} from '@/lib/request-origin'
+export async function POST(req:NextRequest){if(!isSameOrigin(req))return NextResponse.json({error:'Invalid origin'},{status:403});try{const raw=await req.text();if(raw.length>20000)return NextResponse.json({error:'Request too large'},{status:413});const b=JSON.parse(raw);const db=createServerClient();let r;if(b.action==='invite')r=await db.rpc('rye_invite_employees',{p_token:b.token,p_emails:b.emails});else if(b.action==='accept')r=await db.rpc('rye_accept_employee',{p_invite:b.token,p_volunteer:(await cookies()).get('rye_volunteer_access')?.value||''});else return NextResponse.json({error:'Invalid action'},{status:400});if(r.error)return NextResponse.json({error:r.error.code==='P0001'?r.error.message:'Action unavailable'},{status:409});return NextResponse.json({ok:true,result:r.data})}catch{return NextResponse.json({error:'Company workspace unavailable'},{status:503})}}

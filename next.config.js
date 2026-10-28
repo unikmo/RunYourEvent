@@ -12,7 +12,7 @@ const legacy = [
 const nextConfig = {
   async headers() {
     const headers = [{key:'Cache-Control',value:'private, no-store'},{key:'Referrer-Policy',value:'no-referrer'},{key:'X-Robots-Tag',value:'noindex, nofollow, noarchive'}]
-    return ['/sponsor/:path*','/volunteer','/club','/conversations/:path*','/access','/admin/:path*'].map(source=>({source,headers}))
+    return ['/sponsor/:path*','/volunteer','/club','/conversations/:path*','/access','/admin/:path*','/billing','/notifications','/company/:path*','/employee/:path*','/sponsorship/:path*'].map(source=>({source,headers}))
   },
   async redirects() {
     return legacy.map(source => ({
