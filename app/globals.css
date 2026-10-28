@@ -105,8 +105,12 @@ summary:focus-visible {
     @apply display max-w-5xl text-[clamp(3rem,7vw,6rem)] font-black leading-[0.94];
   }
 
+  .home-hero {
+    @apply max-w-[640px] text-[clamp(2.25rem,4.5vw,3.75rem)] font-black leading-[1.04] tracking-[-0.045em] text-[#101827];
+  }
+
   .premium-hero {
-    @apply text-[clamp(3.5rem,8vw,7.25rem)] font-black leading-[0.88] tracking-[-0.065em] text-[#101827];
+    @apply text-[clamp(2.5rem,5vw,4.25rem)] font-black leading-[1.04] tracking-[-0.065em] text-[#101827];
   }
 
   .premium-section {

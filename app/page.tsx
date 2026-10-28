@@ -1,164 +1,82 @@
 import type { Metadata } from 'next'
-import { ArrowRight, BadgeCheck, Check, Clock3, GraduationCap, QrCode, ShieldCheck, Users } from 'lucide-react'
+import { ArrowRight, BadgeCheck, Check, Clock3, GraduationCap, ShieldCheck, Users } from 'lucide-react'
 
 export const metadata: Metadata = {
-  title: 'RunYourEvent | Sports Volunteering, Club Sponsorship & Corporate Projects',
-  description: 'RunYourEvent supplies volunteers to sports clubs for clear 2–4 hour activities. Clubs pay €10 only when a volunteer completes the activity. Everyone builds verified hours toward Bronze, Silver and Gold recognition.',
+  title: 'RunYourEvent | Volunteer, Bring Your Team or Support Local Sport',
+  description: 'Find local sports volunteering, bring your employee team or get the help your club needs. Community activities, employee projects and sponsorship with verified contribution.',
   alternates: { canonical: '/' },
 }
 
-const activityExamples = [
-  ['Matchday setup', '2h', 'Before kickoff'],
-  ['Entry & guest support', '2–3h', 'Matchday'],
-  ['Food stand', '2–4h', 'Matchday'],
-  ['Tournament desk', '2–4h', 'Tournament'],
-  ['Scoreboard support', '2–4h', 'Matchday'],
-  ['Content support', '2–4h', 'Club media'],
+const audiences = [
+  ['For volunteers', 'A few hours. A useful plan.', 'Find a local activity, bring friends and build your verified contribution record.', '/activities', 'Find an activity'],
+  ['For sports clubs', 'Get the help your club needs.', 'Publish matchday roles, practical projects or a whole season of volunteer needs.', '/club', 'Find volunteers'],
+  ['For companies & organisations', 'Bring your employee team.', 'Give staff a meaningful team activity, from a short shift to a full-day club project.', '/corporate', 'Explore employee volunteering'],
+  ['For sponsors', 'Help your community show up.', 'Fund all or part of a club’s volunteer needs and see the contribution your support enables.', '/opportunities', 'Sponsor a club'],
 ]
-
 const steps = [
-  ['01', 'Post the activity', 'Tell us the sport, role, venue, date and 2–4 hour window.'],
-  ['02', 'Volunteers choose', 'Your published activity appears for local volunteers to discover and join.'],
-  ['03', 'Volunteer completes it', 'Personal invitation plus QR check-in and check-out verify attendance.'],
-  ['04', 'Pay €10', 'The fee applies only after the volunteer completes the activity.'],
+  ['01', 'Clubs publish real needs', 'A clear task, location, time and number of places. Community activities last 2–4 hours; employee projects can run up to eight.'],
+  ['02', 'People choose and connect', 'Volunteers confirm their own places and coordinate directly with the club. Employers invite their teams through a private workspace.'],
+  ['03', 'Contribution gets verified', 'Check-in, check-out and organizer approval turn completed activities into verified hours, recognition and contribution reports.'],
 ]
 
 export default function HomePage() {
   return (
     <main className="overflow-hidden bg-[#f7f5ef]">
-      <section className="relative isolate border-b border-black/[0.06]">
+      <section aria-labelledby="home-heading" className="relative isolate border-b border-black/[0.06]">
         <div className="premium-halo" aria-hidden="true" />
-        <div className="shell relative grid gap-14 py-20 sm:py-28 lg:grid-cols-[1.05fr_.95fr] lg:items-center lg:py-32">
+        <div className="shell relative grid items-start gap-9 py-8 sm:gap-12 sm:py-12 lg:grid-cols-[1.15fr_.85fr] lg:gap-14 lg:py-14">
           <div>
-            <p className="eyebrow">Sports Volunteer Platform</p>
-            <h1 className="premium-hero mt-7 max-w-[840px]">Your club needs help.<br /><span className="text-[#9a741c]">Someone nearby has 2 hours.</span></h1>
-            <p className="mt-8 max-w-[720px] text-[18px] leading-8 text-[#646f80] sm:text-xl">Clubs publish clear sports activities. Volunteers choose where to help and coordinate directly. Pay <b className="text-[#182237]">€10 only when a volunteer completes it.</b></p>
-            <div className="mt-10 flex flex-wrap gap-3">
-              <a href="/club" className="btn-primary">Find volunteers <ArrowRight className="ml-2" size={16} /></a>
-              <a href="/volunteer-engine/volunteers" className="btn-secondary">Give 2–4 hours</a>
+            <p className="eyebrow">Local sport. Shared contribution.</p>
+            <h1 id="home-heading" className="home-hero mt-4">Local sport.<br/><span className="text-[#9a741c]">Powered by people.</span></h1>
+            <p className="mt-5 max-w-xl text-base leading-7 text-[#646f80] sm:text-lg">Find local sports volunteering, bring your employee team, or get the help your club needs.</p>
+            <div className="mt-6 flex flex-wrap gap-3" aria-label="Choose how to participate">
+              <a href="/activities" className="btn-primary">Find an activity <ArrowRight className="ml-2" size={16}/></a>
+              <a href="/club" className="btn-secondary">Find volunteers</a>
+              <a href="/corporate" className="btn-secondary">Bring your employee team</a>
             </div>
-            <div className="mt-8 flex flex-wrap gap-x-7 gap-y-3 text-sm font-semibold text-[#717a88]">
-              <span className="inline-flex items-center gap-2"><Check size={14} className="text-[#9a741c]" />2–4 hour activities</span>
-              <span className="inline-flex items-center gap-2"><Check size={14} className="text-[#9a741c]" />€10 after completion</span>
-              <span className="inline-flex items-center gap-2"><Check size={14} className="text-[#9a741c]" />20 / 40 / 60h recognition</span>
-            </div>
-          </div>
-
-          <div className="relative">
-            <div className="rounded-[34px] border border-black/[0.07] bg-[#0e1729] p-5 text-white shadow-[0_30px_80px_rgba(14,23,41,.16)] sm:p-7">
-              <div className="flex items-center justify-between border-b border-white/10 pb-5">
-                <div><p className="text-[10px] font-black uppercase tracking-[.15em] text-[#d9b95d]">Volunteer activity</p><p className="mt-2 text-xl font-black">Home match · Saturday</p></div>
-                <span className="rounded-full border border-white/10 px-3 py-1 text-xs font-bold text-white/55">3 needed</span>
-              </div>
-              <div className="py-6">
-                <p className="text-4xl font-black tracking-[-0.05em]">Entry support</p>
-                <div className="mt-5 grid gap-3 text-sm text-white/65 sm:grid-cols-2">
-                  <p className="flex items-center gap-2"><Clock3 size={16} className="text-[#e7c66f]" />14:00–16:00</p>
-                  <p className="flex items-center gap-2"><Users size={16} className="text-[#e7c66f]" />3 volunteers</p>
-                  <p className="flex items-center gap-2"><QrCode size={16} className="text-[#e7c66f]" />QR attendance</p>
-                  <p className="flex items-center gap-2"><BadgeCheck size={16} className="text-[#e7c66f]" />Verified hours</p>
-                </div>
-              </div>
-              <div className="grid gap-px overflow-hidden rounded-[20px] bg-white/10 sm:grid-cols-3">
-                <div className="bg-[#162238] p-4"><p className="text-[10px] uppercase tracking-[.13em] text-white/35">Club pays</p><p className="mt-2 text-2xl font-black">€10</p><p className="mt-1 text-xs text-white/45">after completion</p></div>
-                <div className="bg-[#162238] p-4"><p className="text-[10px] uppercase tracking-[.13em] text-white/35">Volunteer gives</p><p className="mt-2 text-2xl font-black">2h</p><p className="mt-1 text-xs text-white/45">one activity</p></div>
-                <div className="bg-[#162238] p-4"><p className="text-[10px] uppercase tracking-[.13em] text-white/35">Volunteer earns</p><p className="mt-2 text-2xl font-black">+2h</p><p className="mt-1 text-xs text-white/45">verified record</p></div>
-              </div>
+            <p className="mt-4 text-sm leading-6 text-[#646f80]">Employee volunteering for companies and organisations. <a href="/sponsors" className="font-bold underline underline-offset-4">You can sponsor local clubs, too.</a></p>
+            <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-xs font-semibold text-[#646f80] sm:text-sm">
+              <span className="inline-flex items-center gap-2"><Check size={14} className="text-[#9a741c]"/>Choose your commitment</span>
+              <span className="inline-flex items-center gap-2"><Check size={14} className="text-[#9a741c]"/>Build verified hours</span>
             </div>
           </div>
+          <aside aria-label="Examples of volunteering" className="space-y-3 lg:pt-1">
+            <article className="rounded-3xl bg-[#0e1729] p-6 text-white sm:p-7">
+              <p className="text-[10px] font-black uppercase tracking-[.15em] text-[#e7c66f]">Community activity · example</p>
+              <h2 className="mt-3 text-2xl font-black tracking-tight">Help a matchday happen.</h2>
+              <p className="mt-3 text-sm leading-6 text-white/70">Welcome supporters, run the tournament desk or help with matchday setup.</p>
+              <div className="mt-5 flex flex-wrap gap-5 text-sm text-white/80"><span className="inline-flex items-center gap-2"><Clock3 size={16} className="text-[#e7c66f]"/>2–4 hours</span><span className="inline-flex items-center gap-2"><BadgeCheck size={16} className="text-[#e7c66f]"/>Verified contribution</span></div>
+            </article>
+            <article className="rounded-3xl border border-[#d5ad48]/35 bg-[#eee7d3] p-6 sm:p-7">
+              <p className="eyebrow">Employee team project · example</p>
+              <h2 className="mt-3 text-2xl font-black tracking-tight">A day together. A club transformed.</h2>
+              <p className="mt-3 text-sm leading-6 text-[#536072]">Repaint a clubhouse or restore a club garden with your colleagues. A clear scope, supervision and verified hours.</p>
+              <a href="/corporate" className="text-link mt-4"><Users size={16}/>Team projects up to 8 hours <ArrowRight size={14}/></a>
+            </article>
+          </aside>
         </div>
       </section>
 
-      <section className="bg-[#0e1729] py-20 text-white sm:py-28">
-        <div className="shell grid gap-14 lg:grid-cols-[.8fr_1.2fr] lg:items-end">
-          <div>
-            <p className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-[#d9b95d]">Not another helper list</p>
-            <h2 className="mt-5 text-4xl font-black leading-[1] tracking-[-0.05em] sm:text-6xl">The problem is not scheduling.<br />It is finding people.</h2>
-          </div>
-          <div>
-            <p className="max-w-xl text-lg leading-8 text-white/60">Calendars, spreadsheets and volunteer lists can organize people you already have. RunYourEvent is built for the gap before that: helping local volunteers discover and join concrete sports activities.</p>
-            <div className="mt-8 border-y border-white/10">
-              {[
-                ['No vague ask', 'A specific role, place and 2–4 hour window.'],
-                ['No season commitment', 'Volunteers choose one activity at a time.'],
-                ['No completed volunteer, no €10 fee', 'Clubs pay for completed help, not exposure.'],
-              ].map(([title,copy])=><div key={title} className="grid gap-2 border-b border-white/10 py-5 last:border-b-0 sm:grid-cols-[.8fr_1.2fr]"><p className="font-black text-white/90">{title}</p><p className="text-sm leading-6 text-white/52">{copy}</p></div>)}
-            </div>
-          </div>
+      <section aria-label="Ways to take part" className="border-b border-black/[0.06] bg-white py-10 sm:py-14">
+        <div className="shell grid gap-8 sm:grid-cols-2 lg:grid-cols-4">{audiences.map(([label,title,copy,href,cta])=><article key={label} className="flex flex-col border-t border-[#d5ad48] pt-5"><p className="eyebrow">{label}</p><h2 className="mt-3 text-xl font-black tracking-tight">{title}</h2><p className="mt-3 text-sm leading-7 text-[#667184]">{copy}</p><a className="text-link mt-5" href={href}>{cta}<ArrowRight size={14}/></a></article>)}</div>
+      </section>
+
+      <section id="how-it-works" className="bg-[#f7f5ef] py-14 sm:py-20">
+        <div className="shell"><p className="eyebrow">How it works</p><h2 className="premium-section mt-4 max-w-3xl">From a club need to a contribution that counts.</h2><div className="mt-9 grid gap-8 md:grid-cols-3">{steps.map(([n,title,copy])=><article key={n} className="border-t border-black/10 pt-5"><p className="eyebrow">{n}</p><h3 className="mt-4 text-xl font-black">{title}</h3><p className="mt-3 text-sm leading-7 text-[#667184]">{copy}</p></article>)}</div></div>
+      </section>
+
+      <section id="employee-volunteering" className="bg-[#0e1729] py-14 text-white sm:py-20">
+        <div className="shell grid gap-9 lg:grid-cols-2 lg:items-center"><div><p className="text-[10px] font-black uppercase tracking-[.17em] text-[#e7c66f]">For companies & organisations</p><h2 className="mt-4 text-3xl font-black leading-tight tracking-[-.04em] sm:text-4xl">Your employees bring the energy.<br/>Local clubs bring a real need.</h2><p className="mt-5 max-w-xl text-base leading-7 text-white/70">Bring a group of colleagues to a practical club project. From painting a clubhouse to restoring a garden, choose a useful commitment of up to eight hours.</p><a href="/corporate" className="btn-signal mt-6">Plan employee volunteering <ArrowRight size={16} className="ml-2"/></a></div><div className="divide-y divide-white/15 border-y border-white/15">{[['A clear project','Agree tasks, team size, supervision, materials and the project price before booking.'],['Your team coordinates on-platform','Invite employees, let each person confirm and keep arrangements in the workspace.'],['Verified participation','Actual completed hours are approved by the club and reflected in the company’s contribution report.']].map(([title,copy])=><div key={title} className="py-5"><h3 className="font-bold">{title}</h3><p className="mt-2 text-sm leading-7 text-white/65">{copy}</p></div>)}</div></div>
+      </section>
+
+      <section id="fees-and-recognition" className="py-14 sm:py-20">
+        <div className="shell grid items-start gap-6 lg:grid-cols-2">
+          <article className="rounded-3xl border border-black/[0.07] bg-white p-7 sm:p-9"><p className="eyebrow">Clear club fees</p><h2 className="mt-4 text-4xl font-black tracking-tight">€10 <span className="text-base font-semibold tracking-normal text-[#667184]">per completed volunteer</span></h2><p className="mt-4 text-sm leading-7 text-[#667184]">The club placement fee applies after completed attendance is verified. Eligible sponsorship can cover this fee.</p><div className="mt-5 divide-y divide-black/[0.07] border-y border-black/[0.07] text-sm text-[#536072]"><p className="py-3"><b>Posting, invitations and acceptance:</b> free</p><p className="py-3"><b>No-show:</b> no placement fee</p><p className="py-3"><b>Employee team projects:</b> separately quoted</p></div><p className="mt-4 text-xs leading-6 text-[#667184]">Materials, protection and applicable taxes are disclosed separately.</p><a href="/pricing" className="text-link mt-5">See pricing details <ArrowRight size={14}/></a></article>
+          <article className="rounded-3xl bg-[#eee7d3] p-7 sm:p-9"><p className="eyebrow">Recognition for every volunteer</p><GraduationCap className="mt-5 text-[#9a741c]" size={30}/><h2 className="mt-4 text-3xl font-black tracking-tight">Your contribution comes with you.</h2><p className="mt-4 text-sm leading-7 text-[#536072]">Build verified hours across clubs and activities. Earn Bronze at 20 hours, Silver at 40 and Gold at 60, with hand-signed Gold certificates.</p><p className="mt-4 text-sm leading-7 text-[#536072]">Choose to share your volunteer page and join the city, country or worldwide Champsboard.</p><div className="mt-5 flex items-center gap-2 text-xs font-bold text-[#536072]"><ShieldCheck size={17}/>Check-in, check-out and club verification</div><div className="mt-6 flex flex-wrap gap-x-6 gap-y-3"><a href="/recognition" className="text-link">Explore recognition <ArrowRight size={14}/></a><a href="/champsboard" className="text-link">See the Champsboard <ArrowRight size={14}/></a></div></article>
         </div>
       </section>
 
-      <section className="bg-white py-24 sm:py-28 lg:py-32">
-        <div className="shell">
-          <div className="grid gap-10 lg:grid-cols-[.78fr_1.22fr] lg:items-end">
-            <div><p className="eyebrow">How it works</p><h2 className="premium-section mt-5">From staffing gap to completed activity.</h2></div>
-            <p className="max-w-xl text-lg leading-8 text-[#646f80]">Clubs publish, volunteers choose and both sides coordinate in one workspace. The sports organization remains responsible for the event, supervision and safety.</p>
-          </div>
-          <div className="mt-14 grid border-y border-black/[0.08] md:grid-cols-4">
-            {steps.map(([number,title,copy],index)=><article key={number} className={'py-8 md:px-7 md:py-10 '+(index>0?'border-t border-black/[0.08] md:border-l md:border-t-0':'')}><p className="text-xs font-black tracking-[.14em] text-[#9a741c]">{number}</p><h3 className="mt-7 text-xl font-black tracking-[-0.03em] text-[#182237]">{title}</h3><p className="mt-3 text-sm leading-6 text-[#667184]">{copy}</p></article>)}
-          </div>
-        </div>
-      </section>
-
-      <section className="border-y border-black/[0.06] bg-[#eeeae0] py-24 sm:py-28">
-        <div className="shell grid gap-14 lg:grid-cols-[.7fr_1.3fr]">
-          <div><p className="eyebrow">What can volunteers do?</p><h2 className="premium-section mt-5">Small jobs that make sport possible.</h2><p className="mt-6 max-w-lg text-base leading-7 text-[#667184]">Matchdays and tournaments are full of work that does not need a season-long volunteer. It needs a person for a few hours.</p></div>
-          <div className="divide-y divide-black/[0.09] border-y border-black/[0.09]">
-            {activityExamples.map(([role,duration,context])=><div key={role} className="grid gap-2 py-5 sm:grid-cols-[1fr_auto_auto] sm:items-center"><p className="font-black text-[#182237]">{role}</p><p className="text-xs font-bold text-[#7b8493] sm:w-28">{context}</p><p className="text-sm font-black text-[#9a741c] sm:w-16 sm:text-right">{duration}</p></div>)}
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-[#f7f5ef] py-24 sm:py-28 lg:py-32">
-        <div className="shell grid gap-12 lg:grid-cols-2">
-          <article className="rounded-[30px] border border-black/[0.07] bg-white p-8 sm:p-10">
-            <p className="eyebrow">For sports clubs</p>
-            <p className="mt-7 text-7xl font-black tracking-[-0.07em] text-[#101827]">€10</p>
-            <p className="mt-2 text-sm font-bold text-[#7b8493]">per volunteer who completes the activity</p>
-            <div className="mt-8 divide-y divide-black/[0.07] border-y border-black/[0.07] text-sm text-[#536072]">
-              <p className="py-4"><b className="text-[#182237]">Posting:</b> free</p>
-              <p className="py-4"><b className="text-[#182237]">Invitation or acceptance:</b> free</p>
-              <p className="py-4"><b className="text-[#182237]">No-show:</b> no €10 fee</p>
-              <p className="py-4"><b className="text-[#182237]">Completed activity:</b> €10</p>
-            </div>
-            <a href="/club" className="btn-primary mt-8">Find volunteers <ArrowRight className="ml-2" size={16}/></a>
-          </article>
-
-          <article className="rounded-[30px] bg-[#0e1729] p-8 text-white sm:p-10">
-            <p className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-[#d9b95d]">For every volunteer</p>
-            <div className="mt-7 flex items-end gap-3"><GraduationCap size={36} className="mb-2 text-[#e7c66f]"/><p className="text-7xl font-black tracking-[-0.07em]">20h</p></div>
-            <p className="mt-2 text-sm font-bold text-white/45">verified sports volunteering</p>
-            <h2 className="mt-8 text-3xl font-black tracking-[-0.04em]">Build a record that says you showed up.</h2>
-            <p className="mt-5 max-w-lg text-base leading-7 text-white/58">Verified completed activities accumulate across clubs and sports. Reach Bronze at 20 hours, Silver at 40 and Gold at 60. Gold certificates are hand-signed. Your verified record grows with every completed activity.</p>
-            <div className="mt-7 flex items-center gap-3 text-sm font-bold text-white/70"><ShieldCheck size={18} className="text-[#e7c66f]"/>Check-in + check-out + organizer verification</div>
-            <a href="/recognition" className="mt-8 inline-flex min-h-11 items-center justify-center rounded-full bg-white px-5 py-3 text-sm font-black text-[#101827]">Explore recognition <ArrowRight className="ml-2" size={16}/></a>
-          </article>
-        </div>
-      </section>
-
-      <section className="border-y border-black/[0.07] bg-white py-24 sm:py-28">
-        <div className="shell">
-          <p className="eyebrow">A whole season of possibility</p>
-          <h2 className="premium-section mt-5 max-w-4xl">Clubs bring the needs.<br />Companies help make it happen.</h2>
-          <div className="mt-12 grid gap-8 md:grid-cols-3">
-            {[
-              ['For clubs', 'Plan beyond the next match.', 'Enter your seasonal needs, from matchday helpers to a clubhouse refresh. Sponsors can support all or part of the work.', '/seasonal-needs', 'Add seasonal needs'],
-              ['For sponsors', 'Back your local sports community.', 'Cover volunteer placement fees for a club, a project or part of a season. See funding and verified delivery separately.', '/sponsors', 'Explore sponsorship'],
-              ['For employers', 'Give your team a useful day.', 'Plan a corporate sports-club project of up to eight hours, with clear tasks, supervision and verified participation.', '/corporate', 'Plan a team project'],
-            ].map(([label,title,copy,href,cta]) => <article key={label} className="border-t border-black/10 pt-7"><p className="eyebrow">{label}</p><h3 className="mt-4 text-2xl font-black tracking-tight">{title}</h3><p className="mt-4 text-sm leading-7 text-[#667184]">{copy}</p><a className="text-link mt-6" href={href}>{cta}<ArrowRight size={14}/></a></article>)}
-          </div>
-        </div>
-      </section>
-      <section className="bg-[#eeeae0] py-20 sm:py-24">
-        <div className="shell grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center"><div><p className="eyebrow">Make a plan for the weekend</p><h2 className="premium-section mt-5 max-w-3xl">Bring your friends.<br />Give four hours.</h2><p className="mt-6 max-w-2xl text-base leading-7 text-[#667184]">Choose an activity, share it with your friends and make a useful day of it. Each person confirms their own place and builds their own verified contribution record.</p></div><a href="/activities" className="btn-primary">Find an activity <ArrowRight className="ml-2" size={16}/></a></div>
-      </section>
-
-      <section className="bg-white py-20 sm:py-24">
-        <div className="shell grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
-          <div><p className="eyebrow">Sports need people</p><h2 className="mt-4 max-w-3xl text-4xl font-black tracking-[-0.05em] text-[#182237]">Make the commitment small enough to say yes to.</h2></div>
-          <div className="flex flex-wrap gap-3"><a href="/club" className="btn-primary">Find volunteers</a><a href="/volunteer-engine/volunteers" className="btn-secondary">Volunteer</a></div>
-        </div>
-      </section>
+      <section className="border-y border-black/[0.06] bg-white py-14 sm:py-20"><div className="shell grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center"><div><p className="eyebrow">Make a plan for the weekend</p><h2 className="premium-section mt-4 max-w-3xl">Bring your friends.<br/>Give four hours.</h2><p className="mt-5 max-w-2xl text-base leading-7 text-[#667184]">Choose an activity, share it with your friends and make a useful day of it. Each person confirms their own place and builds their own contribution record.</p></div><a href="/activities" className="btn-primary">Find an activity <ArrowRight className="ml-2" size={16}/></a></div></section>
     </main>
   )
 }
