@@ -18,11 +18,11 @@ export default async function SuccessPage() {
 
   if (error) {
     console.error('Paid-plan lookup failed', error)
-    return <main className="shell py-20"><p className="eyebrow">Verification error</p><h1 className="display mt-4 text-4xl font-black">Your payment could not be verified right now.</h1><p className="mt-4 text-[#687386]">Your Stripe payment is not lost. Please refresh this page or contact hello@runyourevent.com.</p></main>
+    return <main className="shell py-20"><p className="eyebrow">Verification error</p><h1 className="display mt-4 text-4xl font-black">Your payment could not be verified right now.</h1><p className="mt-4 text-[#687386]">We cannot confirm the payment state while verification is unavailable. Please retry or contact hello@runyourevent.com with your earlier receipt.</p></main>
   }
 
   if (!row) {
-    return <main className="shell py-20"><p className="eyebrow">Payment verification</p><h1 className="display mt-4 text-4xl font-black">Stripe is still confirming this purchase.</h1><p className="mt-4 max-w-2xl text-[#687386]">The plan unlocks only after RunYourEvent receives and verifies Stripe&apos;s signed payment event. Refresh this page shortly.</p><a href="/checkout/success" className="btn-primary mt-7">Check payment again →</a></main>
+    return <main className="shell py-20"><p className="eyebrow">Payment verification</p><h1 className="display mt-4 text-4xl font-black">No verified legacy purchase is available yet.</h1><p className="mt-4 max-w-2xl text-[#687386]">The plan unlocks only after RunYourEvent receives and verifies Stripe&apos;s signed payment event. Refresh this page shortly.</p><a href="/checkout/success" className="btn-primary mt-7">Check payment again →</a></main>
   }
 
   const tier = row.paid_tier === 'professional' ? 'professional' : 'essential'

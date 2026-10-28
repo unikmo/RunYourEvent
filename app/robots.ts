@@ -7,7 +7,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: ['/api/','/admin/','/club','/volunteer','/access','/conversations/','/sponsor/','/certificates/','/company/','/employee/','/billing','/notifications','/sponsorship/'],
+      disallow: ['/api/','/admin/','/club$','/volunteer$','/access','/conversations/','/sponsor/','/certificates/','/company/','/employee/','/billing','/notifications','/sponsorship/','/events/','/share/','/workspace/','/checkout/'],
     },
     sitemap: `${siteUrl}/sitemap.xml`,
     host: siteUrl,

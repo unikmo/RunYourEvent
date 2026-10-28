@@ -9,7 +9,7 @@ export async function POST(req:NextRequest){
  if(!isSameOrigin(req))return NextResponse.json({error:'Invalid request origin'},{status:403})
  try{
   const raw=await req.text();if(raw.length>10000)return NextResponse.json({error:'Request too large'},{status:413})
-  const b=JSON.parse(raw);const service=getServerSupabase()
+  const b=JSON.parse(raw);if(!b.companyToken)return NextResponse.json({error:'Community sponsorship starts with an hour-target quote. Choose at least 25 hours at /sponsors; an enquiry does not create an invoice.'},{status:409});const service=getServerSupabase()
   const rate=await service.rpc('rye_invoice_request_rate',{p_bucket:createHash('sha256').update((req.headers.get('x-forwarded-for')?.split(',')[0]||'unknown')+(process.env.CRON_SECRET||process.env.SUPABASE_SERVICE_ROLE_KEY)).digest('hex')});if(rate.error||rate.data!==true)return NextResponse.json({error:'Please wait before starting another invoice'},{status:429})
   let companyId:string|undefined;if(b.companyToken){const c=await createServerClient().rpc('rye_company_workspace',{p_token:b.companyToken});if(c.error||!c.data)return NextResponse.json({error:'Corporate workspace is not authorized'},{status:401});companyId=c.data.booking.id}
   const savedToken=(await cookies()).get('rye_order_access')?.value;let reuse:any=null

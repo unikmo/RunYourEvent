@@ -20,9 +20,9 @@ export default function SiteFooter() {
               <a className="block hover:text-white" href="/access">Sign in</a>
               <a className="block hover:text-white" href="/recognition">Recognition & rewards</a>
               <a className="block hover:text-white" href="/seasonal-needs">Publish seasonal needs</a>
-              <a className="block hover:text-white" href="/opportunities">Sponsor club needs</a>
+              <a className="block hover:text-white" href="/opportunities">Browse needs to sponsor</a>
               <a className="block hover:text-white" href="/sponsors">For sponsors</a>
-              <a className="block hover:text-white" href="/corporate">For companies</a>
+              <a className="block hover:text-white" href="/corporate">Employee volunteering</a>
               <a className="block hover:text-white" href="/pricing">Pricing</a>
             </nav>
           </div>

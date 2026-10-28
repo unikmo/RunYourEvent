@@ -2,7 +2,7 @@ import { isSameOrigin } from '@/lib/request-origin'
 import { NextRequest, NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
 import { createServerClient } from '@/lib/supabase-server'
-import { clean, integer, validSeasonalNeed, validUuid } from '@/lib/community-input'
+import { clean, integer, validSeasonalNeed, validSponsorEnquiry, validUuid } from '@/lib/community-input'
 export const runtime='nodejs'; export const dynamic='force-dynamic'
 export async function POST(req:NextRequest) {
  try {
@@ -17,7 +17,7 @@ export async function POST(req:NextRequest) {
    if(!validSeasonalNeed(b)) return NextResponse.json({error:'Complete the required project details, dates, supervision and privacy acknowledgement.'},{status:400})
    result=await db.rpc('rye_submit_seasonal_need',{p_payload:b,p_club_token:store.get('rye_club_access')?.value||null})
   } else if(b.action==='sponsor_enquiry') {
-   if(clean(b.organizationName,160).length<2 || clean(b.contactName,120).length<2 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(clean(b.email,254)) || b.privacyAck!==true || (b.needId && !validUuid(b.needId)) || (b.budgetCents!=null && !integer(b.budgetCents,1,100000000))) return NextResponse.json({error:'Complete the company, contact and privacy fields.'},{status:400})
+   if(!validSponsorEnquiry(b)) return NextResponse.json({error:'For sponsorship, choose at least 25 whole volunteer-hours. For employee projects, enter the team size and 2–8 hours per employee. Complete the contact, message and privacy fields.'},{status:400})
    result=await db.rpc('rye_submit_community',{p_action:'sponsor_enquiry',p_payload:b})
   } else if(b.action==='join_activity') {
    const token=store.get('rye_volunteer_access')?.value

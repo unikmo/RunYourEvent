@@ -9,8 +9,10 @@ function transportLabel(mode:string){return ({independent:'Independent arrival',
 export default async function Page({params}:{params:Promise<{token:string}>}){
   const {token}=await params
   if(!/^[a-f0-9]{48}$/i.test(token)) notFound()
-  const db=createServerClient(); const {data,error}=await db.rpc('rye_volunteer_invite_lookup',{p_invite_token:token})
-  if(error||!data) notFound()
+  let data:any=null;let unavailable=false
+  try{const r=await createServerClient().rpc('rye_volunteer_invite_lookup',{p_invite_token:token});if(r.error)unavailable=true;else data=r.data}catch{unavailable=true}
+  if(unavailable)return <main className="shell section-pad"><h1 className="section-title">Your invitation is temporarily unavailable.</h1><p className="lede mt-5">We could not load the activity or confirm its status. Please retry shortly.</p></main>
+  if(!data)notFound()
   const row=data as any; const o=row.opportunity||{}; const v=row.volunteer||{}
   const start=o.shiftStart?new Date(o.shiftStart):null; const end=o.shiftEnd?new Date(o.shiftEnd):null
   return <main className="bg-[#f7f5ef]"><section className="shell max-w-4xl py-20 sm:py-24">
@@ -19,7 +21,7 @@ export default async function Page({params}:{params:Promise<{token:string}>}){
     <p className="mt-6 max-w-2xl text-lg leading-8 text-[#646f80]">Accepting confirms this specific activity only{start&&end?` (${Math.round((end.getTime()-start.getTime())/360000)/10} hours)`:''}. It does not commit you to future activities.</p>
     <div className="mt-10 divide-y divide-black/[0.08] border-y border-black/[0.08]">
       {[
-        ['Role',o.title],['Club / organizer',o.organizationName],['Activity',o.eventName||o.title],['Location',[o.venue,o.city].filter(Boolean).join(' · ')],['Date',o.eventDay],['Time',start&&end?start.toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'})+'–'+end.toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'}):'—'],['Transport',transportLabel(o.transportMode)],['Transport details',o.transportDetails||'—']
+        ['Role',o.title],['Club / organizer',o.organizationName],['Activity',o.eventName||o.title],['Location',[o.venue,o.city].filter(Boolean).join(' · ')],['Date',o.eventDay],['Time · Europe/Berlin',start&&end?start.toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit',timeZone:'Europe/Berlin'})+'–'+end.toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit',timeZone:'Europe/Berlin'}):'—'],['Transport',transportLabel(o.transportMode)],['Transport details',o.transportDetails||'—']
       ].map(([label,value])=><div key={label} className="grid gap-2 py-5 sm:grid-cols-[170px_1fr]"><p className="text-[10px] font-black uppercase tracking-[.12em] text-[#8a671b]">{label}</p><p className="text-sm font-bold leading-6 text-[#283449]">{value}</p></div>)}
     </div>
     <p className="mt-6 text-sm leading-6 text-[#667184]">RunYourEvent helps match sports volunteers but cannot guarantee attendance. Once you accept, we ask you to reconfirm before the activity. At the venue, scan the organizer's RunYourEvent QR on this same device to check in.</p>

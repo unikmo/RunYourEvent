@@ -31,11 +31,11 @@ export default function VolunteerSignupForm(){
       <label className="sm:col-span-2"><span className="label">School / university <span className="font-normal text-[#7b8493]">optional</span></span><input className="input" name="schoolOrUniversity" maxLength={160} /></label>
     </div>
     <label><span className="label">Which sports activities interest you?</span><textarea className="input min-h-28 resize-y" name="interests" maxLength={1500} placeholder="Football, basketball, tournaments, entry support, food stand, setup, content…" /></label>
-    <label><span className="label">Typical availability</span><textarea className="input min-h-24 resize-y" name="availability" maxLength={1500} placeholder="e.g. Saturdays, Sunday afternoons, weekday evenings…" /></label>
+    <label><span className="label">Availability notes</span><textarea className="input min-h-24 resize-y" name="availability" maxLength={1500} placeholder="e.g. Saturdays, Sunday afternoons, weekday evenings…" /></label>
     <div className="border-y border-black/[0.08] py-5 text-sm leading-6 text-[#5f6978]"><b className="text-[#182237]">Recognition for everyone:</b> Bronze at 20 verified hours, Silver at 40 and a hand-signed Gold certificate at 60.</div>
     <label className="flex items-start gap-3 text-sm leading-6 text-[#5f6978]"><input className="mt-1 h-4 w-4" name="guardianConsentReady" type="checkbox" /><span>If I am under 18, I can provide parent or guardian consent where required for the activity.</span></label>
     <label className="flex items-start gap-3 border-b border-black/[0.08] pb-5 text-sm leading-6 text-[#5f6978]"><input className="mt-1 h-4 w-4" name="privacyAck" type="checkbox" required /><span>I agree that RunYourEvent may store this profile and use it to identify suitable sports-volunteer activities. I can request deletion or pause participation later.</span></label>
-    <div className="flex flex-wrap items-center gap-4"><button type="submit" className="btn-primary" disabled={state==='sending'}>{state==='sending'?'Joining…':'Join the sports volunteer pool'}</button><span className="text-xs leading-5 text-[#7b8493]">Free to join. No obligation to accept an activity.</span></div>
+    <div className="flex flex-wrap items-center gap-4"><button type="submit" className="btn-primary" disabled={state==='sending'}>{state==='sending'?'Joining…':'Join the sports volunteer pool'}</button><span className="text-xs leading-5 text-[#7b8493]">Free to join. No obligation to accept an activity. Set matching days and email alerts in your passport after signup.</span></div>
     {message&&<p role="status" className={'text-sm font-bold '+(state==='success'?'text-green-700':'text-red-700')}>{message}</p>}
   </form>
 }

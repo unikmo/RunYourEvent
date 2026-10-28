@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import SiteHeader from '@/components/SiteHeader'
 import SiteFooter from '@/components/SiteFooter'
+import LegacyProductNotice from '@/components/LegacyProductNotice'
 import './globals.css'
 
 const inter = Inter({ subsets: ['latin'], display: 'swap', variable: '--font-inter' })
@@ -21,5 +22,5 @@ export const metadata: Metadata = {
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  return <html lang="en"><body className={inter.className + ' min-h-screen'}><a className="skip-link" href="#main-content">Skip to content</a><SiteHeader/><div id="main-content">{children}</div><SiteFooter/></body></html>
+  return <html lang="en"><body className={inter.className + ' min-h-screen'}><a className="skip-link" href="#main-content">Skip to content</a><SiteHeader/><LegacyProductNotice/><div id="main-content">{children}</div><SiteFooter/></body></html>
 }

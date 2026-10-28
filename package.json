@@ -11,7 +11,8 @@
     "check:migrations": "node scripts/check-migrations.mjs",
     "test:input": "node scripts/test-input.mjs",
     "test:seamless": "node scripts/test-seamless.mjs",
-    "test:champsboard": "node scripts/test-champsboard.mjs"
+    "test:champsboard": "node scripts/test-champsboard.mjs",
+    "test:sponsor-hours": "node scripts/test-sponsor-hours.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.116.0",

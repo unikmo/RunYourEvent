@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const legacy = [
-  '/custom','/event-types','/templates','/browse','/resources','/agencies','/venues','/my-events',
+  '/browse/:path*','/weddings','/family-reunions','/custom','/event-types','/templates','/browse','/resources','/agencies','/venues','/my-events',
   '/company-event-planning','/event-planning-checklist','/event-planning-template','/event-planning-timeline',
   '/wedding-planning-checklist','/wedding-planning-timeline','/family-reunion-planning','/class-reunion-planning',
   '/company-retreat-planning','/event-execution-plan','/destination-wedding-planning','/family-reunion-checklist',
@@ -12,7 +12,7 @@ const legacy = [
 const nextConfig = {
   async headers() {
     const headers = [{key:'Cache-Control',value:'private, no-store'},{key:'Referrer-Policy',value:'no-referrer'},{key:'X-Robots-Tag',value:'noindex, nofollow, noarchive'}]
-    return ['/sponsor/:path*','/volunteer','/club','/conversations/:path*','/access','/admin/:path*','/billing','/notifications','/company/:path*','/employee/:path*','/sponsorship/:path*'].map(source=>({source,headers}))
+    return ['/sponsor/:path*','/volunteer','/club','/conversations/:path*','/access','/admin/:path*','/billing','/notifications','/company/:path*','/employee/:path*','/sponsorship/:path*','/events/:path*','/share/:path*','/workspace/:path*','/checkout/:path*'].map(source=>({source,headers}))
   },
   async redirects() {
     return legacy.map(source => ({

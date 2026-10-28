@@ -10,7 +10,7 @@ export default function SeasonalNeedsPage() {
     <section className="bg-white py-20"><div className="shell grid gap-12 lg:grid-cols-[.65fr_1.35fr]">
       <aside><p className="eyebrow">A clear path to delivery</p><div className="rule-list mt-6 text-sm leading-6 text-[#667184]">{[
         ['Describe the season','Enter each activity or repeatable role with its dates, people, hours and practical requirements.'],
-        ['Make sponsorship possible','Companies can propose funding a whole need or part of it. Allocations and costs are agreed before activation.'],
+        ['Make sponsorship possible','Sponsors request hour packages starting at 25 hours. A smaller club activity can form part of a package spanning several needs. Funding scope and costs are agreed before activation.'],
         ['Recruit separately','A funded need still needs suitable people. Funding, filled places and completed hours are tracked separately.'],
         ['Record the contribution','Check-in, check-out and organizer verification build an evidence-based volunteer record.'],
       ].map(([title,body])=><p key={title} className="py-5"><b className="text-[#182237]">{title}</b><br/>{body}</p>)}</div><p className="mt-6 text-sm leading-6 text-[#667184]">The host remains responsible for activity suitability, supervision, safeguarding and safety. Insurance, materials and transport are agreed separately where applicable.</p></aside>

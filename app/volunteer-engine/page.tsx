@@ -21,7 +21,7 @@ export default function VolunteerEnginePage() {
     <main className="overflow-hidden bg-[#f7f5ef]">
       <section className="relative isolate border-b border-black/[0.06]">
         <div className="premium-halo" aria-hidden="true" />
-        <div className="shell relative py-24 sm:py-32 lg:py-36">
+        <div className="shell relative py-8 sm:py-12 lg:py-14">
           <div className="max-w-5xl">
             <p className="eyebrow">Sports volunteering</p>
             <h1 className="premium-hero mt-6 max-w-[980px]">Give 2–4 hours.<br /><span className="text-[#9a741c]">Help sport happen.</span></h1>
@@ -33,7 +33,7 @@ export default function VolunteerEnginePage() {
 
       <section className="bg-[#0e1729] py-20 text-white sm:py-28">
         <div className="shell grid gap-14 lg:grid-cols-[.8fr_1.2fr] lg:items-center">
-          <div><p className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-[#d9b95d]">Micro-volunteering for sport</p><h2 className="mt-5 max-w-xl text-4xl font-black leading-[1] tracking-[-0.05em] sm:text-6xl">A role you can say yes to.</h2><p className="mt-6 max-w-lg text-base leading-7 text-white/58">Every opportunity states the job, venue and 2–4 hour window before a volunteer accepts.</p></div>
+          <div><p className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-[#d9b95d]">Micro-volunteering for sport</p><h2 className="mt-5 max-w-xl text-4xl font-black leading-[1] tracking-[-0.05em] sm:text-6xl">A role you can say yes to.</h2><p className="mt-6 max-w-lg text-base leading-7 text-white/58">Community opportunities state the job, venue and 2–4 hour window before acceptance. Employer-arranged projects can last up to eight hours.</p></div>
           <div className="divide-y divide-white/10 border-y border-white/10">{roles.map(([role,duration]) => <div key={role} className="grid gap-2 py-6 sm:grid-cols-[1fr_auto] sm:items-center"><p className="font-bold text-white/88">{role}</p><p className="text-sm font-black text-[#e7c66f]">{duration}</p></div>)}</div>
         </div>
       </section>
@@ -52,7 +52,7 @@ export default function VolunteerEnginePage() {
             {[
               ['1','Club posts','A 2–4 hour sports activity with role, place and time.'],
               ['2','Volunteer accepts','The volunteer chooses a specific activity—never an undefined commitment.'],
-              ['3','Attendance is verified','Personal invitation plus event QR records check-in and check-out.'],
+              ['3','Attendance is verified','Check-in and check-out record attendance; organizer approval verifies completed time.'],
               ['4','Hours build','Organizer-approved time builds your Bronze, Silver and Gold recognition.'],
             ].map(([n,title,body],i) => <article key={n} className={'py-8 md:px-7 ' + (i>0?'border-t border-black/[0.08] md:border-l md:border-t-0':'')}><p className="text-xs font-black text-[#9a741c]">{n}</p><h3 className="mt-5 font-black text-[#182237]">{title}</h3><p className="mt-3 text-sm leading-6 text-[#667184]">{body}</p></article>)}
           </div>

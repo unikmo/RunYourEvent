@@ -11,7 +11,7 @@ const audiences = [
   ['For volunteers', 'A few hours. A useful plan.', 'Find a local activity, bring friends and build your verified contribution record.', '/activities', 'Find an activity'],
   ['For sports clubs', 'Get the help your club needs.', 'Publish matchday roles, practical projects or a whole season of volunteer needs.', '/club', 'Find volunteers'],
   ['For companies & organisations', 'Bring your employee team.', 'Give staff a meaningful team activity, from a short shift to a full-day club project.', '/corporate', 'Explore employee volunteering'],
-  ['For sponsors', 'Help your community show up.', 'Fund all or part of a club’s volunteer needs and see the contribution your support enables.', '/opportunities', 'Sponsor a club'],
+  ['For sponsors', 'Help your community show up.', 'Choose a package of 25 or more volunteer-hours across club needs, with a quote and verified delivery reporting.', '/opportunities', 'Sponsor a club'],
 ]
 const steps = [
   ['01', 'Clubs publish real needs', 'A clear task, location, time and number of places. Community activities last 2–4 hours; employee projects can run up to eight.'],
