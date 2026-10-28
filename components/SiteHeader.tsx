@@ -6,18 +6,20 @@ export default function SiteHeader() {
           <span className="h-[2px] w-5 bg-[#d5ad48] transition-all duration-150 group-hover:w-7" aria-hidden="true" />
           <span className="text-[17px] font-black tracking-[-0.045em] text-[#101827]">RunYourEvent</span>
         </a>
-        <nav className="hidden items-center gap-7 text-[13px] font-bold text-[#657184] lg:flex" aria-label="Primary">
-          <a href="/volunteer-engine/organizers" className="transition-colors hover:text-[#101827]">For clubs</a>
-          <a href="/volunteer-engine/volunteers" className="transition-colors hover:text-[#101827]">For volunteers</a>
-          <a href="/volunteer-engine" className="transition-colors hover:text-[#101827]">How it works</a>
+        <nav className="hidden items-center gap-5 text-[13px] font-bold text-[#657184] xl:flex" aria-label="Primary">
+          <a href="/club" className="transition-colors hover:text-[#101827]">Club workspace</a>
+          <a href="/activities" className="transition-colors hover:text-[#101827]">Find activities</a>
+          <a href="/opportunities" className="transition-colors hover:text-[#101827]">Sponsors</a>
+          <a href="/corporate" className="transition-colors hover:text-[#101827]">Companies</a>
           <a href="/pricing" className="transition-colors hover:text-[#101827]">Pricing</a>
-          <a href="/about" className="transition-colors hover:text-[#101827]">About</a>
+          <a href="/volunteer" className="transition-colors hover:text-[#101827]">My volunteer passport</a>
         </nav>
         <div className="flex items-center gap-2">
-          <a href="/volunteer-engine/volunteers" className="px-2 py-2 text-xs font-extrabold text-[#657184] lg:hidden">Volunteer</a>
-          <a href="/volunteer-engine/organizers" className="btn-primary !min-h-10 !px-4 !py-2.5">Post activity</a>
+          <a href="/volunteer-engine/volunteers" className="px-2 py-2 text-xs font-extrabold text-[#657184] xl:hidden">Volunteer</a>
+          <a href="/club" className="btn-primary !min-h-10 !px-4 !py-2.5">Post activity</a>
         </div>
       </div>
+      <details className="shell border-t border-black/[0.06] py-2 xl:hidden"><summary className="cursor-pointer py-2 text-sm font-bold">Explore RunYourEvent</summary><nav aria-label="Mobile" className="grid grid-cols-2 gap-4 py-4 text-sm font-bold">{[['/volunteer','My volunteer passport'],['/access','Sign in'],['/club','Club workspace'],['/activities','Find activities'],['/opportunities','Sponsor club needs'],['/seasonal-needs','Seasonal club needs'],['/sponsors','For sponsors'],['/corporate','For companies'],['/recognition','Recognition'],['/pricing','Pricing']].map(([href,label])=><a key={href} href={href}>{label}</a>)}</nav></details>
     </header>
   )
 }

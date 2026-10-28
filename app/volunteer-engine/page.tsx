@@ -3,7 +3,7 @@ import { ArrowRight, Check } from 'lucide-react'
 
 export const metadata: Metadata = {
   title: 'Sports Volunteering | 2–4 Hour Activities',
-  description: 'RunYourEvent connects sports clubs with volunteers for clear 2–4 hour activities. Clubs pay €10 per completed volunteer. Students can earn a certificate after 20 verified hours.',
+  description: 'RunYourEvent connects sports clubs with volunteers for clear 2–4 hour activities. Clubs pay €10 per completed volunteer. Everyone can earn Bronze, Silver and hand-signed Gold at 20, 40 and 60 verified hours.',
   alternates: { canonical: '/volunteer-engine' },
 }
 
@@ -26,7 +26,7 @@ export default function VolunteerEnginePage() {
             <p className="eyebrow">Sports volunteering</p>
             <h1 className="premium-hero mt-6 max-w-[980px]">Give 2–4 hours.<br /><span className="text-[#9a741c]">Help sport happen.</span></h1>
             <p className="mt-8 max-w-[760px] text-[18px] leading-8 text-[#646f80] sm:text-xl">RunYourEvent is a sports-volunteer platform built around short, specific activities instead of open-ended commitments.</p>
-            <div className="mt-10 flex flex-wrap gap-3"><a href="/volunteer-engine/organizers" className="btn-primary">I need volunteers <ArrowRight className="ml-2" size={16}/></a><a href="/volunteer-engine/volunteers" className="btn-secondary">I want to volunteer</a></div>
+            <div className="mt-10 flex flex-wrap gap-3"><a href="/club" className="btn-primary">I need volunteers <ArrowRight className="ml-2" size={16}/></a><a href="/volunteer-engine/volunteers" className="btn-secondary">I want to volunteer</a></div>
           </div>
         </div>
       </section>
@@ -40,8 +40,8 @@ export default function VolunteerEnginePage() {
 
       <section className="bg-white py-24 sm:py-28 lg:py-32">
         <div className="shell grid gap-12 lg:grid-cols-2">
-          <div><p className="eyebrow">Sports clubs</p><h2 className="premium-section mt-5">€10 per completed volunteer.</h2><p className="mt-6 max-w-xl text-base leading-7 text-[#667184]">Post a concrete activity. We match and invite local volunteers. You pay the €10 volunteer fee only after the activity is completed.</p><a href="/volunteer-engine/organizers" className="btn-primary mt-8">Request volunteers <ArrowRight className="ml-2" size={16}/></a></div>
-          <div><p className="eyebrow">Students</p><h2 className="premium-section mt-5">20 verified hours.<br />One certificate.</h2><p className="mt-6 max-w-xl text-base leading-7 text-[#667184]">Verified time accumulates across sports activities. At 20 hours, students become eligible for a RunYourEvent Sports Volunteer Certificate.</p><a href="/volunteer-engine/volunteers" className="btn-secondary mt-8">Join the volunteer pool</a></div>
+          <div><p className="eyebrow">Sports clubs</p><h2 className="premium-section mt-5">€10 per completed volunteer.</h2><p className="mt-6 max-w-xl text-base leading-7 text-[#667184]">Publish your seasonal needs and activities. Local volunteers choose a role; your club coordinates directly and verifies completed time. A sponsor can cover the €10 community placement fee.</p><a href="/club" className="btn-primary mt-8">Request volunteers <ArrowRight className="ml-2" size={16}/></a></div>
+          <div><p className="eyebrow">Every volunteer</p><h2 className="premium-section mt-5">20. 40. 60 hours.<br />Recognition that grows.</h2><p className="mt-6 max-w-xl text-base leading-7 text-[#667184]">Verified time accumulates across sports activities. Everyone can earn Bronze at 20 hours, Silver at 40 and a hand-signed Gold certificate at 60.</p><a href="/volunteer-engine/volunteers" className="btn-secondary mt-8">Join the volunteer pool</a></div>
         </div>
       </section>
 
@@ -53,10 +53,10 @@ export default function VolunteerEnginePage() {
               ['1','Club posts','A 2–4 hour sports activity with role, place and time.'],
               ['2','Volunteer accepts','The volunteer chooses a specific activity—never an undefined commitment.'],
               ['3','Attendance is verified','Personal invitation plus event QR records check-in and check-out.'],
-              ['4','Hours build','Verified time counts toward the 20-hour student certificate.'],
+              ['4','Hours build','Organizer-approved time builds your Bronze, Silver and Gold recognition.'],
             ].map(([n,title,body],i) => <article key={n} className={'py-8 md:px-7 ' + (i>0?'border-t border-black/[0.08] md:border-l md:border-t-0':'')}><p className="text-xs font-black text-[#9a741c]">{n}</p><h3 className="mt-5 font-black text-[#182237]">{title}</h3><p className="mt-3 text-sm leading-6 text-[#667184]">{body}</p></article>)}
           </div>
-          <div className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm font-semibold text-[#667184]"><span className="inline-flex items-center gap-2"><Check size={14} className="text-[#9a741c]"/>2–4 hours per activity</span><span className="inline-flex items-center gap-2"><Check size={14} className="text-[#9a741c]"/>€10 per completed volunteer</span><span className="inline-flex items-center gap-2"><Check size={14} className="text-[#9a741c]"/>20 verified hours for certificate eligibility</span></div>
+          <div className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm font-semibold text-[#667184]"><span className="inline-flex items-center gap-2"><Check size={14} className="text-[#9a741c]"/>2–4 hours per activity</span><span className="inline-flex items-center gap-2"><Check size={14} className="text-[#9a741c]"/>€10 per completed volunteer</span><span className="inline-flex items-center gap-2"><Check size={14} className="text-[#9a741c]"/>20 / 40 / 60-hour milestones</span></div>
         </div>
       </section>
     </main>

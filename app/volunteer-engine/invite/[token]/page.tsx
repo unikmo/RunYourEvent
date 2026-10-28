@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation'
 import { createServerClient } from '@/lib/supabase-server'
 import VolunteerInviteActions from '@/components/VolunteerInviteActions'
+import Link from 'next/link'
 
 export const dynamic='force-dynamic'
 function transportLabel(mode:string){return ({independent:'Independent arrival',public_transport:'Public transport',local_reimbursement:'Local transport reimbursed',station_shuttle:'Station / central shuttle',organizer_transport:'Organizer-provided transport'} as Record<string,string>)[mode]||mode}
@@ -15,7 +16,7 @@ export default async function Page({params}:{params:Promise<{token:string}>}){
   return <main className="bg-[#f7f5ef]"><section className="shell max-w-4xl py-20 sm:py-24">
     <p className="eyebrow">Sports volunteer activity</p>
     <h1 className="premium-section mt-5">{v.firstName}, this activity is yours to choose.</h1>
-    <p className="mt-6 max-w-2xl text-lg leading-8 text-[#646f80]">Accepting confirms this specific 2–4 hour activity only. It does not commit you to future activities.</p>
+    <p className="mt-6 max-w-2xl text-lg leading-8 text-[#646f80]">Accepting confirms this specific activity only{start&&end?` (${Math.round((end.getTime()-start.getTime())/360000)/10} hours)`:''}. It does not commit you to future activities.</p>
     <div className="mt-10 divide-y divide-black/[0.08] border-y border-black/[0.08]">
       {[
         ['Role',o.title],['Club / organizer',o.organizationName],['Activity',o.eventName||o.title],['Location',[o.venue,o.city].filter(Boolean).join(' · ')],['Date',o.eventDay],['Time',start&&end?start.toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'})+'–'+end.toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'}):'—'],['Transport',transportLabel(o.transportMode)],['Transport details',o.transportDetails||'—']
@@ -23,5 +24,6 @@ export default async function Page({params}:{params:Promise<{token:string}>}){
     </div>
     <p className="mt-6 text-sm leading-6 text-[#667184]">RunYourEvent helps match sports volunteers but cannot guarantee attendance. Once you accept, we ask you to reconfirm before the activity. At the venue, scan the organizer's RunYourEvent QR on this same device to check in.</p>
     <VolunteerInviteActions token={token} initialStatus={row.status}/>
+    <div className="mt-8 border-t border-black/[0.08] pt-6"><Link className="text-link" href="/volunteer">Open your volunteer passport</Link><p className="mt-3 text-sm leading-6 text-[#667184]">After accepting on this device, see your verified hours, recognition and profile visibility settings.</p></div>
   </section></main>
 }

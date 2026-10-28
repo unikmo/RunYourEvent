@@ -14,11 +14,12 @@ export default function VolunteerSignupForm(){
       const response=await fetch('/api/volunteer-engine/volunteers',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({...data,guardianConsentReady:data.guardianConsentReady==='on',privacyAck:data.privacyAck==='on'})})
       const json=await response.json()
       if(!response.ok) throw new Error(json.error||'Registration could not be submitted.')
-      setState('success'); setMessage('You are in the RunYourEvent sports volunteer pool. We can now match you with suitable local 2–4 hour activities.'); form.reset()
+      setState('success'); setMessage(json.created?'Your volunteer passport is ready. Choose an activity and coordinate directly with the club.':'If you already registered, open your passport on your original device or use a personal invitation. Existing profiles cannot be accessed by entering an email address.'); form.reset()
+      if(json.created){const q=new URLSearchParams(window.location.search);const activity=q.get('activity');const group=q.get('group');window.location.assign(activity?'/activities'+(group&&/^[a-f0-9]{16}$/.test(group)?'?group='+group:'')+'#activity-'+activity:'/volunteer')}
     }catch(error){setState('error');setMessage(error instanceof Error?error.message:'Registration could not be submitted.')}
   }
 
-  return <form onSubmit={submit} className="mt-10 grid gap-6" noValidate>
+  return <form onSubmit={submit} className="mt-10 grid gap-6">
     <input name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
     <div className="grid gap-6 sm:grid-cols-2">
       <label><span className="label">First name</span><input className="input" name="firstName" required maxLength={80} /></label>
@@ -31,7 +32,7 @@ export default function VolunteerSignupForm(){
     </div>
     <label><span className="label">Which sports activities interest you?</span><textarea className="input min-h-28 resize-y" name="interests" maxLength={1500} placeholder="Football, basketball, tournaments, entry support, food stand, setup, content…" /></label>
     <label><span className="label">Typical availability</span><textarea className="input min-h-24 resize-y" name="availability" maxLength={1500} placeholder="e.g. Saturdays, Sunday afternoons, weekday evenings…" /></label>
-    <div className="border-y border-black/[0.08] py-5 text-sm leading-6 text-[#5f6978]"><b className="text-[#182237]">Student certificate:</b> verified completed sports-volunteering time builds toward eligibility at 20 hours.</div>
+    <div className="border-y border-black/[0.08] py-5 text-sm leading-6 text-[#5f6978]"><b className="text-[#182237]">Recognition for everyone:</b> Bronze at 20 verified hours, Silver at 40 and a hand-signed Gold certificate at 60.</div>
     <label className="flex items-start gap-3 text-sm leading-6 text-[#5f6978]"><input className="mt-1 h-4 w-4" name="guardianConsentReady" type="checkbox" /><span>If I am under 18, I can provide parent or guardian consent where required for the activity.</span></label>
     <label className="flex items-start gap-3 border-b border-black/[0.08] pb-5 text-sm leading-6 text-[#5f6978]"><input className="mt-1 h-4 w-4" name="privacyAck" type="checkbox" required /><span>I agree that RunYourEvent may store this profile and use it to identify suitable sports-volunteer activities. I can request deletion or pause participation later.</span></label>
     <div className="flex flex-wrap items-center gap-4"><button type="submit" className="btn-primary" disabled={state==='sending'}>{state==='sending'?'Joining…':'Join the sports volunteer pool'}</button><span className="text-xs leading-5 text-[#7b8493]">Free to join. No obligation to accept an activity.</span></div>
