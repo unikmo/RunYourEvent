@@ -78,7 +78,7 @@ const adapter={from(table){const filters=[];return {select(){return this},eq(k,v
 const mailOrder=await rpc('rye_create_order',{p_payload:{needId:club.needId,organizationName:'Email Sponsor <script>',email:'billing@fixture.test',billingAddress:'Sponsor Street 3, Bonn, Germany',amountCents:1000,termsAck:true},p_company_token:null})
 const mailInvoice=await scalar('select id from rye_invoices where order_id=$1',[mailOrder.id])
 await processInvoice(adapter,mailInvoice);await processInvoice(adapter,mailInvoice)
-assert.equal(mail.length,1);assert.ok(mail[0].attachments[0].content.includes('Email Sponsor &lt;script&gt;'));assert.ok(mail[0].text.includes('11.90 EUR'))
+assert.equal(mail.length,1);assert.ok(mail[0].attachments[0].content.includes('Email Sponsor &lt;script&gt;'));assert.ok(mail[0].text.includes('11,90 EUR'))
 assert.equal(await scalar('select status from rye_invoices where id=$1',[mailInvoice]),'open')
 assert.ok(await scalar('select sent_at is not null from rye_invoices where id=$1',[mailInvoice]))
 pass('Invoice email includes frozen tax, itemization, escaped customer data and transfer reference; completed retries do not resend')

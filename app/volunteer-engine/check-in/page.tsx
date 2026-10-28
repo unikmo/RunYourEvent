@@ -14,12 +14,12 @@ export default async function Page({searchParams}:{searchParams:Promise<{event?:
     try{const db=createServerClient();const result=await db.rpc('rye_volunteer_event_status',{p_invite_token:inviteToken,p_event_code:eventCode});if(result.error)unavailable=true;else data=result.data}catch{unavailable=true}
   }
   return <main className="bg-[#f7f5ef]"><section className="shell max-w-3xl py-20 sm:py-24">
-    <p className="eyebrow">Sports volunteer activity · Attendance</p>
-    <h1 className="premium-section mt-5">Activity check-in.</h1>
-    {!data?<div className="mt-8 border-y border-black/[0.08] py-6"><p className="text-sm font-black text-[#182237]">{unavailable?'Attendance records are temporarily unavailable.':'We could not open this activity on this device.'}</p><p className="mt-2 text-sm leading-6 text-[#667184]">{unavailable?'We cannot confirm your attendance status. Please retry or ask the club to record the issue.':'Open your accepted invitation or sign in to your volunteer passport, then scan the club QR again.'}</p><Link href="/access?role=volunteer" className="text-link mt-4">Sign in to your volunteer passport →</Link></div>:<>
-      <div className="mt-8 divide-y divide-black/[0.08] border-y border-black/[0.08]"><div className="py-5"><p className="text-[10px] font-black uppercase tracking-[.12em] text-[#8a671b]">Activity</p><p className="mt-2 text-lg font-black text-[#182237]">{data.title}</p><p className="mt-1 text-sm text-[#667184]">{data.organizationName} · {data.venue}</p></div></div>
+    <p className="eyebrow">Freiwilliger Einsatz · Anwesenheit</p>
+    <h1 className="premium-section mt-5">Melde dich vor Ort an.</h1>
+    {!data?<div className="mt-8 border-y border-black/[0.08] py-6"><p className="text-sm font-black text-[#182237]">{unavailable?"Die Anwesenheitsdaten lassen sich gerade nicht laden.":"Dieser Einsatz konnte auf diesem Gerät nicht geöffnet werden."}</p><p className="mt-2 text-sm leading-6 text-[#667184]">{unavailable?"Deine Anwesenheit können wir gerade nicht bestätigen. Bitte versuch es erneut oder bitte den Verein, das Problem zu dokumentieren.":"Öffne die Einladung, für die du zugesagt hast, oder melde dich bei deinem Engagementpass an. Scanne danach den QR-Code des Vereins erneut."}</p><Link href="/access?role=volunteer" className="text-link mt-4">Bei deinem Engagementpass anmelden →</Link></div>:<>
+      <div className="mt-8 divide-y divide-black/[0.08] border-y border-black/[0.08]"><div className="py-5"><p className="text-[10px] font-black uppercase tracking-[.12em] text-[#8a671b]">Einsatz</p><p className="mt-2 text-lg font-black text-[#182237]">{data.title}</p><p className="mt-1 text-sm text-[#667184]">{data.organizationName} · {data.venue}</p></div></div>
       <VolunteerAttendanceActions eventCode={eventCode} initial={data}/>
-      <p className="mt-5 text-xs leading-5 text-[#7b8493]">Check-in records arrival and check-out records the attendance window. The club verifies actual volunteering time, excluding breaks, before it counts toward recognition or any applicable club invoice. Volunteers are not charged the platform placement fee.</p>
+      <p className="mt-5 text-xs leading-5 text-[#7b8493]">Mit der Anmeldung erfasst du deine Ankunft, mit der Abmeldung das Ende deines Einsatzes. Der Verein bestätigt die tatsächliche Zeit ohne Pausen. Erst dann zählt sie für Anerkennungen und eine mögliche Abrechnung. Als Freiwilliger zahlst du keine Vermittlungsgebühr.</p>
     </>}
   </section></main>
 }

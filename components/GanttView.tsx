@@ -56,7 +56,7 @@ export default function GanttView({ tasks, eventDate, planningStart, eventName }
   while (cur < end) {
     const pct = ((cur.getTime() - start.getTime()) / totalMs) * 100
     months.push({
-      label: cur.toLocaleDateString('en-GB', { month: 'short', year: '2-digit' }),
+      label: cur.toLocaleDateString('de-DE', { month: 'short', year: '2-digit' }),
       pct,
     })
     cur.setMonth(cur.getMonth() + 1)
@@ -85,9 +85,9 @@ export default function GanttView({ tasks, eventDate, planningStart, eventName }
       <div className="bg-navy text-white rounded-2xl p-5">
         <h3 className="text-lg font-bold">{eventName}</h3>
         <p className="text-white/60 text-sm mt-0.5">
-          {new Date(planningStart).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
+          {new Date(planningStart).toLocaleDateString('de-DE', { day: 'numeric', month: 'short', year: 'numeric' })}
           {' → '}
-          {new Date(eventDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
+          {new Date(eventDate).toLocaleDateString('de-DE', { day: 'numeric', month: 'short', year: 'numeric' })}
           {' · '}{weekCount} weeks
         </p>
 
@@ -208,7 +208,7 @@ export default function GanttView({ tasks, eventDate, planningStart, eventName }
           <p className="text-white/60">{tooltip.task.time_minutes} min</p>
           {tooltip.task.target_date && (
             <p className="text-yellow-300 mt-1">
-              {new Date(tooltip.task.target_date).toLocaleDateString('en-GB', {
+              {new Date(tooltip.task.target_date).toLocaleDateString('de-DE', {
                 day: 'numeric',
                 month: 'short',
                 year: 'numeric',

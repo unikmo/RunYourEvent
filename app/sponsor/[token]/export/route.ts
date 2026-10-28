@@ -10,14 +10,14 @@ function cell(value:unknown) {
 }
 export async function GET(_req:Request,{params}:{params:Promise<{token:string}>}) {
   const {token}=await params
-  if(!/^[a-f0-9]{48}$/.test(token))return new NextResponse('Report not found',{status:404,headers})
+  if(!/^[a-f0-9]{48}$/.test(token))return new NextResponse("Bericht nicht gefunden",{status:404,headers})
   try {
     const {data,error}=await createServerClient().rpc('rye_sponsor_report',{p_token:token})
-    if(error)return new NextResponse('Report temporarily unavailable',{status:503,headers});if(!data)return new NextResponse('Report not found',{status:404,headers})
+    if(error)return new NextResponse("Der Bericht lässt sich gerade nicht laden",{status:503,headers});if(!data)return new NextResponse("Bericht nicht gefunden",{status:404,headers})
     const employee=data.report_kind==='employee_project'
-    const rows:unknown[][]=[[employee?'RunYourEvent employee-project report':'RunYourEvent sponsor report'],[employee?'Project':'Sponsor',data.sponsor_name],['Agreed target hours',data.target_hours??'Not recorded'],['Campaign budget EUR',Number(data.budget_cents||0)/100],['Allocated EUR',Number(data.allocated_cents||0)/100],['Reserved EUR',Number(data.reserved_cents||0)/100],['Completed placements',data.completed_placements||0],['Verified placements',data.verified_placements||0],['Verified hours',Number(data.verified_minutes||0)/60],[],['Club','Activity','Allocated EUR','Completed placements','Verified hours']]
-    if(!employee&&data.agreement)rows.splice(10,0,['Agreement reference',data.agreement.reference],['Scope',data.agreement.scope],['Undelivered hours / unused funds',data.agreement.shortfallTerms],['Tax treatment',data.agreement.taxTerms])
+    const rows:unknown[][]=[[employee?"RunYourEvent-Bericht zum Teameinsatz":"RunYourEvent-Sponsoringbericht"],[employee?"Projekt":'Sponsor',data.sponsor_name],["Vereinbarte Stundenzahl",data.target_hours??"Nicht erfasst"],["Sponsoringbudget EUR",Number(data.budget_cents||0)/100],["Zugeordnet EUR",Number(data.allocated_cents||0)/100],["Reserviert EUR",Number(data.reserved_cents||0)/100],["Abgeschlossene Einsätze",data.completed_placements||0],["Bestätigte Einsätze",data.verified_placements||0],["Bestätigte Stunden",Number(data.verified_minutes||0)/60],[],["Verein","Einsatz","Zugeordnet EUR","Abgeschlossene Einsätze","Bestätigte Stunden"]]
+    if(!employee&&data.agreement)rows.splice(10,0,["Angebots- / Vertragsnummer",data.agreement.reference],["Leistungen",data.agreement.scope],["Nicht geleistete Stunden / ungenutzte Mittel",data.agreement.shortfallTerms],["Steuerliche Behandlung",data.agreement.taxTerms])
     for(const need of Array.isArray(data.needs)?data.needs:[])rows.push([need.organization_name,need.title,Number(need.allocated_cents||0)/100,need.completed_placements||0,Number(need.verified_minutes||0)/60])
     return new NextResponse('\uFEFF'+rows.map(row=>row.map(cell).join(',')).join('\r\n'),{headers:{...headers,'Content-Type':'text/csv; charset=utf-8','Content-Disposition':'attachment; filename="runyourevent-sponsor-report.csv"'}})
-  } catch {return new NextResponse('Report temporarily unavailable',{status:503,headers})}
+  } catch {return new NextResponse("Der Bericht lässt sich gerade nicht laden",{status:503,headers})}
 }

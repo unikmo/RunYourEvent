@@ -11,17 +11,17 @@ const inter = Inter({ subsets: ['latin'], display: 'swap', variable: '--font-int
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: { default: 'RunYourEvent | Sports Volunteer Platform', template: '%s | RunYourEvent' },
-  description: 'Find local sports volunteering, bring an employee team or get the help your club needs. Companies and organisations can join practical projects or sponsor local clubs, with verified hours and shared contribution.',
+  title: { default: "RunYourEvent | Freiwilliges Engagement im Sport", template: '%s | RunYourEvent' },
+  description: "Hilf im Sportverein, bring dein Team mit oder finde Unterstützung für deinen Verein. Unternehmen und Organisationen können selbst anpacken oder freiwillige Einsätze finanzieren.",
   applicationName: 'RunYourEvent',
-  category: 'Sports Volunteer Platform',
-  keywords: ['sports volunteering','sports club volunteers','football volunteers','2 hour volunteering','student volunteer hours','community service certificate','matchday volunteers','sports volunteer platform'],
+  category: "Freiwilliges Engagement im Sport",
+  keywords: ["freiwilliges Engagement im Sport","Freiwillige für Sportvereine","Helfer im Fußballverein","zwei Stunden freiwillig helfen","Engagementstunden für Schüler und Studierende","Nachweis für freiwilliges Engagement","Helfer am Spieltag","Plattform für freiwilliges Engagement im Sport"],
   alternates: { canonical: '/' },
-  openGraph: { type:'website', url:'/', siteName:'RunYourEvent', title:'RunYourEvent | Sports Volunteer Platform', description:'Give 2–4 hours. Help sport happen.' },
-  twitter: { card:'summary', title:'RunYourEvent | Sports Volunteer Platform', description:'Sports volunteering in clear 2–4 hour activities.' },
+  openGraph: { type:'website', locale:'de_DE', url:'/', siteName:'RunYourEvent', title:"RunYourEvent | Freiwilliges Engagement im Sport", description:"Hilf 2–4 Stunden. Mach Sport vor Ort möglich." },
+  twitter: { card:'summary', title:"RunYourEvent | Freiwilliges Engagement im Sport", description:"Freiwillig im Sport helfen – mit klaren Aufgaben für 2–4 Stunden." },
   robots: { index:!isPreview, follow:!isPreview, googleBot:{index:!isPreview,follow:!isPreview,'max-image-preview':'large','max-snippet':-1,'max-video-preview':-1} },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  return <html lang="en"><body className={inter.className + ' min-h-screen'}><a className="skip-link" href="#main-content">Skip to content</a><StructuredData data={{'@context':'https://schema.org','@graph':[{'@type':'Organization','@id':siteUrl+'/#organization',name:'RunYourEvent',url:siteUrl,parentOrganization:{'@type':'Organization',name:'PlanetHike OÜ'}},{'@type':'WebSite','@id':siteUrl+'/#website',name:'RunYourEvent',url:siteUrl,publisher:{'@id':siteUrl+'/#organization'},inLanguage:'en'}]}}/><SiteHeader/><LegacyProductNotice/><div id="main-content">{children}</div><SiteFooter/></body></html>
+  return <html lang="de"><body className={inter.className + ' min-h-screen'}><a className="skip-link" href="#main-content">Zum Inhalt springen</a><StructuredData data={{'@context':'https://schema.org','@graph':[{'@type':"Organisation",'@id':siteUrl+'/#organization',name:'RunYourEvent',url:siteUrl,parentOrganization:{'@type':"Organisation",name:'PlanetHike OÜ'}},{'@type':'WebSite','@id':siteUrl+'/#website',name:'RunYourEvent',url:siteUrl,publisher:{'@id':siteUrl+'/#organization'},inLanguage:'de'}]}}/><SiteHeader/><LegacyProductNotice/><div id="main-content">{children}</div><SiteFooter/></body></html>
 }

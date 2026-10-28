@@ -1,2 +1,2 @@
 'use client'
-export default function PrintCertificateButton(){return <button className="btn-primary" onClick={()=>window.print()}>Print or save as PDF</button>}
+export default function PrintCertificateButton(){return <button className="btn-primary" onClick={()=>window.print()}>Drucken oder als PDF speichern</button>}

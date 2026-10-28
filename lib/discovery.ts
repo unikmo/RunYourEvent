@@ -9,7 +9,7 @@ export function pageMetadata(input: Metadata): Metadata {
   return {
     ...input,
     title: { absolute: title.includes('RunYourEvent') ? title : `${title} | RunYourEvent` },
-    openGraph: { type: 'website', siteName: 'RunYourEvent', title, description: input.description || '', url: path },
+    openGraph: { type: 'website', locale: 'de_DE', siteName: 'RunYourEvent', title, description: input.description || '', url: path },
     twitter: { card: 'summary', title, description: input.description || '' },
     ...(isPreview ? { robots: { index: false, follow: false } } : {}),
   }

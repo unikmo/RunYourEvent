@@ -1,3 +1,4 @@
+import {systemText} from './german'
 import nodemailer from 'nodemailer'
 import {getServerSupabase} from '@/lib/supabase-server'
 import {processInvoice} from '@/lib/invoice-core'
@@ -17,7 +18,7 @@ export async function runAutomation(){
     const base=new URL(process.env.NEXT_PUBLIC_SITE_URL||'https://runyourevent.com');const href=String(job.payload.href||'/notifications')
     if(!href.startsWith('/')||href.startsWith('//'))throw new Error('Invalid notification link')
     const transport=nodemailer.createTransport({host:process.env.SMTP_HOST,port:Number(process.env.SMTP_PORT||587),secure:process.env.SMTP_PORT==='465',requireTLS:process.env.SMTP_PORT!=='465',auth:process.env.SMTP_USER?{user:process.env.SMTP_USER,pass:process.env.SMTP_PASSWORD}:undefined,connectionTimeout:10000,socketTimeout:15000})
-    const sent=await transport.sendMail({from:process.env.SMTP_FROM,to:job.payload.to,subject:job.payload.subject,text:job.payload.body+'\n\n'+new URL(href,base).toString(),messageId:`<rye-${job.id}@${base.hostname}>`})
+    const sent=await transport.sendMail({from:process.env.SMTP_FROM,to:job.payload.to,subject:systemText(String(job.payload.subject||'')),text:systemText(String(job.payload.body||''))+'\n\n'+new URL(href,base).toString(),messageId:`<rye-${job.id}@${base.hostname}>`})
     if(!sent.accepted?.length||sent.rejected?.length)throw new Error('SMTP delivery was not accepted')
    }else if(job.kind==='invoice')await processInvoice(db,job.payload.invoiceId,job.payload.reminder===true)
    else throw new Error('Unknown job type')

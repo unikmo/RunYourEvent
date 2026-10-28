@@ -104,3 +104,13 @@ The public sitemap lists 23 canonical routes, including five practical volunteer
 AI search crawlers may read public content; bot-specific groups repeat every private exclusion. Private and capability routes have noindex headers, and Vercel previews block indexing site-wide. `/llms.txt` is an optional public reading index, not an indexing guarantee. Run `npm run test:discovery` after `npm run build`; CI does this automatically. Production domain canonicals stay on `https://runyourevent.com`.
 
 For new hour-target campaigns, apply migration `20261028213518_sponsorship_agreement_record.sql`. The admin must record the accepted written quote reference, scope, tax treatment and undelivered-hours/unused-funds terms. Terms are available in the private report and CSV. Package pricing remains quoted; the community €10 placement fee is not an hourly sponsorship rate.
+
+### German copy and Du address
+
+Public marketing pages, the five current SEO guides, FAQs and volunteer/club/company user journeys use edited German copy with consistent informal address (du/dein/dir). Navigation, form labels, action feedback, empty/error states, profile/attendance screens, private reports and certificates use the same vocabulary. Status keys, form payloads, tokens and existing URLs are unchanged. User-written activity titles, messages, names, quote terms and immutable historical records are not translated.
+
+The document language, structured-data language and Open Graph locale are German. Dates/numbers use de-DE; the country list contains stable German ISO labels shared by server and browser. Known system notifications and app-managed emails are localized on presentation/delivery without rewriting stored activity records. Invoice labels and new item descriptions are German; seller tax/payment instructions still come from operator configuration.
+
+Run `npm run test:german` for rendered UI and protocol regression checks, and `npm run test:discovery` after building. Provider-managed Supabase Auth emails require applying both `supabase/templates/magic-link.de.html` (subject: `Dein Anmeldelink für RunYourEvent`) and `supabase/templates/confirmation.de.html` (subject: `Bestätige deine E-Mail-Adresse für RunYourEvent`) in the Auth email template settings when the paused project is restored. Keep ConfirmationURL and Token placeholders intact. These templates are prepared in source, not yet applied to production. No live emails were sent.
+
+The current administrative screens also use German informal address. Retained event-planning archive content is historical and is not rewritten. It adds no language selector or unimplemented translated route variants.

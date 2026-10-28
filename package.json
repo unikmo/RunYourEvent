@@ -13,7 +13,8 @@
     "test:seamless": "node scripts/test-seamless.mjs",
     "test:champsboard": "node scripts/test-champsboard.mjs",
     "test:sponsor-hours": "node scripts/test-sponsor-hours.mjs",
-    "test:discovery": "node scripts/test-discovery.mjs"
+    "test:discovery": "node scripts/test-discovery.mjs",
+    "test:german": "node scripts/test-german-copy.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.116.0",
