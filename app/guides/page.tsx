@@ -1,0 +1,5 @@
+import Link from 'next/link'
+import { guides } from '@/lib/volunteering-guides'
+import { pageMetadata } from '@/lib/discovery'
+export const metadata=pageMetadata({title:'Sports volunteering guides',description:'Practical guides for club recruitment, matchdays, employee projects, sponsorship and verified volunteer hours.',alternates:{canonical:'/guides'}})
+export default function Page(){return <main className="shell py-8 sm:py-12"><p className="eyebrow">Practical guidance</p><h1 className="premium-section mt-5">Make volunteering work.</h1><p className="lede mt-6 max-w-3xl">Clear roles, realistic commitments and contribution you can verify. Choose the guide for your next step.</p><div className="mt-10 grid gap-6 md:grid-cols-2">{guides.map(g=><article key={g.slug} className="panel p-7"><h2 className="text-2xl font-black"><Link className="underline underline-offset-4" href={'/'+g.slug}>{g.title}</Link></h2><p className="mt-4 leading-7 text-[#667184]">{g.description}</p></article>)}</div><Link className="text-link mt-8" href="/faq">Frequently asked questions →</Link></main>}

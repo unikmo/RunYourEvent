@@ -1,9 +1,10 @@
+import { pageMetadata } from '@/lib/discovery'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { createServerClient } from '@/lib/supabase-server'
 
 export const dynamic='force-dynamic'
-export const metadata:Metadata={title:'Find Club Needs to Sponsor | RunYourEvent',description:'Explore reviewed seasonal sports club needs. Support all or part of a project, from community activities to corporate volunteering days.',alternates:{canonical:'/opportunities'}}
+export const metadata:Metadata=pageMetadata({title:'Find Club Needs to Sponsor | RunYourEvent',description:'Explore reviewed seasonal sports club needs. Support all or part of a project, from community activities to corporate volunteering days.',alternates:{canonical:'/opportunities'}})
 
 type Need={id:string;organization_name:string;city:string;title:string;description:string;season_start:string;season_end:string;volunteer_count:number;hours_per_volunteer:number;activity_format:string;funding_target_cents:number;funded_cents:number;status:string}
 const money=(cents:number)=>new Intl.NumberFormat('en-IE',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(cents/100)

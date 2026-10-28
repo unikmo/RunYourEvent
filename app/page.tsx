@@ -1,11 +1,12 @@
+import { pageMetadata } from '@/lib/discovery'
 import type { Metadata } from 'next'
 import { ArrowRight, BadgeCheck, Check, Clock3, GraduationCap, ShieldCheck, Users } from 'lucide-react'
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: 'RunYourEvent | Volunteer, Bring Your Team or Support Local Sport',
   description: 'Find local sports volunteering, bring your employee team or get the help your club needs. Community activities, employee projects and sponsorship with verified contribution.',
   alternates: { canonical: '/' },
-}
+})
 
 const audiences = [
   ['For volunteers', 'A few hours. A useful plan.', 'Find a local activity, bring friends and build your verified contribution record.', '/activities', 'Find an activity'],

@@ -96,3 +96,11 @@ Sponsors request 25 or more whole volunteer-hours through `/sponsors`, with 25/5
 Employee-project enquiries live on `/corporate` and record `enquiry_type`, `team_size` and `hours_per_employee` (2–8). They do not inherit the community sponsorship minimum. Admins may record a contracted campaign `target_hours`; private sponsor reports and CSV exports keep that target separate from verified delivered minutes. Existing records retain a null target instead of invented hour commitments. Apply the `sponsor_hour_targets` migration before activating these forms.
 
 `docs/CONTENT_REVIEW.md` records the page inventory, corrected contradictions, verification and limitations. `npm run test:sponsor-hours` tests quote validation, private storage, request-versus-delivery accounting and separate employer enquiries.
+
+### Search and AI discovery
+
+The public sitemap lists 23 canonical routes, including five practical volunteering guides, `/guides` and `/faq`. Public page metadata is specific to each page. Organization/WebSite, guide breadcrumbs and visible FAQ answers use escaped JSON-LD without invented reviews or delivery statistics. Legacy event-planning SEO routes remain permanent redirects.
+
+AI search crawlers may read public content; bot-specific groups repeat every private exclusion. Private and capability routes have noindex headers, and Vercel previews block indexing site-wide. `/llms.txt` is an optional public reading index, not an indexing guarantee. Run `npm run test:discovery` after `npm run build`; CI does this automatically. Production domain canonicals stay on `https://runyourevent.com`.
+
+For new hour-target campaigns, apply migration `20261028213518_sponsorship_agreement_record.sql`. The admin must record the accepted written quote reference, scope, tax treatment and undelivered-hours/unused-funds terms. Terms are available in the private report and CSV. Package pricing remains quoted; the community €10 placement fee is not an hourly sponsorship rate.

@@ -1,11 +1,12 @@
+import { pageMetadata } from '@/lib/discovery'
 import type { Metadata } from 'next'
 import { ArrowRight, Check } from 'lucide-react'
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: 'Sports Volunteering | 2–4 Hour Activities',
   description: 'RunYourEvent connects sports clubs with volunteers for clear 2–4 hour activities. Clubs pay €10 per completed volunteer. Everyone can earn Bronze, Silver and hand-signed Gold at 20, 40 and 60 verified hours.',
   alternates: { canonical: '/volunteer-engine' },
-}
+})
 
 const roles = [
   ['Matchday setup', '2 hours'],

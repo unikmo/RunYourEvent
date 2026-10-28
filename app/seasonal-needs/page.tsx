@@ -1,8 +1,9 @@
+import { pageMetadata } from '@/lib/discovery'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import SeasonalNeedsForm from '@/components/SeasonalNeedsForm'
 
-export const metadata: Metadata = {title:'Seasonal Volunteer Needs | RunYourEvent',description:'Plan your sports club’s seasonal volunteer needs. Request support for community activities and full-day corporate team projects.',alternates:{canonical:'/seasonal-needs'}}
+export const metadata: Metadata = pageMetadata({title:'Seasonal Volunteer Needs | RunYourEvent',description:'Plan your sports club’s seasonal volunteer needs. Request support for community activities and full-day corporate team projects.',alternates:{canonical:'/seasonal-needs'}})
 
 export default function SeasonalNeedsPage() {
   return <main className="bg-[#f7f5ef]">

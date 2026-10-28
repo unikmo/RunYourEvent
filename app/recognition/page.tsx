@@ -1,7 +1,8 @@
+import { pageMetadata } from '@/lib/discovery'
 import type { Metadata } from 'next'
 import { ArrowRight, BadgeCheck } from 'lucide-react'
 
-export const metadata: Metadata = { title: 'Volunteer Recognition | Bronze, Silver & Gold', description: 'Build a verified contribution record. Earn Bronze at 20 hours, Silver at 40 and a hand-signed Gold certificate at 60 verified hours.', alternates: { canonical: '/recognition' } }
+export const metadata: Metadata = pageMetadata({ title: 'Volunteer Recognition | Bronze, Silver & Gold', description: 'Build a verified contribution record. Earn Bronze at 20 hours, Silver at 40 and a hand-signed Gold certificate at 60 verified hours.', alternates: { canonical: '/recognition' } })
 const tiers=[{name:'Bronze',hours:20,color:'#a4673f',copy:'Your first milestone. A verifiable certificate recognizing 20 hours of contribution.'},{name:'Silver',hours:40,color:'#64748b',copy:'Keep building. Recognition for 40 verified hours across your completed activities.'},{name:'Gold',hours:60,color:'#9a741c',copy:'A lasting contribution. A hand-signed certificate, printable record and Gold profile badge.'}]
 export default function RecognitionPage() {
   return <main className="bg-[#f7f5ef]">

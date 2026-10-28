@@ -1,8 +1,9 @@
+import { pageMetadata } from '@/lib/discovery'
 import type { Metadata } from 'next'
 import { ArrowRight } from 'lucide-react'
 import SponsorEnquiryForm from '@/components/SponsorEnquiryForm'
 
-export const metadata: Metadata = { title: 'Sponsor Local Sports Volunteering', description: 'Sponsor a sports club, a project or part of a season. Choose a sponsorship target starting at 25 volunteer-hours, agree a package quote and follow verified delivery.', alternates: { canonical: '/sponsors' } }
+export const metadata: Metadata = pageMetadata({ title: 'Sponsor Local Sports Volunteering', description: 'Sponsor a sports club, a project or part of a season. Choose a sponsorship target starting at 25 volunteer-hours, agree a package quote and follow verified delivery.', alternates: { canonical: '/sponsors' } })
 
 export default function SponsorsPage() {
   return <main className="bg-[#f7f5ef]">

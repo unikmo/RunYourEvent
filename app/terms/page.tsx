@@ -1,5 +1,6 @@
+import { pageMetadata } from '@/lib/discovery'
 import type { Metadata } from 'next'
-export const metadata:Metadata={title:'RunYourEvent Terms and Conditions',alternates:{canonical:'/terms'}}
+export const metadata:Metadata=pageMetadata({title:'RunYourEvent Terms and Conditions',description:'Terms for sports volunteering, club placement fees, sponsorship quotes, employee projects, attendance, recognition and bank-transfer invoicing.',alternates:{canonical:'/terms'}})
 const S=({title,children}:{title:string,children:React.ReactNode})=><section><h2 className="text-xl font-black text-[#23324a]">{title}</h2><div className="mt-3 space-y-3 text-sm leading-7 text-[#5f6d80]">{children}</div></section>
 export default function Page(){return <main className="bg-[#fbfaf7]"><article className="shell max-w-4xl py-20"><p className="eyebrow">Terms</p><h1 className="display mt-4 text-5xl font-black">Terms & Conditions</h1><p className="mt-5 text-sm text-[#8a93a2]">Last updated: 28 October 2026</p><div className="mt-10 space-y-9">
 <S title="1. Provider and scope"><p>RunYourEvent is provided by PlanetHike OÜ, Järvevana tee 9, 11314 Tallinn, Estonia. RunYourEvent is a sports-volunteer matching and execution platform for short volunteer activities.</p></S>

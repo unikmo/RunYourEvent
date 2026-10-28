@@ -1,11 +1,12 @@
+import { pageMetadata } from '@/lib/discovery'
 import type { Metadata } from 'next'
 import VolunteerSignupForm from '@/components/VolunteerSignupForm'
 
-export const metadata:Metadata={
+export const metadata:Metadata=pageMetadata({
   title:'Volunteer in Sport | 2–4 Hour Activities',
   description:'Join RunYourEvent for flexible 2–4 hour sports volunteer activities. Everyone can earn Bronze, Silver and Gold recognition at 20, 40 and 60 verified hours.',
   alternates:{canonical:'/volunteer-engine/volunteers'}
-}
+})
 
 export default function Page(){
   return <main className="bg-[#f7f5ef]">

@@ -1,8 +1,9 @@
+import { pageMetadata } from '@/lib/discovery'
 import SponsorEnquiryForm from '@/components/SponsorEnquiryForm'
 import type { Metadata } from 'next'
 import { ArrowRight, Clock3, ClipboardCheck, Users } from 'lucide-react'
 
-export const metadata: Metadata = { title: 'Employee Volunteering | Companies & Organisations', description: 'Plan a corporate volunteer project of up to eight hours with local sports clubs. Clear tasks, team coordination and verified participation.', alternates: { canonical: '/corporate' } }
+export const metadata: Metadata = pageMetadata({ title: 'Employee Volunteering | Companies & Organisations', description: 'Plan a corporate volunteer project of up to eight hours with local sports clubs. Clear tasks, team coordination and verified participation.', alternates: { canonical: '/corporate' } })
 
 export default function CorporatePage() {
   return <main className="bg-[#f7f5ef]">

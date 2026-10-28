@@ -1,5 +1,6 @@
+import { pageMetadata } from '@/lib/discovery'
 import type { Metadata } from 'next'
-export const metadata:Metadata={title:'RunYourEvent Privacy Policy',alternates:{canonical:'/privacy'}}
+export const metadata:Metadata=pageMetadata({title:'RunYourEvent Privacy Policy',description:'How RunYourEvent handles volunteer, club, employer and sponsor data, private reports, optional public profiles and Champsboard consent.',alternates:{canonical:'/privacy'}})
 const S=({title,children}:{title:string,children:React.ReactNode})=><section><h2 className="text-xl font-black text-[#23324a]">{title}</h2><div className="mt-3 space-y-3 text-sm leading-7 text-[#5f6d80]">{children}</div></section>
 export default function Page(){return <main className="bg-[#fbfaf7]"><article className="shell max-w-4xl py-20"><p className="eyebrow">Privacy</p><h1 className="display mt-4 text-5xl font-black">Privacy Policy</h1><p className="mt-5 text-sm text-[#8a93a2]">Last updated: 28 October 2026</p><div className="mt-10 space-y-9">
 <S title="1. Controller"><p>PlanetHike OÜ, Järvevana tee 9, 11314 Tallinn, Estonia, is the controller for RunYourEvent. Contact: hello@runyourevent.com.</p></S>

@@ -1,10 +1,11 @@
+import { pageMetadata } from '@/lib/discovery'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { createServerClient } from '@/lib/supabase-server'
 import ActivityJoinButton from '@/components/ActivityJoinButton'
 
 export const dynamic='force-dynamic'
-export const metadata:Metadata={title:'Find Sports Volunteer Activities | RunYourEvent',description:'Find local sports volunteering, bring friends and confirm your own place. Choose 2–4 hour community activities or corporate projects up to eight hours.',alternates:{canonical:'/activities'}}
+export const metadata:Metadata=pageMetadata({title:'Find Sports Volunteer Activities | RunYourEvent',description:'Find local sports volunteering, bring friends and confirm your own place. Choose 2–4 hour community activities; employer projects are arranged separately.',alternates:{canonical:'/activities'}})
 
 type Activity={id:string;title:string;organization_name:string;city:string;venue:string|null;event_day:string;shift_start:string;shift_end:string;slots_total:number;slots_remaining:number;activity_format:string;funding_label:string|null;role_description:string}
 const day=(value:string)=>new Intl.DateTimeFormat('en-GB',{weekday:'short',day:'numeric',month:'short',year:'numeric',timeZone:'Europe/Berlin'}).format(new Date(`${value.slice(0,10)}T12:00:00Z`))

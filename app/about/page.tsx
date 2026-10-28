@@ -1,7 +1,8 @@
+import { pageMetadata } from '@/lib/discovery'
 import type { Metadata } from 'next'
 import { ArrowRight } from 'lucide-react'
 
-export const metadata:Metadata={title:'About RunYourEvent',description:'RunYourEvent connects sports clubs, community volunteers, employee teams and sponsors through clear activities and verified contribution.',alternates:{canonical:'/about'}}
+export const metadata:Metadata=pageMetadata({title:'About RunYourEvent',description:'RunYourEvent connects sports clubs, community volunteers, employee teams and sponsors through clear activities and verified contribution.',alternates:{canonical:'/about'}})
 
 export default function AboutPage(){
   return <main className="bg-[#fbfaf7]">

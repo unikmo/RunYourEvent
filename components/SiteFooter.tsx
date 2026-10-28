@@ -29,6 +29,8 @@ export default function SiteFooter() {
           <div>
             <p className="text-[10px] font-black uppercase tracking-[0.16em] text-white/34">Company</p>
             <nav className="mt-5 space-y-3 text-sm font-semibold text-white/60">
+              <a className="block hover:text-white" href="/guides">Volunteering guides</a>
+              <a className="block hover:text-white" href="/faq">Frequently asked questions</a>
               <a className="block hover:text-white" href="/about">About</a>
               <a className="block hover:text-white" href="/contact">Contact</a>
               <a className="block hover:text-white" href="/privacy">Privacy</a>
