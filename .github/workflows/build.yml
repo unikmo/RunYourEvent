@@ -12,8 +12,8 @@ jobs:
     timeout-minutes: 10
     env:
       NEXT_PUBLIC_SITE_URL: https://runyourevent.com
-      NEXT_PUBLIC_SUPABASE_URL: https://phhpiqwvgwlgjmyiksqe.supabase.co
-      NEXT_PUBLIC_SUPABASE_ANON_KEY: sb_publishable_Di0kT3dAcoP9dHlBrg-rHQ_ISw-26-9
+      NEXT_PUBLIC_SUPABASE_URL: https://example.supabase.co
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: test-build-publishable-key
       ANTHROPIC_API_KEY: sk-ant-build-placeholder-not-used
     steps:
       - name: Checkout
@@ -25,5 +25,10 @@ jobs:
           cache: npm
       - name: Install dependencies
         run: npm ci
+      - name: Community integration and access-control tests
+        run: npm run check:migrations && npm run test:input && npm run test:community && npm run test:seamless && npm run test:champsboard && npm run test:sponsor-hours && npm run test:german
       - name: Production build
         run: npm run build
+
+      - name: Search and AI discovery regression checks
+        run: npm run test:discovery

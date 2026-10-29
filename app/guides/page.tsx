@@ -1,0 +1,5 @@
+import Link from 'next/link'
+import { guides } from '@/lib/volunteering-guides'
+import { pageMetadata } from '@/lib/discovery'
+export const metadata=pageMetadata({title:"Ratgeber für freiwilliges Engagement im Sport",description:"Praktische Tipps zur Helfersuche, zu Spieltagen, Teameinsätzen, Sponsoring und bestätigten Einsatzstunden.",alternates:{canonical:'/guides'}})
+export default function Page(){return <main className="shell py-8 sm:py-12"><p className="eyebrow">Praktische Tipps</p><h1 className="premium-section mt-5">So gelingt dein Engagement.</h1><p className="lede mt-6 max-w-3xl">Klare Aufgaben, verlässliche Absprachen und bestätigte Stunden. Hier findest du Tipps für deinen nächsten Schritt.</p><div className="mt-10 grid gap-6 md:grid-cols-2">{guides.map(g=><article key={g.slug} className="panel p-7"><h2 className="text-2xl font-black"><Link className="underline underline-offset-4" href={'/'+g.slug}>{g.title}</Link></h2><p className="mt-4 leading-7 text-[#667184]">{g.description}</p></article>)}</div><Link className="text-link mt-8" href="/faq">Häufige Fragen →</Link></main>}

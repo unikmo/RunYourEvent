@@ -6,7 +6,16 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test:community": "node scripts/test-community.mjs",
+    "check:migrations": "node scripts/check-migrations.mjs",
+    "test:input": "node scripts/test-input.mjs",
+    "test:seamless": "node scripts/test-seamless.mjs",
+    "test:champsboard": "node scripts/test-champsboard.mjs",
+    "test:sponsor-hours": "node scripts/test-sponsor-hours.mjs",
+    "test:discovery": "node scripts/test-discovery.mjs",
+    "test:german": "node scripts/test-german-copy.mjs",
+    "check:production": "node scripts/check-production.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.116.0",
@@ -14,11 +23,14 @@
     "clsx": "^2.1.1",
     "lucide-react": "^1.31.0",
     "next": "^16.3.0",
+    "nodemailer": "7.0.12",
     "react": "^19.2.8",
     "react-dom": "^19.2.8"
   },
   "devDependencies": {
+    "@electric-sql/pglite": "0.5.12",
     "@types/node": "^20",
+    "@types/nodemailer": "7.0.11",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.4",
     "autoprefixer": "^10.0.1",

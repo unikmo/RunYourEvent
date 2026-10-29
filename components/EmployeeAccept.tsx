@@ -1,0 +1,4 @@
+'use client'
+import {userMessage} from '@/lib/user-message'
+import {useState} from 'react'
+export default function EmployeeAccept({token}:{token:string}){const [message,setMessage]=useState('');const [busy,setBusy]=useState(false);return <div className="mt-8"><button disabled={busy} className="btn-primary" onClick={async()=>{setBusy(true);try{const r=await fetch('/api/company',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'accept',token})});const j=await r.json();if(!r.ok)throw Error(userMessage(j.error));window.location.assign('/volunteer')}catch(e){setMessage(e instanceof Error?userMessage(e.message):"Die Einladung ist gerade nicht verfügbar.");setBusy(false)}}}>Meine Teilnahme bestätigen</button>{message&&<p role="alert" className="mt-5">{message}</p>}</div>}

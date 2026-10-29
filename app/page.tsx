@@ -1,147 +1,83 @@
+import { pageMetadata } from '@/lib/discovery'
 import type { Metadata } from 'next'
-import { ArrowRight, BadgeCheck, Check, Clock3, GraduationCap, QrCode, ShieldCheck, Users } from 'lucide-react'
+import { ArrowRight, BadgeCheck, Check, Clock3, GraduationCap, ShieldCheck, Users } from 'lucide-react'
 
-export const metadata: Metadata = {
-  title: 'RunYourEvent | Sports Volunteers for 2–4 Hour Activities',
-  description: 'RunYourEvent supplies volunteers to sports clubs for clear 2–4 hour activities. Clubs pay €10 only when a volunteer completes the activity. Students build verified hours toward a certificate.',
+export const metadata: Metadata = pageMetadata({
+  title: "RunYourEvent | Hilf im Sportverein – allein oder mit deinem Team",
+  description: "Finde einen freiwilligen Einsatz im Sportverein, bring dein Team mit oder finde Unterstützung für deinen Verein. Mit bestätigten Stunden und Sponsoring ab 25 Stunden.",
   alternates: { canonical: '/' },
-}
+})
 
-const activityExamples = [
-  ['Matchday setup', '2h', 'Before kickoff'],
-  ['Entry & guest support', '2–3h', 'Matchday'],
-  ['Food stand', '2–4h', 'Matchday'],
-  ['Tournament desk', '2–4h', 'Tournament'],
-  ['Scoreboard support', '2–4h', 'Matchday'],
-  ['Content support', '2–4h', 'Club media'],
+const audiences = [
+  ["Für Freiwillige", "Ein paar Stunden, die etwas bewegen.", "Finde einen Einsatz in deiner Nähe, bring Freunde mit und lass dir deine geleisteten Stunden bestätigen.", '/activities', "Einsatz finden"],
+  ["Für Sportvereine", "Die Unterstützung, die dein Verein braucht.", "Finde Helfer für den nächsten Spieltag, ein Vereinsprojekt oder die ganze Saison.", '/club', "Freiwillige finden"],
+  ["Für Unternehmen & Organisationen", "Gemeinsam anpacken – mit deinem Team.", "Gib deinem Team die Gelegenheit, gemeinsam etwas für einen Verein zu bewegen – für ein paar Stunden oder einen ganzen Tag.", '/corporate', "Teameinsätze entdecken"],
+  ["Für Sponsoren", "Mach Engagement vor Ort möglich.", "Unterstütze einen oder mehrere Vereine ab 25 freiwillig geleisteten Stunden. Du erhältst ein Angebot und siehst später, welche Stunden tatsächlich bestätigt wurden.", '/opportunities', "Verein unterstützen"],
 ]
-
 const steps = [
-  ['01', 'Post the activity', 'Tell us the sport, role, venue, date and 2–4 hour window.'],
-  ['02', 'We recruit', 'RunYourEvent matches the activity with suitable local volunteers.'],
-  ['03', 'Volunteer completes it', 'Personal invitation plus QR check-in and check-out verify attendance.'],
-  ['04', 'Pay €10', 'The fee applies only after the volunteer completes the activity.'],
+  ['01', "Vereine sagen, wo Hilfe gebraucht wird", "Aufgabe, Ort, Zeit und Anzahl der Helfer stehen vorher fest. Einzelne Einsätze dauern 2–4 Stunden, Teameinsätze bis zu acht Stunden."],
+  ['02', "Du entscheidest, wo du mitmachst", "Du meldest dich selbst für einen Einsatz an und sprichst dich direkt mit dem Verein ab. Unternehmen laden ihre Mitarbeitenden über einen geschützten Teambereich ein."],
+  ['03', "Deine geleisteten Stunden werden bestätigt", "Du meldest dich vor Ort an und nach dem Einsatz ab. Der Verein bestätigt deine tatsächlichen Stunden. Sie zählen für deine Anerkennung und erscheinen im Bericht."],
 ]
 
 export default function HomePage() {
   return (
     <main className="overflow-hidden bg-[#f7f5ef]">
-      <section className="relative isolate border-b border-black/[0.06]">
+      <section aria-labelledby="home-heading" className="relative isolate border-b border-black/[0.06]">
         <div className="premium-halo" aria-hidden="true" />
-        <div className="shell relative grid gap-14 py-20 sm:py-28 lg:grid-cols-[1.05fr_.95fr] lg:items-center lg:py-32">
+        <div className="shell relative grid items-start gap-9 py-8 sm:gap-12 sm:py-12 lg:grid-cols-[1.15fr_.85fr] lg:gap-14 lg:py-14">
           <div>
-            <p className="eyebrow">Sports Volunteer Platform</p>
-            <h1 className="premium-hero mt-7 max-w-[840px]">Your club needs help.<br /><span className="text-[#9a741c]">Someone nearby has 2 hours.</span></h1>
-            <p className="mt-8 max-w-[720px] text-[18px] leading-8 text-[#646f80] sm:text-xl">RunYourEvent supplies volunteers for short, specific sports activities. Post what needs doing. Pay <b className="text-[#182237]">€10 only when a volunteer completes it.</b></p>
-            <div className="mt-10 flex flex-wrap gap-3">
-              <a href="/volunteer-engine/organizers" className="btn-primary">Find volunteers <ArrowRight className="ml-2" size={16} /></a>
-              <a href="/volunteer-engine/volunteers" className="btn-secondary">Give 2–4 hours</a>
+            <p className="eyebrow">Gemeinsam für den Sport vor Ort.</p>
+            <h1 id="home-heading" className="home-hero mt-4">Dein Verein.<br/><span className="text-[#9a741c]">Deine Hilfe zählt.</span></h1>
+            <p className="mt-5 max-w-xl text-base leading-7 text-[#646f80] sm:text-lg">Hilf bei einem Sportverein mit, bring dein Team mit oder finde Unterstützung für deinen Verein.</p>
+            <div className="mt-6 flex flex-wrap gap-3" aria-label="So kannst du mitmachen">
+              <a href="/activities" className="btn-primary">Einsatz finden <ArrowRight className="ml-2" size={16}/></a>
+              <a href="/club" className="btn-secondary">Freiwillige finden</a>
+              <a href="/corporate" className="btn-secondary">Mit deinem Team helfen</a>
             </div>
-            <div className="mt-8 flex flex-wrap gap-x-7 gap-y-3 text-sm font-semibold text-[#717a88]">
-              <span className="inline-flex items-center gap-2"><Check size={14} className="text-[#9a741c]" />2–4 hour activities</span>
-              <span className="inline-flex items-center gap-2"><Check size={14} className="text-[#9a741c]" />€10 after completion</span>
-              <span className="inline-flex items-center gap-2"><Check size={14} className="text-[#9a741c]" />20 verified hours = certificate</span>
-            </div>
-          </div>
-
-          <div className="relative">
-            <div className="rounded-[34px] border border-black/[0.07] bg-[#0e1729] p-5 text-white shadow-[0_30px_80px_rgba(14,23,41,.16)] sm:p-7">
-              <div className="flex items-center justify-between border-b border-white/10 pb-5">
-                <div><p className="text-[10px] font-black uppercase tracking-[.15em] text-[#d9b95d]">Volunteer activity</p><p className="mt-2 text-xl font-black">Home match · Saturday</p></div>
-                <span className="rounded-full border border-white/10 px-3 py-1 text-xs font-bold text-white/55">3 needed</span>
-              </div>
-              <div className="py-6">
-                <p className="text-4xl font-black tracking-[-0.05em]">Entry support</p>
-                <div className="mt-5 grid gap-3 text-sm text-white/65 sm:grid-cols-2">
-                  <p className="flex items-center gap-2"><Clock3 size={16} className="text-[#e7c66f]" />14:00–16:00</p>
-                  <p className="flex items-center gap-2"><Users size={16} className="text-[#e7c66f]" />3 volunteers</p>
-                  <p className="flex items-center gap-2"><QrCode size={16} className="text-[#e7c66f]" />QR attendance</p>
-                  <p className="flex items-center gap-2"><BadgeCheck size={16} className="text-[#e7c66f]" />Verified hours</p>
-                </div>
-              </div>
-              <div className="grid gap-px overflow-hidden rounded-[20px] bg-white/10 sm:grid-cols-3">
-                <div className="bg-[#162238] p-4"><p className="text-[10px] uppercase tracking-[.13em] text-white/35">Club pays</p><p className="mt-2 text-2xl font-black">€10</p><p className="mt-1 text-xs text-white/45">after completion</p></div>
-                <div className="bg-[#162238] p-4"><p className="text-[10px] uppercase tracking-[.13em] text-white/35">Volunteer gives</p><p className="mt-2 text-2xl font-black">2h</p><p className="mt-1 text-xs text-white/45">one activity</p></div>
-                <div className="bg-[#162238] p-4"><p className="text-[10px] uppercase tracking-[.13em] text-white/35">Student earns</p><p className="mt-2 text-2xl font-black">+2h</p><p className="mt-1 text-xs text-white/45">verified record</p></div>
-              </div>
+            <p className="mt-4 text-sm leading-6 text-[#646f80]">Freiwillige Teameinsätze für Unternehmen und Organisationen. <a href="/sponsors" className="font-bold underline underline-offset-4">Du kannst Vereine auch als Sponsor unterstützen.</a></p>
+            <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-xs font-semibold text-[#646f80] sm:text-sm">
+              <span className="inline-flex items-center gap-2"><Check size={14} className="text-[#9a741c]"/>Du entscheidest, wann du hilfst</span>
+              <span className="inline-flex items-center gap-2"><Check size={14} className="text-[#9a741c]"/>Lass dir deine Stunden bestätigen</span>
             </div>
           </div>
+          <aside aria-label="Beispiele für freiwillige Einsätze" className="space-y-3 lg:pt-1">
+            <article className="rounded-3xl bg-[#0e1729] p-6 text-white sm:p-7">
+              <p className="text-[10px] font-black uppercase tracking-[.15em] text-[#e7c66f]">Beispiel: freiwilliger Einsatz</p>
+              <h2 className="mt-3 text-2xl font-black tracking-tight">Mach den nächsten Spieltag möglich.</h2>
+              <p className="mt-3 text-sm leading-6 text-white/70">Begrüße Gäste, hilf bei der Turnierleitung oder pack beim Aufbau mit an.</p>
+              <div className="mt-5 flex flex-wrap gap-5 text-sm text-white/80"><span className="inline-flex items-center gap-2"><Clock3 size={16} className="text-[#e7c66f]"/>2–4 Stunden</span><span className="inline-flex items-center gap-2"><BadgeCheck size={16} className="text-[#e7c66f]"/>Bestätigte Stunden</span></div>
+            </article>
+            <article className="rounded-3xl border border-[#d5ad48]/35 bg-[#eee7d3] p-6 sm:p-7">
+              <p className="eyebrow">Beispiel: Einsatz mit deinem Team</p>
+              <h2 className="mt-3 text-2xl font-black tracking-tight">Ein gemeinsamer Tag. Viel geschafft für den Verein.</h2>
+              <p className="mt-3 text-sm leading-6 text-[#536072]">Streich mit deinen Kollegen das Vereinsheim oder bring den Vereinsgarten auf Vordermann. Aufgaben und Betreuung sind vorher geklärt. Eure geleisteten Stunden werden bestätigt.</p>
+              <a href="/corporate" className="text-link mt-4"><Users size={16}/>Teameinsätze bis zu 8 Stunden <ArrowRight size={14}/></a>
+            </article>
+          </aside>
         </div>
       </section>
 
-      <section className="bg-[#0e1729] py-20 text-white sm:py-28">
-        <div className="shell grid gap-14 lg:grid-cols-[.8fr_1.2fr] lg:items-end">
-          <div>
-            <p className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-[#d9b95d]">Not another helper list</p>
-            <h2 className="mt-5 text-4xl font-black leading-[1] tracking-[-0.05em] sm:text-6xl">The problem is not scheduling.<br />It is finding people.</h2>
-          </div>
-          <div>
-            <p className="max-w-xl text-lg leading-8 text-white/60">Calendars, spreadsheets and volunteer lists can organize people you already have. RunYourEvent is built for the gap before that: supplying people for concrete sports activities.</p>
-            <div className="mt-8 border-y border-white/10">
-              {[
-                ['No vague ask', 'A specific role, place and 2–4 hour window.'],
-                ['No season commitment', 'Volunteers choose one activity at a time.'],
-                ['No completed volunteer, no €10 fee', 'Clubs pay for completed help, not exposure.'],
-              ].map(([title,copy])=><div key={title} className="grid gap-2 border-b border-white/10 py-5 last:border-b-0 sm:grid-cols-[.8fr_1.2fr]"><p className="font-black text-white/90">{title}</p><p className="text-sm leading-6 text-white/52">{copy}</p></div>)}
-            </div>
-          </div>
+      <section aria-label="So kannst du mitmachen" className="border-b border-black/[0.06] bg-white py-10 sm:py-14">
+        <div className="shell grid gap-8 sm:grid-cols-2 lg:grid-cols-4">{audiences.map(([label,title,copy,href,cta])=><article key={label} className="flex flex-col border-t border-[#d5ad48] pt-5"><p className="eyebrow">{label}</p><h2 className="mt-3 text-xl font-black tracking-tight">{title}</h2><p className="mt-3 text-sm leading-7 text-[#667184]">{copy}</p><a className="text-link mt-5" href={href}>{cta}<ArrowRight size={14}/></a></article>)}</div>
+      </section>
+
+      <section id="how-it-works" className="bg-[#f7f5ef] py-14 sm:py-20">
+        <div className="shell"><p className="eyebrow">So funktioniert’s</p><h2 className="premium-section mt-4 max-w-3xl">Wo dein Verein Hilfe braucht, kannst du etwas bewegen.</h2><div className="mt-9 grid gap-8 md:grid-cols-3">{steps.map(([n,title,copy])=><article key={n} className="border-t border-black/10 pt-5"><p className="eyebrow">{n}</p><h3 className="mt-4 text-xl font-black">{title}</h3><p className="mt-3 text-sm leading-7 text-[#667184]">{copy}</p></article>)}</div></div>
+      </section>
+
+      <section id="employee-volunteering" className="bg-[#0e1729] py-14 text-white sm:py-20">
+        <div className="shell grid gap-9 lg:grid-cols-2 lg:items-center"><div><p className="text-[10px] font-black uppercase tracking-[.17em] text-[#e7c66f]">Für Unternehmen &amp; Organisationen</p><h2 className="mt-4 text-3xl font-black leading-tight tracking-[-.04em] sm:text-4xl">Dein Team packt an.<br/>Der Verein hat die passende Aufgabe.</h2><p className="mt-5 max-w-xl text-base leading-7 text-white/70">Pack mit deinen Kollegen bei einem Vereinsprojekt an. Ob Vereinsheim streichen oder Garten pflegen: Gemeinsam helft ihr dort, wo ihr gebraucht werdet – bis zu acht Stunden lang.</p><a href="/corporate" className="btn-signal mt-6">Teameinsatz planen <ArrowRight size={16} className="ml-2"/></a></div><div className="divide-y divide-white/15 border-y border-white/15">{[["Eine klare Aufgabe","Klärt vor der Buchung die Aufgaben, Teamgröße, Betreuung, Materialien und den Preis."],["Alles für dein Team an einem Ort","Lade dein Team ein. Jeder bestätigt die Teilnahme selbst. Alle Absprachen bleiben im geschützten Teambereich."],["Bestätigte Teilnahme","Der Verein bestätigt die tatsächlich geleisteten Stunden. Sie erscheinen anschließend im Bericht für dein Unternehmen."]].map(([title,copy])=><div key={title} className="py-5"><h3 className="font-bold">{title}</h3><p className="mt-2 text-sm leading-7 text-white/65">{copy}</p></div>)}</div></div>
+      </section>
+
+      <section id="fees-and-recognition" className="py-14 sm:py-20">
+        <div className="shell grid items-start gap-6 lg:grid-cols-2">
+          <article className="rounded-3xl border border-black/[0.07] bg-white p-7 sm:p-9"><p className="eyebrow">Klare Gebühren für deinen Verein</p><h2 className="mt-4 text-4xl font-black tracking-tight">€10 <span className="text-base font-semibold tracking-normal text-[#667184]">pro Person nach bestätigtem Einsatz</span></h2><p className="mt-4 text-sm leading-7 text-[#667184]">Die Gebühr fällt erst an, wenn der Verein den abgeschlossenen Einsatz bestätigt hat. Ein zugeordnetes Sponsoring kann sie übernehmen.</p><div className="mt-5 divide-y divide-black/[0.07] border-y border-black/[0.07] text-sm text-[#536072]"><p className="py-3"><b>Ausschreiben, einladen und anmelden:</b> kostenlos</p><p className="py-3"><b>Nicht erschienen:</b> keine Vermittlungsgebühr</p><p className="py-3"><b>Teameinsätze von Unternehmen:</b> mit individuellem Angebot</p></div><p className="mt-4 text-xs leading-6 text-[#667184]">Kosten für Material, zusätzlichen Versicherungsschutz und gegebenenfalls Steuern werden separat ausgewiesen.</p><a href="/pricing" className="text-link mt-5">Preise ansehen <ArrowRight size={14}/></a></article>
+          <article className="rounded-3xl bg-[#eee7d3] p-7 sm:p-9"><p className="eyebrow">Anerkennung für deinen Einsatz</p><GraduationCap className="mt-5 text-[#9a741c]" size={30}/><h2 className="mt-4 text-3xl font-black tracking-tight">Dein Engagement zählt – auch über den Einsatz hinaus.</h2><p className="mt-4 text-sm leading-7 text-[#536072]">Sammle bestätigte Stunden bei verschiedenen Vereinen und Einsätzen. Ab 20 Stunden erreichst du Bronze, ab 40 Silber und ab 60 Gold. Die Gold-Urkunde wird von Hand unterschrieben.</p><p className="mt-4 text-sm leading-7 text-[#536072]">Wenn du volljährig bist, kannst du dein Profil veröffentlichen und dich freiwillig im Champsboard mit anderen vergleichen – in deiner Stadt, deinem Land oder weltweit.</p><div className="mt-5 flex items-center gap-2 text-xs font-bold text-[#536072]"><ShieldCheck size={17}/>Vor Ort anmelden, abmelden und vom Verein bestätigen lassen</div><div className="mt-6 flex flex-wrap gap-x-6 gap-y-3"><a href="/recognition" className="text-link">Mehr zur Anerkennung <ArrowRight size={14}/></a><a href="/champsboard" className="text-link">Zum Champsboard <ArrowRight size={14}/></a></div></article>
         </div>
       </section>
 
-      <section className="bg-white py-24 sm:py-28 lg:py-32">
-        <div className="shell">
-          <div className="grid gap-10 lg:grid-cols-[.78fr_1.22fr] lg:items-end">
-            <div><p className="eyebrow">How it works</p><h2 className="premium-section mt-5">From staffing gap to completed activity.</h2></div>
-            <p className="max-w-xl text-lg leading-8 text-[#646f80]">RunYourEvent handles the supply loop around the activity. The sports organization remains responsible for the event, supervision and safety.</p>
-          </div>
-          <div className="mt-14 grid border-y border-black/[0.08] md:grid-cols-4">
-            {steps.map(([number,title,copy],index)=><article key={number} className={'py-8 md:px-7 md:py-10 '+(index>0?'border-t border-black/[0.08] md:border-l md:border-t-0':'')}><p className="text-xs font-black tracking-[.14em] text-[#9a741c]">{number}</p><h3 className="mt-7 text-xl font-black tracking-[-0.03em] text-[#182237]">{title}</h3><p className="mt-3 text-sm leading-6 text-[#667184]">{copy}</p></article>)}
-          </div>
-        </div>
-      </section>
-
-      <section className="border-y border-black/[0.06] bg-[#eeeae0] py-24 sm:py-28">
-        <div className="shell grid gap-14 lg:grid-cols-[.7fr_1.3fr]">
-          <div><p className="eyebrow">What can volunteers do?</p><h2 className="premium-section mt-5">Small jobs that make sport possible.</h2><p className="mt-6 max-w-lg text-base leading-7 text-[#667184]">Matchdays and tournaments are full of work that does not need a season-long volunteer. It needs a person for a few hours.</p></div>
-          <div className="divide-y divide-black/[0.09] border-y border-black/[0.09]">
-            {activityExamples.map(([role,duration,context])=><div key={role} className="grid gap-2 py-5 sm:grid-cols-[1fr_auto_auto] sm:items-center"><p className="font-black text-[#182237]">{role}</p><p className="text-xs font-bold text-[#7b8493] sm:w-28">{context}</p><p className="text-sm font-black text-[#9a741c] sm:w-16 sm:text-right">{duration}</p></div>)}
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-[#f7f5ef] py-24 sm:py-28 lg:py-32">
-        <div className="shell grid gap-12 lg:grid-cols-2">
-          <article className="rounded-[30px] border border-black/[0.07] bg-white p-8 sm:p-10">
-            <p className="eyebrow">For sports clubs</p>
-            <p className="mt-7 text-7xl font-black tracking-[-0.07em] text-[#101827]">€10</p>
-            <p className="mt-2 text-sm font-bold text-[#7b8493]">per volunteer who completes the activity</p>
-            <div className="mt-8 divide-y divide-black/[0.07] border-y border-black/[0.07] text-sm text-[#536072]">
-              <p className="py-4"><b className="text-[#182237]">Posting:</b> free</p>
-              <p className="py-4"><b className="text-[#182237]">Invitation or acceptance:</b> free</p>
-              <p className="py-4"><b className="text-[#182237]">No-show:</b> no €10 fee</p>
-              <p className="py-4"><b className="text-[#182237]">Completed activity:</b> €10</p>
-            </div>
-            <a href="/volunteer-engine/organizers" className="btn-primary mt-8">Find volunteers <ArrowRight className="ml-2" size={16}/></a>
-          </article>
-
-          <article className="rounded-[30px] bg-[#0e1729] p-8 text-white sm:p-10">
-            <p className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-[#d9b95d]">For students</p>
-            <div className="mt-7 flex items-end gap-3"><GraduationCap size={36} className="mb-2 text-[#e7c66f]"/><p className="text-7xl font-black tracking-[-0.07em]">20h</p></div>
-            <p className="mt-2 text-sm font-bold text-white/45">verified sports volunteering</p>
-            <h2 className="mt-8 text-3xl font-black tracking-[-0.04em]">Build a record that says you showed up.</h2>
-            <p className="mt-5 max-w-lg text-base leading-7 text-white/58">Verified completed activities accumulate across clubs and sports. At 20 hours, students become eligible for the RunYourEvent Sports Volunteer Certificate.</p>
-            <div className="mt-7 flex items-center gap-3 text-sm font-bold text-white/70"><ShieldCheck size={18} className="text-[#e7c66f]"/>Check-in + check-out + organizer verification</div>
-            <a href="/volunteer-engine/volunteers" className="mt-8 inline-flex min-h-11 items-center justify-center rounded-full bg-white px-5 py-3 text-sm font-black text-[#101827]">Join free <ArrowRight className="ml-2" size={16}/></a>
-          </article>
-        </div>
-      </section>
-
-      <section className="bg-white py-20 sm:py-24">
-        <div className="shell grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
-          <div><p className="eyebrow">Sports need people</p><h2 className="mt-4 max-w-3xl text-4xl font-black tracking-[-0.05em] text-[#182237]">Make the commitment small enough to say yes to.</h2></div>
-          <div className="flex flex-wrap gap-3"><a href="/volunteer-engine/organizers" className="btn-primary">Find volunteers</a><a href="/volunteer-engine/volunteers" className="btn-secondary">Volunteer</a></div>
-        </div>
-      </section>
+      <section className="border-y border-black/[0.06] bg-white py-14 sm:py-20"><div className="shell grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center"><div><p className="eyebrow">Dein Plan fürs Wochenende</p><h2 className="premium-section mt-4 max-w-3xl">Bring deine Freunde mit.<br/>Vier Stunden, die etwas bewegen.</h2><p className="mt-5 max-w-2xl text-base leading-7 text-[#667184]">Such dir einen Einsatz aus und teile ihn mit deinen Freunden. So macht ihr gemeinsam etwas Sinnvolles. Jeder meldet sich selbst an und sammelt seine eigenen bestätigten Stunden.</p></div><a href="/activities" className="btn-primary">Einsatz finden <ArrowRight className="ml-2" size={16}/></a></div></section>
     </main>
   )
 }

@@ -84,7 +84,7 @@ create table if not exists public.rye_volunteer_certificates (
   credited_minutes integer not null check (credited_minutes >= 1800),
   points integer not null check (points >= 3000),
   distinct_event_days integer not null check (distinct_event_days >= 8),
-  certificate_code text not null unique default encode(gen_random_bytes(12),'hex'),
+  certificate_code text not null unique default encode(extensions.gen_random_bytes(12),'hex'),
   issued_at timestamptz not null default now(),
   revoked_at timestamptz,
   unique(volunteer_profile_id, period_label)

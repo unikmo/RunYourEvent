@@ -1,0 +1,6 @@
+import Link from 'next/link'
+import { faqs } from '@/lib/volunteering-guides'
+import { pageMetadata } from '@/lib/discovery'
+import StructuredData from '@/components/StructuredData'
+export const metadata=pageMetadata({title:"Häufige Fragen zu Einsätzen & Sponsoring",description:"Antworten zu Gebühren, Sponsoring ab 25 Stunden, Teameinsätzen, bestätigten Stunden, Urkunden und der freiwilligen Rangliste.",alternates:{canonical:'/faq'}})
+export default function Page(){return <main className="shell max-w-4xl py-8 sm:py-12"><StructuredData data={{'@context':'https://schema.org','@type':'FAQPage',mainEntity:faqs.map(f=>({'@type':'Question',name:f.q,acceptedAnswer:{'@type':'Answer',text:f.a}}))}}/><p className="eyebrow">Deine Fragen – unsere Antworten</p><h1 className="premium-section mt-5">So funktioniert RunYourEvent.</h1><div className="mt-10 divide-y">{faqs.map(f=><section className="py-7" key={f.q}><h2 className="text-xl font-black">{f.q}</h2><p className="mt-4 leading-8 text-[#667184]">{f.a}</p></section>)}</div><div className="mt-8 flex flex-wrap gap-4"><Link className="btn-primary" href="/contact">Schreib uns</Link><Link className="btn-secondary" href="/guides">Ratgeber lesen</Link></div></main>}
