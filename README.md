@@ -114,3 +114,5 @@ The document language, structured-data language and Open Graph locale are German
 Run `npm run test:german` for rendered UI and protocol regression checks, and `npm run test:discovery` after building. Provider-managed Supabase Auth emails require applying both `supabase/templates/magic-link.de.html` (subject: `Dein Anmeldelink für RunYourEvent`) and `supabase/templates/confirmation.de.html` (subject: `Bestätige deine E-Mail-Adresse für RunYourEvent`) in the Auth email template settings when the paused project is restored. Keep ConfirmationURL and Token placeholders intact. These templates are prepared in source, not yet applied to production. No live emails were sent.
 
 The current administrative screens also use German informal address. Retained event-planning archive content is historical and is not rewritten. It adds no language selector or unimplemented translated route variants.
+
+Production configuration and release verification: [docs/PRODUCTION_RELEASE.md](docs/PRODUCTION_RELEASE.md). Run `npm run check:production` in the securely configured environment for read-only API and SMTP connectivity checks.

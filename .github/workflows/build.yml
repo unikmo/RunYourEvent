@@ -26,7 +26,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Community integration and access-control tests
-        run: npm run test:input && npm run test:community && npm run test:seamless && npm run test:champsboard && npm run test:sponsor-hours && npm run test:german
+        run: npm run check:migrations && npm run test:input && npm run test:community && npm run test:seamless && npm run test:champsboard && npm run test:sponsor-hours && npm run test:german
       - name: Production build
         run: npm run build
 
