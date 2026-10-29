@@ -3,7 +3,7 @@ returns text language plpgsql security definer set search_path=public as $$
 declare v_valid boolean; v_raw text; v_hash text;
 begin
   select public.rye_admin_session_valid(p_token) into v_valid; if coalesce(v_valid,false) is not true then raise exception 'unauthorized'; end if;
-  v_raw:=encode(gen_random_bytes(24),'hex'); v_hash:=encode(extensions.digest(v_raw,'sha256'),'hex');
+  v_raw:=encode(extensions.gen_random_bytes(24),'hex'); v_hash:=encode(extensions.digest(v_raw,'sha256'),'hex');
   insert into public.rye_volunteer_placements(opportunity_id,volunteer_profile_id,status,event_day,invite_token_hash,invited_at)
   select o.id,p_volunteer_id,'invited',o.event_day,v_hash,now() from public.rye_volunteer_opportunities o where o.id=p_opportunity_id
   on conflict(opportunity_id,volunteer_profile_id) do update set status='invited',invite_token_hash=v_hash,invited_at=now(),accepted_at=null,reconfirmed_at=null,checked_in_at=null,checked_out_at=null,billable_at=null,updated_at=now();

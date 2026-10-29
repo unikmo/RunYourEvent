@@ -51,8 +51,8 @@ create function public.rye_sponsor_report(p_token text) returns jsonb language p
 declare r jsonb;h integer;
 begin
  r:=rye_sponsor_report_before_hour_targets(p_token);if r is null then return null;end if;
- select target_hours into h from rye_sponsor_campaigns where access_token_hash=encode(digest(p_token,'sha256'),'hex');
- return r||jsonb_build_object('target_hours',h,'report_kind',case when exists(select 1 from rye_sponsor_campaigns where access_token_hash=encode(digest(p_token,'sha256'),'hex')) then 'sponsorship' else 'employee_project' end);
+ select target_hours into h from rye_sponsor_campaigns where access_token_hash=encode(extensions.digest(p_token,'sha256'),'hex');
+ return r||jsonb_build_object('target_hours',h,'report_kind',case when exists(select 1 from rye_sponsor_campaigns where access_token_hash=encode(extensions.digest(p_token,'sha256'),'hex')) then 'sponsorship' else 'employee_project' end);
 end $$;
 revoke all on function public.rye_sponsor_report(text) from public,anon,authenticated;
 grant execute on function public.rye_sponsor_report(text) to anon,authenticated,service_role;

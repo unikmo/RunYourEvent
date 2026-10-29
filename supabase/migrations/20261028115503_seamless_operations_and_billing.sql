@@ -171,16 +171,16 @@ begin
  return jsonb_build_object('account',(select jsonb_build_object('id',id,'name',name,'email',email,'address',address) from rye_billing_accounts where club_id=c),'invoices',coalesce((select jsonb_agg(jsonb_build_object('id',i.id,'status',i.status,'amount_cents',i.amount_cents,'invoice_number',i.invoice_number,'sent_at',i.sent_at,'due_at',i.due_at,'paid_at',i.paid_at,'needs_review',i.needs_review,'created_at',i.created_at) order by i.created_at desc) from rye_invoices i join rye_billing_accounts a on a.id=i.billing_account_id where a.club_id=c),'[]'),'unbilled_cents',coalesce((select sum(ch.amount_cents) from rye_charges ch join rye_billing_accounts a on a.id=ch.billing_account_id where a.club_id=c and ch.invoice_id is null and ch.status='pending'),0));
 end $$;
 create function rye_create_order(p_payload jsonb,p_company_token text default null) returns jsonb language plpgsql security definer set search_path=public,extensions as $$
-declare b jsonb:=p_payload;n rye_seasonal_needs%rowtype;bk rye_corporate_bookings%rowtype;v_amount integer;v_used integer;v_raw text:=encode(gen_random_bytes(24),'hex');v_id uuid;
+declare b jsonb:=p_payload;n rye_seasonal_needs%rowtype;bk rye_corporate_bookings%rowtype;v_amount integer;v_used integer;v_raw text:=encode(extensions.gen_random_bytes(24),'hex');v_id uuid;
 begin
  if length(trim(coalesce(b->>'billingAddress','')))<8 or length(b->>'billingAddress')>2000 then raise exception 'Enter the billing address';end if;
  if b->>'termsAck' is distinct from 'true' then raise exception 'Accept the sponsorship or project terms';end if;
  if p_company_token is not null then
-  select * into bk from rye_corporate_bookings where access_token_hash=encode(digest(p_company_token,'sha256'),'hex') for update;
+  select * into bk from rye_corporate_bookings where access_token_hash=encode(extensions.digest(p_company_token,'sha256'),'hex') for update;
   if not found or bk.status='cancelled' then raise exception 'Corporate booking not found';end if;
   if coalesce(b->>'email','') !~ '^[^@[:space:]]+@[^@[:space:]]+\.[^@[:space:]]+$' or length(trim(coalesce(b->>'organizationName','')))<2 then raise exception 'Enter company and billing email';end if;
   v_amount:=bk.agreed_amount_cents;
-  insert into rye_orders(kind,booking_id,organization_name,email,billing_address,amount_cents,access_hash) select 'corporate',bk.id,left(trim(b->>'organizationName'),160),lower(trim(b->>'email')),trim(b->>'billingAddress'),v_amount,encode(digest(v_raw,'sha256'),'hex') from rye_volunteer_opportunities o join rye_seasonal_needs sn on sn.id=o.seasonal_need_id where o.id=bk.opportunity_id returning id into v_id;
+  insert into rye_orders(kind,booking_id,organization_name,email,billing_address,amount_cents,access_hash) select 'corporate',bk.id,left(trim(b->>'organizationName'),160),lower(trim(b->>'email')),trim(b->>'billingAddress'),v_amount,encode(extensions.digest(v_raw,'sha256'),'hex') from rye_volunteer_opportunities o join rye_seasonal_needs sn on sn.id=o.seasonal_need_id where o.id=bk.opportunity_id returning id into v_id;
  else
   select * into n from rye_seasonal_needs where id=(b->>'needId')::uuid and status not in ('pending','cancelled','completed','verified') for update;
   if not found then raise exception 'This club need is not available';end if;
@@ -188,29 +188,29 @@ begin
   v_amount:=(b->>'amountCents')::integer;
   select coalesce((select sum(amount_cents) from rye_funding_allocations where need_id=n.id),0)+coalesce((select sum(amount_cents) from rye_orders where need_id=n.id and status='pending'),0) into v_used;
   if v_amount is null or v_amount<1000 or v_amount%1000<>0 or v_amount+v_used>n.funding_target_cents or not n.partial_funding and v_amount+v_used<>n.funding_target_cents then raise exception 'Choose a whole number of €10 places within the remaining funding need';end if;
-  insert into rye_orders(kind,need_id,organization_name,email,billing_address,amount_cents,access_hash) values('sponsorship',n.id,left(trim(b->>'organizationName'),160),lower(trim(b->>'email')),trim(b->>'billingAddress'),v_amount,encode(digest(v_raw,'sha256'),'hex')) returning id into v_id;
+  insert into rye_orders(kind,need_id,organization_name,email,billing_address,amount_cents,access_hash) values('sponsorship',n.id,left(trim(b->>'organizationName'),160),lower(trim(b->>'email')),trim(b->>'billingAddress'),v_amount,encode(extensions.digest(v_raw,'sha256'),'hex')) returning id into v_id;
  end if;
  perform rye_invoice_order(v_id);
  return jsonb_build_object('id',v_id,'accessToken',v_raw,'amountCents',v_amount,'expiresAt',(select expires_at from rye_orders where id=v_id));
 end $$;
-create function rye_order_status(p_id uuid,p_token text) returns jsonb language sql stable security definer set search_path=public,extensions as $$select jsonb_build_object('id',id,'status',status,'amount_cents',amount_cents,'kind',kind,'report_available',status='paid') from rye_orders where id=p_id and access_hash=encode(digest(p_token,'sha256'),'hex')$$;
+create function rye_order_status(p_id uuid,p_token text) returns jsonb language sql stable security definer set search_path=public,extensions as $$select jsonb_build_object('id',id,'status',status,'amount_cents',amount_cents,'kind',kind,'report_available',status='paid') from rye_orders where id=p_id and access_hash=encode(extensions.digest(p_token,'sha256'),'hex')$$;
 
 create function rye_company_workspace(p_token text) returns jsonb language plpgsql stable security definer set search_path=public,extensions as $$
 declare b rye_corporate_bookings%rowtype;
 begin
- select * into b from rye_corporate_bookings where access_token_hash=encode(digest(p_token,'sha256'),'hex');if not found then return null;end if;
+ select * into b from rye_corporate_bookings where access_token_hash=encode(extensions.digest(p_token,'sha256'),'hex');if not found then return null;end if;
  return jsonb_build_object('booking',jsonb_build_object('id',b.id,'amount_cents',b.agreed_amount_cents,'status',b.status,'title',(select title from rye_volunteer_opportunities where id=b.opportunity_id),'paid',exists(select 1 from rye_orders where booking_id=b.id and status='paid')),'employees',coalesce((select jsonb_agg(jsonb_build_object('id',e.id,'email',e.email,'accepted_at',e.accepted_at,'status',p.status,'verified_minutes',case when p.organizer_verified then p.verified_minutes else 0 end)) from rye_employee_invites e left join rye_volunteer_placements p on p.volunteer_profile_id=e.volunteer_id and p.opportunity_id=b.opportunity_id where e.booking_id=b.id),'[]'));
 end $$;
 create function rye_invite_employees(p_token text,p_emails jsonb) returns integer language plpgsql security definer set search_path=public,extensions as $$
 declare b rye_corporate_bookings%rowtype;e text;t text;i uuid;v_count integer:=0;
 begin
- select * into b from rye_corporate_bookings where access_token_hash=encode(digest(p_token,'sha256'),'hex') for update;
+ select * into b from rye_corporate_bookings where access_token_hash=encode(extensions.digest(p_token,'sha256'),'hex') for update;
  if not found or b.status='cancelled' or not exists(select 1 from rye_orders where booking_id=b.id and status='paid') then raise exception 'Pay the agreed project booking before inviting your team';end if;
  if jsonb_typeof(p_emails) is distinct from 'array' or jsonb_array_length(p_emails) not between 1 and 100 then raise exception 'Enter 1–100 employee email addresses';end if;
  for e in select lower(trim(value)) from jsonb_array_elements_text(p_emails) loop
   if e !~ '^[^@[:space:]]+@[^@[:space:]]+\.[^@[:space:]]+$' or length(e)>254 then raise exception 'Invalid employee email';end if;
-  t:=encode(gen_random_bytes(24),'hex');i:=null;
-  insert into rye_employee_invites(booking_id,email,token_hash) values(b.id,e,encode(digest(t,'sha256'),'hex')) on conflict(booking_id,email) do nothing returning id into i;
+  t:=encode(extensions.gen_random_bytes(24),'hex');i:=null;
+  insert into rye_employee_invites(booking_id,email,token_hash) values(b.id,e,encode(extensions.digest(t,'sha256'),'hex')) on conflict(booking_id,email) do nothing returning id into i;
   if i is not null then insert into rye_jobs(kind,payload,dedupe_key) values('email',jsonb_build_object('to',e,'subject','Your employee volunteering invitation','body','Your company has invited you to a sports volunteering project. Review the activity and confirm your own participation.','href','/employee/'||t),'employee:'||i) on conflict do nothing;v_count:=v_count+1;end if;
  end loop;return v_count;
 end $$;
@@ -219,7 +219,7 @@ declare e rye_employee_invites%rowtype;b rye_corporate_bookings%rowtype;v uuid:=
 begin
  if v is null then raise exception 'Sign in to your volunteer account first';end if;
  perform 1 from rye_volunteer_profiles where id=v for update;
- select * into e from rye_employee_invites where token_hash=encode(digest(p_invite,'sha256'),'hex') for update;
+ select * into e from rye_employee_invites where token_hash=encode(extensions.digest(p_invite,'sha256'),'hex') for update;
  if not found or not exists(select 1 from rye_volunteer_profiles p join auth.users u on lower(u.email)=p.email and u.email_confirmed_at is not null where p.id=v and p.email=e.email) then raise exception 'Verify the email address invited by your employer through sign-in';end if;
  select * into b from rye_corporate_bookings where id=e.booking_id;
  if b.status='cancelled' or not exists(select 1 from rye_orders where booking_id=b.id and status='paid') then raise exception 'This booking is not active';end if;
@@ -311,7 +311,7 @@ alter table rye_request_limits enable row level security;revoke all on rye_reque
 create function rye_invoice_request_rate(p_bucket text) returns boolean language plpgsql security definer set search_path=public,extensions as $$declare n integer;begin
  insert into rye_request_limits(bucket,attempts) values(p_bucket,1) on conflict(bucket) do update set attempts=case when rye_request_limits.window_at<now()-interval '1 hour' then 1 else rye_request_limits.attempts+1 end,window_at=case when rye_request_limits.window_at<now()-interval '1 hour' then now() else rye_request_limits.window_at end returning attempts into n;return n<=15;
 end $$;revoke all on function rye_invoice_request_rate(text) from public,anon,authenticated;grant execute on function rye_invoice_request_rate(text) to service_role;
-create function rye_employee_preview(p_token text) returns jsonb language sql stable security definer set search_path=public,extensions as $$select jsonb_build_object('title',o.title,'organization_name',o.organization_name,'venue',o.venue,'shift_start',o.shift_start,'shift_end',o.shift_end,'role_description',o.role_description,'break_minutes',o.break_minutes) from rye_employee_invites e join rye_corporate_bookings b on b.id=e.booking_id join rye_volunteer_opportunities o on o.id=b.opportunity_id where e.token_hash=encode(digest(p_token,'sha256'),'hex') and b.status<>'cancelled'$$;
+create function rye_employee_preview(p_token text) returns jsonb language sql stable security definer set search_path=public,extensions as $$select jsonb_build_object('title',o.title,'organization_name',o.organization_name,'venue',o.venue,'shift_start',o.shift_start,'shift_end',o.shift_end,'role_description',o.role_description,'break_minutes',o.break_minutes) from rye_employee_invites e join rye_corporate_bookings b on b.id=e.booking_id join rye_volunteer_opportunities o on o.id=b.opportunity_id where e.token_hash=encode(extensions.digest(p_token,'sha256'),'hex') and b.status<>'cancelled'$$;
 revoke all on function rye_employee_preview(text) from public,anon,authenticated;grant execute on function rye_employee_preview(text) to anon,authenticated;
 create function rye_reward_stock_gate() returns trigger language plpgsql security definer set search_path=public,extensions as $$begin if new.delivery_mode='unique_voucher' then new.active=false;end if;return new;end $$;
 revoke all on function rye_reward_stock_gate() from public,anon,authenticated;
@@ -327,16 +327,16 @@ create trigger rye_remove_sponsored_unbilled_fee after insert on rye_placement_f
 -- Employee membership requires a capability minted after a confirmed-email sign-in.
 alter table rye_volunteer_profiles add column email_verified_at timestamptz;
 create or replace function rye_recover_account(p_role text) returns jsonb language plpgsql security definer set search_path=public,extensions as $$
-declare v_email text;v_account uuid;v_token text:=encode(gen_random_bytes(24),'hex');
+declare v_email text;v_account uuid;v_token text:=encode(extensions.gen_random_bytes(24),'hex');
 begin
  select lower(email) into v_email from auth.users where id=auth.uid() and email_confirmed_at is not null;
  if auth.uid() is null or coalesce(v_email,'')='' or p_role not in ('volunteer','club') then raise exception 'Verified sign-in required';end if;
  if p_role='volunteer' then
-  update rye_volunteer_profiles set email_verified_at=now(),access_token_hash=encode(digest(v_token,'sha256'),'hex') where email=v_email and status='active' returning id into v_account;
+  update rye_volunteer_profiles set email_verified_at=now(),access_token_hash=encode(extensions.digest(v_token,'sha256'),'hex') where email=v_email and status='active' returning id into v_account;
   if v_account is not null then update rye_volunteer_placements set invite_token_hash=null where volunteer_profile_id=v_account;end if;
  else
   select id into v_account from rye_club_accounts where owner_email=v_email order by created_at desc limit 1;
-  if v_account is not null then update rye_club_accounts set access_token_hash=encode(digest(v_token,'sha256'),'hex') where id=v_account;update rye_seasonal_needs set club_account_id=v_account where club_account_id in(select id from rye_club_accounts where owner_email=v_email);end if;
+  if v_account is not null then update rye_club_accounts set access_token_hash=encode(extensions.digest(v_token,'sha256'),'hex') where id=v_account;update rye_seasonal_needs set club_account_id=v_account where club_account_id in(select id from rye_club_accounts where owner_email=v_email);end if;
  end if;
  if v_account is null then raise exception 'No active account was found for this verified address';end if;return jsonb_build_object('accessToken',v_token);
 end $$;

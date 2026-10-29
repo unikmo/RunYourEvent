@@ -89,7 +89,7 @@ await reject(()=>rpc('rye_recover_account',{p_role:'volunteer'}),/Verified sign-
 await db.query("select set_config('request.jwt.claims',$1,false)",[JSON.stringify({sub:'00000000-0000-4000-8000-000000000001',email:'alex@example.test'})])
 await reject(()=>rpc('rye_recover_account',{p_role:'volunteer'}),/Verified sign-in/);
 await db.exec("insert into auth.users values('00000000-0000-4000-8000-000000000001','alex@example.test',now())");
-await db.query("update rye_volunteer_placements set invite_token_hash=encode(digest($1,'sha256'),'hex') where id=$2",['a'.repeat(48),pl]);
+await db.query("update rye_volunteer_placements set invite_token_hash=encode(extensions.digest($1,'sha256'),'hex') where id=$2",['a'.repeat(48),pl]);
 const recovered=await rpc('rye_recover_account',{p_role:'volunteer'})
 assert.match(recovered.accessToken,/^[a-f0-9]{48}$/);assert.equal(await rpc('rye_my_volunteer_passport',{p_invite_token:'a'.repeat(48)}),null);assert.equal(await rpc('rye_my_volunteer_passport',{p_invite_token:user.accessToken}),null)
 assert.equal((await rpc('rye_my_volunteer_passport',{p_invite_token:recovered.accessToken})).credited_minutes,3960)

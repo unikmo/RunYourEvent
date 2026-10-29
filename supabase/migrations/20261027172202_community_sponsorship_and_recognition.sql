@@ -83,8 +83,8 @@ revoke all on public.rye_seasonal_needs,public.rye_sponsor_enquiries,public.rye_
 create function public.rye_passport_identity(p_token text) returns uuid
 language sql stable security definer set search_path=public,extensions as $$
  select p.id from public.rye_volunteer_profiles p
- where p.status='active' and length(p_token)=48 and (p.access_token_hash=encode(digest(p_token,'sha256'),'hex')
- or exists(select 1 from public.rye_volunteer_placements pl where pl.volunteer_profile_id=p.id and pl.invite_token_hash=encode(digest(p_token,'sha256'),'hex')))
+ where p.status='active' and length(p_token)=48 and (p.access_token_hash=encode(extensions.digest(p_token,'sha256'),'hex')
+ or exists(select 1 from public.rye_volunteer_placements pl where pl.volunteer_profile_id=p.id and pl.invite_token_hash=encode(extensions.digest(p_token,'sha256'),'hex')))
  limit 1
 $$;
 revoke all on function public.rye_passport_identity(text) from public,anon,authenticated;
@@ -127,12 +127,12 @@ $$;
 -- Mint access only when a genuinely new profile is inserted. Never claim an existing profile by email.
 create function public.rye_register_volunteer(p_payload jsonb) returns jsonb
 language plpgsql security definer set search_path=public,extensions as $$
-declare b jsonb:=p_payload; v_id uuid; v_raw text:=encode(gen_random_bytes(24),'hex');
+declare b jsonb:=p_payload; v_id uuid; v_raw text:=encode(extensions.gen_random_bytes(24),'hex');
 begin
  if b->>'privacyAck' is distinct from 'true' or b->>'ageBand' not in ('16_17','18_20','21_25','26_plus') or length(trim(coalesce(b->>'firstName','')))<1 or length(trim(coalesce(b->>'lastName','')))<1 or length(trim(coalesce(b->>'city','')))<2 or coalesce(b->>'email','') !~ '^[^@[:space:]]+@[^@[:space:]]+\.[^@[:space:]]+$' then raise exception 'Complete the required registration fields'; end if;
  if b->>'ageBand'='16_17' and b->>'guardianConsentReady' is distinct from 'true' then raise exception 'Guardian consent confirmation required'; end if;
  insert into rye_volunteer_profiles(first_name,last_name,email,city,postal_code,age_band,school_or_university,interests,availability,guardian_consent_ready,privacy_ack,access_token_hash)
- values(left(b->>'firstName',80),left(b->>'lastName',80),lower(trim(b->>'email')),left(b->>'city',120),left(b->>'postalCode',30),b->>'ageBand',left(b->>'schoolOrUniversity',160),left(b->>'interests',1500),left(b->>'availability',1500),coalesce((b->>'guardianConsentReady')::boolean,false),true,encode(digest(v_raw,'sha256'),'hex'))
+ values(left(b->>'firstName',80),left(b->>'lastName',80),lower(trim(b->>'email')),left(b->>'city',120),left(b->>'postalCode',30),b->>'ageBand',left(b->>'schoolOrUniversity',160),left(b->>'interests',1500),left(b->>'availability',1500),coalesce((b->>'guardianConsentReady')::boolean,false),true,encode(extensions.digest(v_raw,'sha256'),'hex'))
  on conflict(email) do nothing returning id into v_id;
  if v_id is null then return jsonb_build_object('created',false); end if;
  return jsonb_build_object('created',true,'accessToken',v_raw);
@@ -230,7 +230,7 @@ revoke all on public.rye_volunteer_issues from public,anon,authenticated;
 
 create function public.rye_club_identity(p_token text) returns uuid
 language sql stable security definer set search_path=public,extensions as $$
- select id from rye_club_accounts where length(p_token)=48 and access_token_hash=encode(digest(p_token,'sha256'),'hex')
+ select id from rye_club_accounts where length(p_token)=48 and access_token_hash=encode(extensions.digest(p_token,'sha256'),'hex')
 $$;
 revoke all on function public.rye_club_identity(text) from public,anon,authenticated;
 
@@ -239,8 +239,8 @@ language plpgsql security definer set search_path=public,extensions as $$
 declare v_account uuid:=rye_club_identity(p_club_token); v_raw text; v_need uuid;
 begin
  if v_account is null then
-  v_raw:=encode(gen_random_bytes(24),'hex');
-  insert into rye_club_accounts(access_token_hash,owner_email) values(encode(digest(v_raw,'sha256'),'hex'),lower(trim(p_payload->>'email'))) returning id into v_account;
+  v_raw:=encode(extensions.gen_random_bytes(24),'hex');
+  insert into rye_club_accounts(access_token_hash,owner_email) values(encode(extensions.digest(v_raw,'sha256'),'hex'),lower(trim(p_payload->>'email'))) returning id into v_account;
  end if;
  v_need:=rye_submit_community('seasonal_need',p_payload);
  update rye_seasonal_needs set club_account_id=v_account,status='requested' where id=v_need;
@@ -470,7 +470,7 @@ create or replace function public.rye_volunteer_respond_invite(p_invite_token te
 returns text language plpgsql security definer set search_path=public,extensions as $$
 declare v_placement uuid; v_result text;
 begin
- select id into v_placement from rye_volunteer_placements where invite_token_hash=encode(digest(coalesce(p_invite_token,''),'sha256'),'hex');
+ select id into v_placement from rye_volunteer_placements where invite_token_hash=encode(extensions.digest(coalesce(p_invite_token,''),'sha256'),'hex');
  if not found then raise exception 'Invalid invitation'; end if;
  perform rye_passport_activity_action(p_invite_token,v_placement,p_action,'');
  select status into v_result from rye_volunteer_placements where id=v_placement;
@@ -480,17 +480,17 @@ end $$;
 -- Recovery is authorized by a verified Supabase Auth email, never by an email field alone.
 create function public.rye_recover_account(p_role text) returns jsonb
 language plpgsql security definer set search_path=public,extensions as $$
-declare v_email text; v_account uuid; v_token text:=encode(gen_random_bytes(24),'hex');
+declare v_email text; v_account uuid; v_token text:=encode(extensions.gen_random_bytes(24),'hex');
 begin
  select lower(email) into v_email from auth.users where id=auth.uid() and email_confirmed_at is not null;
  if auth.uid() is null or coalesce(v_email,'')='' or p_role not in ('volunteer','club') then raise exception 'Verified sign-in required'; end if;
  if p_role='volunteer' then
-  update rye_volunteer_profiles set access_token_hash=encode(digest(v_token,'sha256'),'hex') where email=v_email and status='active' returning id into v_account;
+  update rye_volunteer_profiles set access_token_hash=encode(extensions.digest(v_token,'sha256'),'hex') where email=v_email and status='active' returning id into v_account;
   if v_account is not null then update rye_volunteer_placements set invite_token_hash=null where volunteer_profile_id=v_account; end if;
  else
   select id into v_account from rye_club_accounts where owner_email=v_email order by created_at desc limit 1;
   if v_account is not null then
-   update rye_club_accounts set access_token_hash=encode(digest(v_token,'sha256'),'hex') where id=v_account;
+   update rye_club_accounts set access_token_hash=encode(extensions.digest(v_token,'sha256'),'hex') where id=v_account;
    update rye_seasonal_needs set club_account_id=v_account where club_account_id in (select id from rye_club_accounts where owner_email=v_email);
   end if;
  end if;
@@ -512,7 +512,7 @@ language sql stable security definer set search_path=public,extensions as $$
  'needs',coalesce((select jsonb_agg(jsonb_build_object('title',n.title,'organization_name',n.organization_name,'allocated_cents',a.amount_cents,
  'completed_placements',(select count(*) from rye_placement_funding pf join rye_volunteer_placements pl on pl.id=pf.placement_id where pf.allocation_id=a.id and pl.status='completed'),
  'verified_minutes',coalesce((select sum(pl.verified_minutes) from rye_placement_funding pf join rye_volunteer_placements pl on pl.id=pf.placement_id where pf.allocation_id=a.id and pl.status='completed' and pl.organizer_verified),0))) from rye_funding_allocations a join rye_seasonal_needs n on n.id=a.need_id where a.campaign_id=c.id),'[]'))
- from rye_sponsor_campaigns c where length(p_token)=48 and c.access_token_hash=encode(digest(p_token,'sha256'),'hex')
+ from rye_sponsor_campaigns c where length(p_token)=48 and c.access_token_hash=encode(extensions.digest(p_token,'sha256'),'hex')
 $$;
 revoke all on function public.rye_campaign_report(text) from public,anon,authenticated;
 

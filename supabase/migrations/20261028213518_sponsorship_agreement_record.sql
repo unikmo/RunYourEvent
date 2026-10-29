@@ -27,7 +27,7 @@ create function public.rye_sponsor_report(p_token text) returns jsonb language p
 declare r jsonb;agreement jsonb;
 begin
  r:=rye_sponsor_report_before_agreement(p_token);if r is null then return null;end if;
- select jsonb_build_object('reference',agreement_reference,'scope',agreed_scope,'shortfallTerms',shortfall_terms,'taxTerms',tax_terms) into agreement from rye_sponsor_campaigns where access_token_hash=encode(digest(p_token,'sha256'),'hex') and agreement_reference is not null;
+ select jsonb_build_object('reference',agreement_reference,'scope',agreed_scope,'shortfallTerms',shortfall_terms,'taxTerms',tax_terms) into agreement from rye_sponsor_campaigns where access_token_hash=encode(extensions.digest(p_token,'sha256'),'hex') and agreement_reference is not null;
  return r||jsonb_build_object('agreement',agreement);
 end $$;
 revoke all on function public.rye_sponsor_report(text) from public,anon,authenticated;

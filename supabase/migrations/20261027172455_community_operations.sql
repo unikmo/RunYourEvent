@@ -92,16 +92,16 @@ begin
   if v_o.protection_status not in ('active','not_required') or coalesce(length(trim(v_o.safeguarding_notes)),0)<5 or coalesce(length(trim(v_o.briefing_notes)),0)<2 then raise exception 'Confirm project safety, supervision and volunteer coverage before activation'; end if;
   v_amount:=(b->>'agreedAmountCents')::integer;
   if v_amount is null or v_amount not between 1 and 100000000 or coalesce(length(trim(b->>'agreementReference')),0) not between 4 and 240 then raise exception 'Record the agreed project price and actual agreement reference'; end if;
-  v_corporate_token:=encode(gen_random_bytes(24),'hex');
-  insert into rye_corporate_bookings(opportunity_id,agreed_amount_cents,agreement_reference,access_token_hash) values(v_o.id,v_amount,trim(b->>'agreementReference'),encode(digest(v_corporate_token,'sha256'),'hex')) returning id into v_id;
+  v_corporate_token:=encode(extensions.gen_random_bytes(24),'hex');
+  insert into rye_corporate_bookings(opportunity_id,agreed_amount_cents,agreement_reference,access_token_hash) values(v_o.id,v_amount,trim(b->>'agreementReference'),encode(extensions.digest(v_corporate_token,'sha256'),'hex')) returning id into v_id;
   update rye_volunteer_opportunities set status='open',updated_at=now() where id=v_o.id;
  elsif p_action='resolve_issue' then
   update rye_volunteer_issues set status='resolved' where id=(b->>'id')::uuid and status='open' returning id into v_id;
   if v_id is null then raise exception 'Open issue not found'; end if;
  elsif p_action='create_campaign' then
   if length(trim(coalesce(b->>'sponsorName','')))<2 or length(b->>'sponsorName')>160 or coalesce((b->>'budgetCents')::integer,0)<1000 or (b->>'endDate')::date<(b->>'startDate')::date then raise exception 'Enter an agreed sponsor, budget and valid campaign dates'; end if;
-  v_sponsor_token:=encode(gen_random_bytes(24),'hex');
-  insert into rye_sponsor_campaigns(sponsor_name,budget_cents,starts_on,ends_on,access_token_hash) values(trim(b->>'sponsorName'),(b->>'budgetCents')::integer,(b->>'startDate')::date,(b->>'endDate')::date,encode(digest(v_sponsor_token,'sha256'),'hex')) returning id into v_id;
+  v_sponsor_token:=encode(extensions.gen_random_bytes(24),'hex');
+  insert into rye_sponsor_campaigns(sponsor_name,budget_cents,starts_on,ends_on,access_token_hash) values(trim(b->>'sponsorName'),(b->>'budgetCents')::integer,(b->>'startDate')::date,(b->>'endDate')::date,encode(extensions.digest(v_sponsor_token,'sha256'),'hex')) returning id into v_id;
  elsif p_action='allocate_funding' then
   v_amount:=(b->>'amountCents')::integer;
   select * into v_c from rye_sponsor_campaigns where id=(b->>'campaignId')::uuid for update;
@@ -217,7 +217,7 @@ begin
  'needs',jsonb_build_array(jsonb_build_object('title',o.title,'organization_name',o.organization_name,'allocated_cents',b.agreed_amount_cents,
  'completed_placements',(select count(*) from rye_volunteer_placements p where p.opportunity_id=o.id and p.status='completed'),
  'verified_minutes',coalesce((select sum(p.verified_minutes) from rye_volunteer_placements p where p.opportunity_id=o.id and p.status='completed' and p.organizer_verified),0))))
- into v_result from rye_corporate_bookings b join rye_volunteer_opportunities o on o.id=b.opportunity_id where length(p_token)=48 and b.access_token_hash=encode(digest(p_token,'sha256'),'hex');
+ into v_result from rye_corporate_bookings b join rye_volunteer_opportunities o on o.id=b.opportunity_id where length(p_token)=48 and b.access_token_hash=encode(extensions.digest(p_token,'sha256'),'hex');
  return v_result;
 end $$;
 revoke all on function public.rye_sponsor_report(text) from public,anon,authenticated;
@@ -226,7 +226,7 @@ grant execute on function public.rye_sponsor_report(text) to anon,authenticated;
 -- Re-inviting must never erase existing attendance, verified hours or a live acceptance.
 create or replace function public.rye_admin_invite_volunteer(p_token text,p_opportunity_id uuid,p_volunteer_id uuid)
 returns text language plpgsql security definer set search_path=public,extensions as $$
-declare v_raw text:=encode(gen_random_bytes(24),'hex'); v_rows integer;
+declare v_raw text:=encode(extensions.gen_random_bytes(24),'hex'); v_rows integer;
 begin
  if rye_admin_session_valid(p_token) is not true then raise exception 'Unauthorized'; end if;
  perform 1 from rye_volunteer_profiles where id=p_volunteer_id and status='active' for update;
@@ -234,7 +234,7 @@ begin
  perform 1 from rye_volunteer_opportunities where id=p_opportunity_id and status='open' and shift_start>now() for update;
  if not found then raise exception 'Open future activity not found'; end if;
  insert into rye_volunteer_placements(opportunity_id,volunteer_profile_id,status,event_day,invite_token_hash,invited_at)
- select o.id,p_volunteer_id,'invited',o.event_day,encode(digest(v_raw,'sha256'),'hex'),now() from rye_volunteer_opportunities o where o.id=p_opportunity_id
+ select o.id,p_volunteer_id,'invited',o.event_day,encode(extensions.digest(v_raw,'sha256'),'hex'),now() from rye_volunteer_opportunities o where o.id=p_opportunity_id
  on conflict(opportunity_id,volunteer_profile_id) do update set status='invited',invite_token_hash=excluded.invite_token_hash,invited_at=now(),updated_at=now()
  where rye_volunteer_placements.status in ('applied','invited','declined','cancelled','no_show') and rye_volunteer_placements.checked_in_at is null and not rye_volunteer_placements.organizer_verified;
  get diagnostics v_rows=row_count;
