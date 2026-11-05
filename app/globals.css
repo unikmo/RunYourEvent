@@ -191,3 +191,20 @@ summary:focus-visible {
     scroll-behavior: auto !important;
   }
 }
+
+/* Compact homepage hierarchy; other landing pages keep their display styles. */
+.home-hero-title {
+  max-width: 12ch;
+  font-size: clamp(2.25rem, 4.4vw, 3.5rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.04em;
+  text-wrap: balance;
+}
+
+.home-page .premium-section {
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.035em;
+}
