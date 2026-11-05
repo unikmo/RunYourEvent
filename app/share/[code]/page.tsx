@@ -63,7 +63,7 @@ export default function SharePage() {
       <main className="grid min-h-[62vh] place-items-center bg-[#fbfaf7] px-6 text-center">
         <div>
           <p className="eyebrow">Shared plan unavailable</p>
-          <h1 className="display mt-3 text-4xl font-black text-[#15233f]">We could not find this execution plan.</h1>
+          <h2 className="page-title mt-3 text-[#15233f]">We could not find this execution plan.</h2>
           <a href="/custom" className="btn-primary mt-6">Build your own plan →</a>
         </div>
       </main>
@@ -73,11 +73,11 @@ export default function SharePage() {
   return (
     <main className="bg-[#fbfaf7]">
       <section className="border-b border-black/[0.055] bg-[#f5f2ea]">
-        <div className="shell py-12 sm:py-16">
+        <div className="shell py-12 sm:py-8">
           <p className="eyebrow">Shared RunYourEvent plan</p>
-          <h1 className="display mt-4 text-4xl font-black leading-[1.02] sm:text-5xl">
+          <h2 className="page-title mt-4">
             {blueprint.event_name}
-          </h1>
+          </h2>
           <div className="mt-4 flex flex-wrap gap-4 text-sm font-bold text-[#768192]">
             <span>{tasks.length} tasks</span>
             <span>·</span>
@@ -99,7 +99,7 @@ export default function SharePage() {
             if (!layerTasks.length) return null
 
             return (
-              <section key={layer} className="overflow-hidden rounded-[26px] border border-black/[0.055] bg-white">
+              <section key={layer} className="overflow-hidden rounded-2xl border border-black/[0.055] bg-white">
                 <div className="flex items-center justify-between border-b border-black/[0.055] bg-[#f8f6f0] px-5 py-4">
                   <div>
                     <p className="text-[10px] font-black uppercase tracking-[0.12em] text-[#9a7b31]">{layer}</p>
@@ -126,12 +126,12 @@ export default function SharePage() {
           })}
         </div>
 
-        <div className="mt-10 rounded-[28px] bg-[#15233f] p-7 text-white sm:flex sm:items-center sm:justify-between sm:gap-8">
+        <div className="mt-6 rounded-2xl bg-[#15233f] p-7 text-white sm:flex sm:items-center sm:justify-between sm:gap-8">
           <div>
             <p className="text-[10px] font-black uppercase tracking-[0.14em] text-[#efcd6d]">Plan another event</p>
-            <h2 className="mt-2 text-2xl font-black tracking-[-0.03em]">
+            <h3 className="mt-2 text-2xl font-black tracking-[-0.03em]">
               Build the event operating model from your own fixed date.
-            </h2>
+            </h3>
           </div>
           <a href="/custom" className="btn-signal mt-6 shrink-0 sm:mt-0">
             Build my plan <ArrowRight className="ml-2" size={15} />

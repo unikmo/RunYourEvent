@@ -23,9 +23,9 @@ export default function VolunteerOrganizerForm(){
     }catch(error){setState('error');setMessage(error instanceof Error?error.message:'Activity could not be submitted.')}
   }
 
-  return <form onSubmit={submit} className="mt-10 grid gap-6" noValidate>
+  return <form onSubmit={submit} className="mt-5 grid gap-5" noValidate>
     <input name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
-    <div className="grid gap-6 sm:grid-cols-2">
+    <div className="grid gap-5 sm:grid-cols-2">
       <label><span className="label">Club / sports organization</span><input className="input" name="organizationName" required maxLength={160} /></label>
       <label><span className="label">Contact person</span><input className="input" name="contactName" required maxLength={120} /></label>
       <label><span className="label">Email</span><input className="input" name="email" type="email" required maxLength={254} /></label>
@@ -40,7 +40,7 @@ export default function VolunteerOrganizerForm(){
 
     <fieldset className="border-y border-black/[0.08] py-6">
       <legend className="label">2–4 hour activity window</legend>
-      <div className="mt-4 grid gap-6 sm:grid-cols-2">
+      <div className="mt-4 grid gap-5 sm:grid-cols-2">
         <label className="sm:col-span-2"><span className="label">Venue / meeting point</span><input className="input" name="venue" required maxLength={240} /></label>
         <label><span className="label">Starts</span><input className="input" name="shiftStartLocal" type="time" required /></label>
         <label><span className="label">Ends</span><input className="input" name="shiftEndLocal" type="time" required /></label>

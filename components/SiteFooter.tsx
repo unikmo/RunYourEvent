@@ -1,17 +1,17 @@
 export default function SiteFooter() {
   return (
     <footer className="bg-[#0e1729] text-white">
-      <div className="shell py-16 sm:py-20">
-        <div className="grid gap-14 lg:grid-cols-[1.35fr_.8fr_.8fr]">
+      <div className="shell py-8 sm:py-10">
+        <div className="grid gap-8 lg:grid-cols-[1.35fr_.8fr_.8fr]">
           <div>
             <a href="/" className="inline-flex items-center gap-3" aria-label="RunYourEvent home"><span className="h-[2px] w-5 bg-[#d5ad48]" aria-hidden="true" /><span className="text-lg font-black tracking-[-0.04em]">RunYourEvent</span></a>
-            <p className="mt-5 max-w-sm text-sm leading-6 text-white/52">Sports volunteering in clear 2–4 hour activities.</p>
+            <p className="mt-5 max-w-sm text-sm leading-6 text-white/70">Sports volunteering in clear 2–4 hour activities.</p>
             <p className="mt-6 max-w-sm text-xl font-black leading-7 tracking-[-0.03em] text-white/90">Give a few hours.<br/>Help sport happen.</p>
-            <p className="mt-6 text-xs text-white/34">A product of PlanetHike OÜ.</p>
+            <p className="mt-6 text-xs text-white/70">A product of PlanetHike OÜ.</p>
           </div>
           <div>
-            <p className="text-[10px] font-black uppercase tracking-[0.16em] text-white/34">Platform</p>
-            <nav className="mt-5 space-y-3 text-sm font-semibold text-white/60">
+            <p className="text-[10px] font-black uppercase tracking-[0.16em] text-white/70">Platform</p>
+            <nav className="mt-5 space-y-3 text-sm font-semibold text-white/70">
               <a className="block hover:text-white" href="/volunteer-engine/organizers">For clubs</a>
               <a className="block hover:text-white" href="/volunteer-engine/volunteers">For volunteers</a>
               <a className="block hover:text-white" href="/volunteer-engine">How it works</a>
@@ -19,8 +19,8 @@ export default function SiteFooter() {
             </nav>
           </div>
           <div>
-            <p className="text-[10px] font-black uppercase tracking-[0.16em] text-white/34">Company</p>
-            <nav className="mt-5 space-y-3 text-sm font-semibold text-white/60">
+            <p className="text-[10px] font-black uppercase tracking-[0.16em] text-white/70">Company</p>
+            <nav className="mt-5 space-y-3 text-sm font-semibold text-white/70">
               <a className="block hover:text-white" href="/about">About</a>
               <a className="block hover:text-white" href="/contact">Contact</a>
               <a className="block hover:text-white" href="/privacy">Privacy</a>
@@ -29,7 +29,7 @@ export default function SiteFooter() {
             </nav>
           </div>
         </div>
-        <div className="mt-14 border-t border-white/10 pt-6 text-xs text-white/30">© {new Date().getFullYear()} RunYourEvent · PlanetHike OÜ · Sports Volunteer Platform.</div>
+        <div className="mt-8 border-t border-white/10 pt-6 text-xs text-white/70">© {new Date().getFullYear()} RunYourEvent · PlanetHike OÜ · Sports Volunteer Platform.</div>
       </div>
     </footer>
   )

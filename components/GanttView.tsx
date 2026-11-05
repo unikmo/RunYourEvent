@@ -84,7 +84,7 @@ export default function GanttView({ tasks, eventDate, planningStart, eventName }
       {/* Header */}
       <div className="bg-navy text-white rounded-2xl p-5">
         <h3 className="text-lg font-bold">{eventName}</h3>
-        <p className="text-white/60 text-sm mt-0.5">
+        <p className="text-white/70 text-sm mt-0.5">
           {new Date(planningStart).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
           {' → '}
           {new Date(eventDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
@@ -204,8 +204,8 @@ export default function GanttView({ tasks, eventDate, planningStart, eventName }
           style={{ top: tooltip.y - 10, left: tooltip.x + 20, transform: 'translateY(-100%)' }}
         >
           <p className="font-bold mb-1 leading-snug">{tooltip.task.title}</p>
-          <p className="text-white/60">{tooltip.task.who}</p>
-          <p className="text-white/60">{tooltip.task.time_minutes} min</p>
+          <p className="text-white/70">{tooltip.task.who}</p>
+          <p className="text-white/70">{tooltip.task.time_minutes} min</p>
           {tooltip.task.target_date && (
             <p className="text-yellow-300 mt-1">
               {new Date(tooltip.task.target_date).toLocaleDateString('en-GB', {
@@ -216,7 +216,7 @@ export default function GanttView({ tasks, eventDate, planningStart, eventName }
             </p>
           )}
           {tooltip.task.weeks_before_event != null && (
-            <p className="text-white/50 text-[10px]">
+            <p className="text-white/70 text-[10px]">
               {tooltip.task.weeks_before_event === 0
                 ? 'Event day'
                 : `${tooltip.task.weeks_before_event}w before`}

@@ -39,7 +39,7 @@ export default function CategoryPage() {
   return (
     <main className="bg-[#fbfaf7]">
       <section className="border-b border-black/[0.055] bg-[#f5f2ea]">
-        <div className="shell py-14 sm:py-16">
+        <div className="shell py-14 sm:py-8">
           <nav className="mb-7 flex items-center gap-2 text-xs font-bold text-[#8992a0]" aria-label="Breadcrumb">
             <a href="/browse" className="transition-colors hover:text-[#15233f]">Event library</a>
             <ChevronRight size={13} />
@@ -47,9 +47,9 @@ export default function CategoryPage() {
           </nav>
 
           <p className="eyebrow">Event planning reference category</p>
-          <h1 className="display mt-4 max-w-4xl text-4xl font-black leading-[1.02] sm:text-5xl">
+          <h2 className="page-title mt-4 max-w-4xl">
             {category}
-          </h1>
+          </h2>
           <p className="mt-4 max-w-2xl text-base leading-7 text-[#6d7889]">
             Use these event references to understand scope and coverage. For a real event,
             RunYourEvent can adapt the model to your fixed date, scale, format, venue status and objectives.
@@ -76,11 +76,11 @@ export default function CategoryPage() {
         {loading ? (
           <div className="grid gap-4 md:grid-cols-2">
             {[...Array(6)].map((_, i) => (
-              <div key={i} className="h-40 animate-pulse rounded-[24px] border border-black/[0.04] bg-white" />
+              <div key={i} className="h-40 animate-pulse rounded-2xl border border-black/[0.04] bg-white" />
             ))}
           </div>
         ) : events.length === 0 ? (
-          <div className="rounded-[28px] border border-black/[0.055] bg-white p-10 text-center">
+          <div className="rounded-2xl border border-black/[0.055] bg-white p-10 text-center">
             <p className="text-lg font-black text-[#23324a]">No reference model is ready in this category yet.</p>
             <p className="mx-auto mt-2 max-w-xl text-sm leading-6 text-[#7a8595]">
               You do not need to wait for the library. Describe the event and build a tailored execution plan instead.
@@ -93,7 +93,7 @@ export default function CategoryPage() {
               <a
                 key={event.id}
                 href={`/events/${event.id}`}
-                className="group rounded-[26px] border border-black/[0.055] bg-white p-6 transition-all hover:-translate-y-0.5 hover:border-[#c8aa5b] hover:shadow-xl hover:shadow-black/[0.035]"
+                className="group rounded-2xl border border-black/[0.055] bg-white p-6 transition-all hover:-translate-y-0.5 hover:border-[#c8aa5b] hover:shadow-xl hover:shadow-black/[0.035]"
               >
                 <div className="flex items-start justify-between gap-5">
                   <span className="grid h-10 w-10 place-items-center rounded-xl bg-[#f2e7c7] text-[#80631f]">
@@ -104,9 +104,9 @@ export default function CategoryPage() {
                   </span>
                 </div>
 
-                <h2 className="mt-5 text-xl font-black tracking-[-0.025em] text-[#23324a] group-hover:text-[#80631f]">
+                <h3 className="mt-5 text-xl font-black tracking-[-0.025em] text-[#23324a] group-hover:text-[#80631f]">
                   {event.name}
-                </h2>
+                </h3>
                 <p className="mt-2 line-clamp-2 text-sm leading-6 text-[#707b8c]">
                   {event.description}
                 </p>
@@ -132,12 +132,12 @@ export default function CategoryPage() {
           </div>
         )}
 
-        <div className="mt-12 rounded-[30px] bg-[#15233f] p-7 text-white sm:flex sm:items-center sm:justify-between sm:gap-8 sm:p-9">
+        <div className="mt-8 rounded-2xl bg-[#15233f] p-7 text-white sm:flex sm:items-center sm:justify-between sm:gap-8 sm:p-9">
           <div>
             <p className="text-[10px] font-black uppercase tracking-[0.14em] text-[#efcd6d]">Do not plan from a generic template</p>
-            <h2 className="mt-2 text-2xl font-black tracking-[-0.03em]">
+            <h3 className="mt-2 text-2xl font-black tracking-[-0.03em]">
               Use the library to understand scope. Use RunYourEvent to plan the actual event.
-            </h2>
+            </h3>
           </div>
           <a href="/custom" className="btn-signal mt-6 shrink-0 sm:mt-0">
             Build my plan →

@@ -18,9 +18,9 @@ export default function VolunteerSignupForm(){
     }catch(error){setState('error');setMessage(error instanceof Error?error.message:'Registration could not be submitted.')}
   }
 
-  return <form onSubmit={submit} className="mt-10 grid gap-6" noValidate>
+  return <form onSubmit={submit} className="mt-5 grid gap-5" noValidate>
     <input name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
-    <div className="grid gap-6 sm:grid-cols-2">
+    <div className="grid gap-5 sm:grid-cols-2">
       <label><span className="label">First name</span><input className="input" name="firstName" required maxLength={80} /></label>
       <label><span className="label">Last name</span><input className="input" name="lastName" required maxLength={80} /></label>
       <label><span className="label">Email</span><input className="input" name="email" type="email" required maxLength={254} /></label>

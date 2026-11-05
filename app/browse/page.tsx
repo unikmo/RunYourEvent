@@ -30,13 +30,13 @@ export default function BrowsePage() {
   return (
     <main className="bg-[#fbfaf7]">
       <section className="border-b border-black/[0.055] bg-[#f5f2ea]">
-        <div className="shell grid items-end gap-8 py-16 lg:grid-cols-[1fr_auto] lg:py-20">
+        <div className="shell grid items-end gap-8 py-8 lg:grid-cols-[1fr_auto] lg:py-10">
           <div className="max-w-3xl">
             <p className="eyebrow">Event execution template library</p>
-            <h1 className="display mt-4 text-5xl font-black leading-[1.02] sm:text-6xl">
+            <h2 className="page-title mt-4">
               Start from execution knowledge.
               <span className="block text-[#8b7440]">Then tailor the operating plan.</span>
-            </h1>
+            </h2>
             <p className="mt-5 max-w-2xl text-lg leading-8 text-[#6d7889]">
               Browse event types for coverage and inspiration. When you are ready to execute,
               RunYourEvent adapts the event context into a dependency-aware execution model.
@@ -48,7 +48,7 @@ export default function BrowsePage() {
         </div>
       </section>
 
-      <section className="shell py-14 sm:py-18">
+      <section className="shell py-14 sm:py-8">
         <div className="mb-7 flex items-center justify-between gap-5">
           <div>
             <p className="text-sm font-black text-[#23324a]">Browse by category</p>
@@ -62,7 +62,7 @@ export default function BrowsePage() {
         {loading ? (
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {[...Array(9)].map((_, i) => (
-              <div key={i} className="h-36 animate-pulse rounded-[24px] border border-black/[0.04] bg-white" />
+              <div key={i} className="h-36 animate-pulse rounded-2xl border border-black/[0.04] bg-white" />
             ))}
           </div>
         ) : (
@@ -71,7 +71,7 @@ export default function BrowsePage() {
               <a
                 key={cat.name}
                 href={`/browse/${encodeURIComponent(cat.name)}`}
-                className="group rounded-[24px] border border-black/[0.055] bg-white p-6 transition-all hover:-translate-y-0.5 hover:border-[#c8aa5b] hover:shadow-xl hover:shadow-black/[0.035]"
+                className="group rounded-2xl border border-black/[0.055] bg-white p-6 transition-all hover:-translate-y-0.5 hover:border-[#c8aa5b] hover:shadow-xl hover:shadow-black/[0.035]"
               >
                 <div className="flex items-start justify-between gap-4">
                   <span className="grid h-10 w-10 place-items-center rounded-xl bg-[#f3ead2] text-[#8b6b23]">
@@ -79,9 +79,9 @@ export default function BrowsePage() {
                   </span>
                   <span className="text-xs font-black text-[#a0a7b1]">{cat.event_count} types</span>
                 </div>
-                <h2 className="mt-5 text-lg font-black tracking-[-0.025em] text-[#23324a] group-hover:text-[#80631f]">
+                <h3 className="mt-5 text-lg font-black tracking-[-0.025em] text-[#23324a] group-hover:text-[#80631f]">
                   {cat.name}
-                </h2>
+                </h3>
                 <p className="mt-2 text-sm leading-6 text-[#7a8595]">
                   Explore event references, then generate a plan from your own fixed date and operating context.
                 </p>
@@ -93,11 +93,11 @@ export default function BrowsePage() {
           </div>
         )}
 
-        <div className="mt-12 rounded-[30px] bg-[#15233f] p-7 text-white sm:flex sm:items-center sm:justify-between sm:gap-8 sm:p-9">
+        <div className="mt-8 rounded-2xl bg-[#15233f] p-7 text-white sm:flex sm:items-center sm:justify-between sm:gap-8 sm:p-9">
           <div>
             <p className="text-[11px] font-black uppercase tracking-[0.15em] text-[#efcd6d]">Your event is more specific?</p>
-            <h2 className="mt-2 text-2xl font-black tracking-[-0.03em]">Describe it instead of searching for a perfect template.</h2>
-            <p className="mt-2 max-w-2xl text-sm leading-6 text-white/50">
+            <h3 className="mt-2 text-2xl font-black tracking-[-0.03em]">Describe it instead of searching for a perfect template.</h3>
+            <p className="mt-2 max-w-2xl text-sm leading-6 text-white/70">
               RunYourEvent can use a reference model where available and adapt it to the objective, scale, format, venue status and fixed date.
             </p>
           </div>

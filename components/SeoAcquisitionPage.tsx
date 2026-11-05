@@ -37,11 +37,11 @@ export default function SeoAcquisitionPage({ slug, eyebrow, title, lead, intro, 
       {breadcrumbSchema && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />}
 
       <section className="relative isolate overflow-hidden border-b border-black/[0.06]">
-        <div className="premium-halo" aria-hidden="true" />
-        <div className="shell relative py-24 sm:py-28 lg:py-32">
+
+        <div className="shell relative py-12 sm:py-12 lg:py-14">
           <div className="max-w-5xl">
             <p className="eyebrow">{eyebrow}</p>
-            <h1 className="mt-6 text-[clamp(3rem,7vw,6.5rem)] font-black leading-[0.91] tracking-[-0.06em] text-[#101827]">{title}</h1>
+            <h2 className="page-title mt-6 text-[#101827]">{title}</h2>
             <p className="mt-8 max-w-3xl text-lg leading-8 text-[#646f80]">{lead}</p>
             <div className="mt-9 flex flex-wrap items-center gap-4">
               <a className="btn-primary" href="/custom">{cta} <ArrowRight className="ml-2" size={15} /></a>
@@ -56,11 +56,11 @@ export default function SeoAcquisitionPage({ slug, eyebrow, title, lead, intro, 
         </div>
       </section>
 
-      <section className="bg-white py-20 sm:py-24 lg:py-28">
-        <div className="shell grid gap-12 lg:grid-cols-[.68fr_1.32fr]">
+      <section className="bg-white py-10 sm:py-12 lg:py-12">
+        <div className="shell grid gap-8 lg:grid-cols-[.68fr_1.32fr]">
           <div>
             <p className="eyebrow">Execution scope</p>
-            <h2 className="premium-section mt-5">What has to become true.</h2>
+            <h3 className="premium-section mt-5">What has to become true.</h3>
           </div>
           <div className="divide-y divide-black/[0.08] border-y border-black/[0.08]">
             {workstreams.map(item => <p key={item} className="py-5 text-base font-black tracking-[-0.02em] text-[#24324a]">{item}</p>)}
@@ -68,11 +68,11 @@ export default function SeoAcquisitionPage({ slug, eyebrow, title, lead, intro, 
         </div>
       </section>
 
-      <section className="border-y border-black/[0.06] bg-[#eeeae0] py-20 sm:py-24 lg:py-28">
-        <div className="shell grid gap-12 lg:grid-cols-[.72fr_1.28fr]">
+      <section className="border-y border-black/[0.06] bg-[#eeeae0] py-10 sm:py-12 lg:py-12">
+        <div className="shell grid gap-8 lg:grid-cols-[.72fr_1.28fr]">
           <div>
             <p className="eyebrow">From planning to execution</p>
-            <h2 className="premium-section mt-5">A checklist remembers work. A connected plan controls it.</h2>
+            <h3 className="premium-section mt-5">A checklist remembers work. A connected plan controls it.</h3>
             <p className="mt-7 max-w-xl text-base leading-7 text-[#667184]">{intro}</p>
           </div>
           <ol className="grid border-y border-black/[0.08] sm:grid-cols-2">
@@ -86,11 +86,11 @@ export default function SeoAcquisitionPage({ slug, eyebrow, title, lead, intro, 
         </div>
       </section>
 
-      <section id="framework" className="bg-[#f7f5ef] py-20 sm:py-24 lg:py-28">
+      <section id="framework" className="bg-[#f7f5ef] py-10 sm:py-12 lg:py-12">
         <div className="shell">
           <p className="eyebrow">Execution framework</p>
-          <h2 className="premium-section mt-5 max-w-5xl">Work backwards from the fixed date. Make every dependency visible.</h2>
-          <div className="mt-12 grid border-y border-black/[0.08] md:grid-cols-2 xl:grid-cols-4">
+          <h3 className="premium-section mt-5 max-w-5xl">Work backwards from the fixed date. Make every dependency visible.</h3>
+          <div className="mt-8 grid border-y border-black/[0.08] md:grid-cols-2 xl:grid-cols-4">
             {steps.map((step, index) => (
               <article key={step.title} className={`py-8 md:px-8 ${index > 0 ? 'border-t border-black/[0.08] md:border-t-0' : ''} ${index % 2 === 1 ? 'md:border-l md:border-black/[0.08]' : ''} ${index >= 2 ? 'md:border-t md:border-black/[0.08] xl:border-t-0' : ''} ${index > 0 ? 'xl:border-l xl:border-black/[0.08]' : ''}`}>
                 <p className="text-xs font-black tracking-[0.14em] text-[#9a741c]">0{index + 1}</p>
@@ -102,12 +102,12 @@ export default function SeoAcquisitionPage({ slug, eyebrow, title, lead, intro, 
         </div>
       </section>
 
-      <section className="bg-[#0e1729] py-24 text-white sm:py-28">
-        <div className="shell grid gap-12 lg:grid-cols-[.78fr_1.22fr] lg:items-center">
+      <section className="bg-[#0e1729] py-12 text-white sm:py-12">
+        <div className="shell grid gap-8 lg:grid-cols-[.78fr_1.22fr] lg:items-center">
           <div>
             <p className="text-[10px] font-black uppercase tracking-[0.17em] text-[#e7c66f]">Execution exposure</p>
-            <h2 className="mt-5 max-w-xl text-4xl font-black leading-[1.01] tracking-[-0.05em] sm:text-5xl">The event date does not move because the work is late.</h2>
-            <p className="mt-6 max-w-lg text-base leading-7 text-white/55">RunYourEvent surfaces ownership gaps, blocked work and schedule exposure while there is still time to act.</p>
+            <h3 className="mt-5 max-w-xl text-2xl font-black leading-[1.01] tracking-[-0.03em] sm:text-2xl">The event date does not move because the work is late.</h3>
+            <p className="mt-6 max-w-lg text-base leading-7 text-white/70">RunYourEvent surfaces ownership gaps, blocked work and schedule exposure while there is still time to act.</p>
           </div>
           <div className="divide-y divide-white/10 border-y border-white/12">
             {pitfalls.map(item => <p key={item} className="py-5 text-sm font-bold leading-6 text-white/78">{item}</p>)}
@@ -116,7 +116,7 @@ export default function SeoAcquisitionPage({ slug, eyebrow, title, lead, intro, 
       </section>
 
       {related.length > 0 && (
-        <section className="bg-[#eeeae0] py-20 sm:py-24">
+        <section className="bg-[#eeeae0] py-10 sm:py-12">
           <div className="shell">
             <p className="eyebrow">Related execution guides</p>
             <div className="mt-7 grid border-y border-black/[0.08] md:grid-cols-2">
@@ -130,11 +130,11 @@ export default function SeoAcquisitionPage({ slug, eyebrow, title, lead, intro, 
         </section>
       )}
 
-      <section className="bg-white py-20 sm:py-24 lg:py-28">
+      <section className="bg-white py-10 sm:py-12 lg:py-12">
         <div className="shell grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
           <div>
             <p className="eyebrow">RunYourEvent</p>
-            <h2 className="premium-section mt-5">Turn the fixed date into a plan your team can actually execute.</h2>
+            <h3 className="premium-section mt-5">Turn the fixed date into a plan your team can actually execute.</h3>
             <p className="mt-6 max-w-2xl text-base leading-7 text-[#667184]">Generate the plan, assign the work, track readiness, replan when dates move and run event day from the same execution workspace.</p>
           </div>
           <a className="btn-primary shrink-0" href="/custom">{cta} <ArrowRight className="ml-2" size={15} /></a>
@@ -142,9 +142,9 @@ export default function SeoAcquisitionPage({ slug, eyebrow, title, lead, intro, 
       </section>
 
       {faqs.length > 0 && (
-        <section className="border-t border-black/[0.06] bg-[#f7f5ef] py-20 sm:py-24">
-          <div className="shell grid gap-10 lg:grid-cols-[.55fr_1.45fr]">
-            <div><p className="eyebrow">Questions</p><h2 className="mt-5 text-3xl font-black tracking-[-0.04em] text-[#101827]">What people ask before they start.</h2></div>
+        <section className="border-t border-black/[0.06] bg-[#f7f5ef] py-10 sm:py-12">
+          <div className="shell grid gap-6 lg:grid-cols-[.55fr_1.45fr]">
+            <div><p className="eyebrow">Questions</p><h3 className="mt-5 text-3xl font-black tracking-[-0.04em] text-[#101827]">What people ask before they start.</h3></div>
             <div className="divide-y divide-black/[0.08] border-y border-black/[0.08]">
               {faqs.map(({ q, a }) => (
                 <details key={q} className="group py-5">

@@ -49,9 +49,9 @@ export default function Page() {
   return (
     <main className="bg-[#fcfbf8]">
       <section className="border-b border-black/[0.06]">
-        <div className="shell py-20 sm:py-24">
+        <div className="shell py-10 sm:py-12">
           <p className="eyebrow">Resources</p>
-          <h1 className="display mt-5 max-w-5xl text-5xl font-black leading-[0.98] sm:text-6xl lg:text-7xl">Planning guides that lead to execution—not another pile of generic checklists.</h1>
+          <h2 className="page-title mt-5 max-w-5xl">Planning guides that lead to execution—not another pile of generic checklists.</h2>
           <p className="lede mt-7">Find the planning language you searched for, then use it to build the stronger operating model behind delivery: owners, dependencies, deadlines, readiness and Run of Show.</p>
         </div>
       </section>
@@ -64,7 +64,7 @@ export default function Page() {
               <div className="divide-y divide-black/[0.08] border-y border-black/[0.08]">
                 {cluster.items.map(([title, body, href]) => (
                   <a key={title} href={href} className="group grid gap-3 py-5 sm:grid-cols-[.72fr_1.28fr_auto] sm:items-center">
-                    <h2 className="font-black tracking-[-0.02em] text-[#15233f]">{title}</h2>
+                    <h3 className="font-black tracking-[-0.02em] text-[#15233f]">{title}</h3>
                     <p className="text-sm leading-6 text-[#667184]">{body}</p>
                     <ArrowRight size={15} className="text-[#9a741c] transition-transform duration-150 group-hover:translate-x-1" />
                   </a>
@@ -79,7 +79,7 @@ export default function Page() {
         <div className="shell grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
           <div>
             <p className="eyebrow">Ready to move beyond the guide?</p>
-            <h2 className="section-title mt-4">Turn the event into an operating plan.</h2>
+            <h3 className="section-title mt-4">Turn the event into an operating plan.</h3>
           </div>
           <a href="/custom" className="btn-primary">Build my event plan <ArrowRight className="ml-2" size={15} /></a>
         </div>

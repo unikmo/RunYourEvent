@@ -101,7 +101,7 @@ export default function EventPage() {
       <main className="grid min-h-[62vh] place-items-center bg-[#fbfaf7] px-6 text-center">
         <div>
           <p className="eyebrow">Reference not found</p>
-          <h1 className="display mt-3 text-4xl font-black text-[#15233f]">This event model is unavailable.</h1>
+          <h2 className="page-title mt-3 text-[#15233f]">This event model is unavailable.</h2>
           <a href="/custom" className="btn-primary mt-6">Build a tailored plan instead →</a>
         </div>
       </main>
@@ -111,7 +111,7 @@ export default function EventPage() {
   return (
     <main className="bg-[#fbfaf7]">
       <section className="border-b border-black/[0.055] bg-[#f5f2ea]">
-        <div className="shell py-12 sm:py-16">
+        <div className="shell py-12 sm:py-8">
           <nav className="mb-7 flex flex-wrap items-center gap-2 text-xs font-bold text-[#8992a0]" aria-label="Breadcrumb">
             <a href="/browse" className="hover:text-[#15233f]">Event library</a>
             <ChevronRight size={13} />
@@ -128,7 +128,7 @@ export default function EventPage() {
           <div className="grid items-end gap-8 lg:grid-cols-[1fr_auto]">
             <div className="max-w-4xl">
               <p className="eyebrow">Event planning reference model</p>
-              <h1 className="display mt-4 text-4xl font-black leading-[1.02] sm:text-5xl">{event.name}</h1>
+              <h2 className="page-title mt-4">{event.name}</h2>
               <p className="mt-4 max-w-3xl text-base leading-7 text-[#687386]">{event.description}</p>
             </div>
 
@@ -156,7 +156,7 @@ export default function EventPage() {
           ))}
         </div>
 
-        <div className="mt-6 rounded-[24px] border border-[#ded2aa] bg-[#fbf6e7] p-5">
+        <div className="mt-6 rounded-2xl border border-[#ded2aa] bg-[#fbf6e7] p-5">
           <p className="text-sm font-black text-[#5f4b1f]">This is a reference plan, not your final execution plan.</p>
           <p className="mt-1.5 max-w-4xl text-xs leading-5 text-[#8b7440]">
             It does not know your fixed date, venue status, attendance assumptions or objectives. Use it to understand scope, then generate a tailored dependency-aware plan for the actual event.
@@ -164,7 +164,7 @@ export default function EventPage() {
         </div>
 
         {tasks.length > 0 ? (
-          <div className="mt-10 space-y-9">
+          <div className="mt-6 space-y-9">
             {LAYERS.map(layer => {
               const layerTasks = tasksByLayer[layer] || []
               if (!layerTasks.length) return null
@@ -174,13 +174,13 @@ export default function EventPage() {
                   <div className="mb-4 flex items-end justify-between gap-4">
                     <div>
                       <p className="text-[10px] font-black uppercase tracking-[0.13em] text-[#9a7b31]">{layer}</p>
-                      <h2 className="mt-1 text-xl font-black tracking-[-0.025em] text-[#23324a]">
+                      <h3 className="mt-1 text-xl font-black tracking-[-0.025em] text-[#23324a]">
                         {layerTasks.length} reference tasks
-                      </h2>
+                      </h3>
                     </div>
                   </div>
 
-                  <div className="overflow-hidden rounded-[26px] border border-black/[0.055] bg-white">
+                  <div className="overflow-hidden rounded-2xl border border-black/[0.055] bg-white">
                     <div className="hidden grid-cols-[50px_1fr_150px_80px] gap-3 border-b border-black/[0.055] bg-[#f8f6f0] px-5 py-3 text-[9px] font-black uppercase tracking-[0.1em] text-[#9ba2ad] md:grid">
                       <div>#</div>
                       <div>Task</div>
@@ -213,12 +213,12 @@ export default function EventPage() {
               )
             })}
 
-            <div className="flex flex-col justify-between gap-5 rounded-[28px] bg-[#15233f] p-7 text-white sm:flex-row sm:items-center">
+            <div className="flex flex-col justify-between gap-5 rounded-2xl bg-[#15233f] p-7 text-white sm:flex-row sm:items-center">
               <div>
                 <p className="text-[10px] font-black uppercase tracking-[0.14em] text-[#efcd6d]">Ready to make it real?</p>
-                <h2 className="mt-2 text-2xl font-black tracking-[-0.03em]">
+                <h3 className="mt-2 text-2xl font-black tracking-[-0.03em]">
                   Add your date and context. Turn this reference into an execution plan.
-                </h2>
+                </h3>
               </div>
               <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
                 <button
@@ -233,7 +233,7 @@ export default function EventPage() {
             </div>
           </div>
         ) : (
-          <div className="mt-10 rounded-[28px] border border-black/[0.055] bg-white p-10 text-center">
+          <div className="mt-6 rounded-2xl border border-black/[0.055] bg-white p-10 text-center">
             <p className="text-lg font-black text-[#23324a]">No reference tasks are attached to this event yet.</p>
             <p className="mx-auto mt-2 max-w-xl text-sm leading-6 text-[#7a8595]">
               RunYourEvent can still construct a tailored plan from your event brief.

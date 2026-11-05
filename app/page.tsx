@@ -28,10 +28,10 @@ export default function HomePage() {
     <main className="home-page overflow-hidden bg-[#f7f5ef]">
       <section className="relative isolate border-b border-black/[0.06]">
 
-        <div className="shell relative grid gap-8 py-10 sm:py-12 lg:grid-cols-[1.05fr_.95fr] lg:items-start lg:gap-12 lg:py-14">
+        <div className="shell relative grid gap-8 py-10 sm:py-12 lg:grid-cols-[1.05fr_.95fr] lg:items-start lg:gap-8 lg:py-14">
           <div>
             <p className="eyebrow">Sports Volunteer Platform</p>
-            <h1 className="home-hero-title mt-4">Find volunteers for your next matchday.</h1>
+            <h2 className="page-title mt-4">Find volunteers for your next matchday.</h2>
             <p className="mt-5 max-w-xl text-base leading-7 text-[#536072] sm:text-lg">Local help for 2–4 hour sports activities. <b className="text-[#182237]">€10 per volunteer after completion.</b></p>
             <div className="mt-6 flex flex-wrap gap-3">
               <a href="/volunteer-engine/organizers" className="btn-primary">Find volunteers <ArrowRight className="ml-2" size={16} /></a>
@@ -71,8 +71,8 @@ export default function HomePage() {
 
       <section className="bg-white py-10 sm:py-12 lg:py-14">
         <div className="shell">
-          <div className="grid gap-10 lg:grid-cols-[.78fr_1.22fr] lg:items-end">
-            <div><p className="eyebrow">How it works</p><h2 className="premium-section mt-5">From staffing gap to completed activity.</h2></div>
+          <div className="grid gap-6 lg:grid-cols-[.78fr_1.22fr] lg:items-end">
+            <div><p className="eyebrow">How it works</p><h3 className="premium-section mt-5">From staffing gap to completed activity.</h3></div>
             <p className="max-w-xl text-lg leading-8 text-[#646f80]">RunYourEvent handles the supply loop around the activity. The sports organization remains responsible for the event, supervision and safety.</p>
           </div>
           <div className="mt-7 grid border-y border-black/[0.08] md:grid-cols-4">
@@ -85,7 +85,7 @@ export default function HomePage() {
         <div className="shell grid gap-8 lg:grid-cols-[.8fr_1.2fr] lg:items-end">
           <div>
             <p className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-[#d9b95d]">Not another helper list</p>
-            <h2 className="mt-5 text-3xl font-bold leading-tight tracking-[-0.035em] sm:text-4xl">The problem is not scheduling.<br />It is finding people.</h2>
+            <h3 className="mt-5 text-2xl font-bold leading-tight tracking-[-0.035em] sm:text-3xl">The problem is not scheduling.<br />It is finding people.</h3>
           </div>
           <div>
             <p className="max-w-xl text-lg leading-8 text-white/75">Calendars, spreadsheets and volunteer lists can organize people you already have. RunYourEvent is built for the gap before that: supplying people for concrete sports activities.</p>
@@ -102,7 +102,7 @@ export default function HomePage() {
 
       <section className="border-y border-black/[0.06] bg-[#eeeae0] py-10 sm:py-14">
         <div className="shell grid gap-8 lg:grid-cols-[.7fr_1.3fr]">
-          <div><p className="eyebrow">What can volunteers do?</p><h2 className="premium-section mt-5">Small jobs that make sport possible.</h2><p className="mt-6 max-w-lg text-base leading-7 text-[#667184]">Matchdays and tournaments are full of work that does not need a season-long volunteer. It needs a person for a few hours.</p></div>
+          <div><p className="eyebrow">What can volunteers do?</p><h3 className="premium-section mt-5">Small jobs that make sport possible.</h3><p className="mt-6 max-w-lg text-base leading-7 text-[#667184]">Matchdays and tournaments are full of work that does not need a season-long volunteer. It needs a person for a few hours.</p></div>
           <div className="divide-y divide-black/[0.09] border-y border-black/[0.09]">
             {activityExamples.map(([role,duration,context])=><div key={role} className="grid gap-2 py-5 sm:grid-cols-[1fr_auto_auto] sm:items-center"><p className="font-black text-[#182237]">{role}</p><p className="text-xs font-bold text-[#7b8493] sm:w-28">{context}</p><p className="text-sm font-black text-[#9a741c] sm:w-16 sm:text-right">{duration}</p></div>)}
           </div>
@@ -113,7 +113,7 @@ export default function HomePage() {
         <div className="shell grid gap-8 lg:grid-cols-2">
           <article className="rounded-2xl border border-black/[0.07] bg-white p-6 sm:p-8">
             <p className="eyebrow">For sports clubs</p>
-            <p className="mt-7 text-7xl font-black tracking-[-0.07em] text-[#101827]">€10</p>
+            <p className="mt-7 text-3xl font-black tracking-[-0.03em] text-[#101827]">€10</p>
             <p className="mt-2 text-sm font-bold text-[#7b8493]">per volunteer who completes the activity</p>
             <div className="mt-8 divide-y divide-black/[0.07] border-y border-black/[0.07] text-sm text-[#536072]">
               <p className="py-4"><b className="text-[#182237]">Posting:</b> free</p>
@@ -126,9 +126,9 @@ export default function HomePage() {
 
           <article className="rounded-2xl bg-[#0e1729] p-6 text-white sm:p-8">
             <p className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-[#d9b95d]">For students</p>
-            <div className="mt-7 flex items-end gap-3"><GraduationCap size={36} className="mb-2 text-[#e7c66f]"/><p className="text-7xl font-black tracking-[-0.07em]">20h</p></div>
+            <div className="mt-7 flex items-end gap-3"><GraduationCap size={36} className="mb-2 text-[#e7c66f]"/><p className="text-3xl font-black tracking-[-0.03em]">20h</p></div>
             <p className="mt-2 text-sm font-bold text-white/70">verified sports volunteering</p>
-            <h2 className="mt-8 text-3xl font-black tracking-[-0.04em]">Build a record that says you showed up.</h2>
+            <h3 className="mt-8 text-3xl font-black tracking-[-0.04em]">Build a record that says you showed up.</h3>
             <p className="mt-5 max-w-lg text-base leading-7 text-white/70">Verified completed activities accumulate across clubs and sports. At 20 hours, students become eligible for the RunYourEvent Sports Volunteer Certificate.</p>
             <div className="mt-7 flex items-center gap-3 text-sm font-bold text-white/70"><ShieldCheck size={18} className="text-[#e7c66f]"/>Check-in + check-out + organizer verification</div>
             <a href="/volunteer-engine/volunteers" className="mt-8 inline-flex min-h-11 items-center justify-center rounded-full bg-white px-5 py-3 text-sm font-black text-[#101827]">Join free <ArrowRight className="ml-2" size={16}/></a>
@@ -138,7 +138,7 @@ export default function HomePage() {
 
       <section className="bg-white py-10 sm:py-14">
         <div className="shell grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
-          <div><p className="eyebrow">Sports need people</p><h2 className="mt-4 max-w-3xl text-4xl font-black tracking-[-0.05em] text-[#182237]">Make the commitment small enough to say yes to.</h2></div>
+          <div><p className="eyebrow">Sports need people</p><h3 className="mt-4 max-w-3xl text-2xl font-black tracking-[-0.03em] text-[#182237]">Make the commitment small enough to say yes to.</h3></div>
           <div className="flex flex-wrap gap-3"><a href="/volunteer-engine/organizers" className="btn-primary">Find volunteers</a><a href="/volunteer-engine/volunteers" className="btn-secondary">Volunteer</a></div>
         </div>
       </section>

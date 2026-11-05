@@ -12,11 +12,11 @@ export default async function Page({params}:{params:Promise<{token:string}>}){
   if(error||!data) notFound()
   const row=data as any; const o=row.opportunity||{}; const v=row.volunteer||{}
   const start=o.shiftStart?new Date(o.shiftStart):null; const end=o.shiftEnd?new Date(o.shiftEnd):null
-  return <main className="bg-[#f7f5ef]"><section className="shell max-w-4xl py-20 sm:py-24">
+  return <main className="bg-[#f7f5ef]"><section className="shell max-w-4xl py-10 sm:py-12">
     <p className="eyebrow">Sports volunteer activity</p>
-    <h1 className="premium-section mt-5">{v.firstName}, this activity is yours to choose.</h1>
+    <h2 className="page-title mt-5">{v.firstName}, this activity is yours to choose.</h2>
     <p className="mt-6 max-w-2xl text-lg leading-8 text-[#646f80]">Accepting confirms this specific 2–4 hour activity only. It does not commit you to future activities.</p>
-    <div className="mt-10 divide-y divide-black/[0.08] border-y border-black/[0.08]">
+    <div className="mt-6 divide-y divide-black/[0.08] border-y border-black/[0.08]">
       {[
         ['Role',o.title],['Club / organizer',o.organizationName],['Activity',o.eventName||o.title],['Location',[o.venue,o.city].filter(Boolean).join(' · ')],['Date',o.eventDay],['Time',start&&end?start.toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'})+'–'+end.toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'}):'—'],['Transport',transportLabel(o.transportMode)],['Transport details',o.transportDetails||'—']
       ].map(([label,value])=><div key={label} className="grid gap-2 py-5 sm:grid-cols-[170px_1fr]"><p className="text-[10px] font-black uppercase tracking-[.12em] text-[#8a671b]">{label}</p><p className="text-sm font-bold leading-6 text-[#283449]">{value}</p></div>)}

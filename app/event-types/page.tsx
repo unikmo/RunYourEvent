@@ -53,39 +53,39 @@ export default function Page() {
   return (
     <main className="bg-[#fcfbf8]">
       <section className="border-b border-black/[0.06]">
-        <div className="shell py-20 sm:py-24">
+        <div className="shell py-10 sm:py-12">
           <p className="eyebrow">Event types</p>
-          <h1 className="display mt-5 max-w-5xl text-5xl font-black leading-[0.98] sm:text-6xl lg:text-7xl">One execution engine. Built around the event you actually have to deliver.</h1>
+          <h2 className="page-title mt-5 max-w-5xl">One execution engine. Built around the event you actually have to deliver.</h2>
           <p className="lede mt-7">Start with the event type that matches your situation. Each guide uses the language people search for, while the product itself remains focused on execution.</p>
         </div>
       </section>
 
       <section className="section-pad bg-white">
-        <div className="shell grid gap-12 lg:grid-cols-[.58fr_1.42fr]">
-          <div><p className="eyebrow">Most-used starting points</p><h2 className="section-title mt-4">High-intent event journeys.</h2></div>
+        <div className="shell grid gap-8 lg:grid-cols-[.58fr_1.42fr]">
+          <div><p className="eyebrow">Most-used starting points</p><h3 className="section-title mt-4">High-intent event journeys.</h3></div>
           <Directory items={primary} />
         </div>
       </section>
 
       <section className="section-pad border-y border-black/[0.06] bg-[#f4f1e9]">
-        <div className="shell grid gap-12 lg:grid-cols-[.58fr_1.42fr]">
-          <div><p className="eyebrow">Nonprofit, volunteer & community</p><h2 className="display mt-4 text-3xl font-black tracking-[-0.04em] text-[#15233f]">Complex coordination without enterprise overhead.</h2></div>
+        <div className="shell grid gap-8 lg:grid-cols-[.58fr_1.42fr]">
+          <div><p className="eyebrow">Nonprofit, volunteer & community</p><h3 className="display mt-4 text-3xl font-black tracking-[-0.04em] text-[#15233f]">Complex coordination without enterprise overhead.</h3></div>
           <Directory items={mission} />
         </div>
       </section>
 
       <section className="section-pad bg-white">
-        <div className="shell grid gap-12 lg:grid-cols-[.58fr_1.42fr]">
-          <div><p className="eyebrow">Adjacent high-intent guides</p><h2 className="display mt-4 text-3xl font-black tracking-[-0.04em] text-[#15233f]">Specific events. Specific execution logic.</h2></div>
+        <div className="shell grid gap-8 lg:grid-cols-[.58fr_1.42fr]">
+          <div><p className="eyebrow">Adjacent high-intent guides</p><h3 className="display mt-4 text-3xl font-black tracking-[-0.04em] text-[#15233f]">Specific events. Specific execution logic.</h3></div>
           <Directory items={adjacent} />
         </div>
       </section>
 
       <section className="section-pad bg-[#15233f] text-white">
-        <div className="shell grid gap-12 lg:grid-cols-[.75fr_1.25fr] lg:items-center">
+        <div className="shell grid gap-8 lg:grid-cols-[.75fr_1.25fr] lg:items-center">
           <div>
             <p className="text-[10px] font-black uppercase tracking-[0.16em] text-[#e7c66f]">Professional operators</p>
-            <h2 className="mt-4 text-4xl font-black leading-[1.03] tracking-[-0.04em] sm:text-5xl">Run repeat events without turning every event into the same template.</h2>
+            <h3 className="mt-4 text-2xl font-black leading-[1.03] tracking-[-0.04em] sm:text-2xl">Run repeat events without turning every event into the same template.</h3>
           </div>
           <div className="divide-y divide-white/10 border-y border-white/10">
             {[
@@ -93,7 +93,7 @@ export default function Page() {
               ['Hotels & venues', 'Coordinate clients, suppliers and internal teams from one operating plan.', '/venues'],
             ].map(([title, body, href]) => (
               <a key={title} href={href} className="group grid gap-2 py-6 sm:grid-cols-[1fr_auto] sm:items-center">
-                <div><h3 className="font-black">{title}</h3><p className="mt-2 text-sm leading-6 text-white/60">{body}</p></div>
+                <div><h3 className="font-black">{title}</h3><p className="mt-2 text-sm leading-6 text-white/70">{body}</p></div>
                 <ArrowRight size={16} className="text-[#e7c66f] transition-transform duration-150 group-hover:translate-x-1" />
               </a>
             ))}
