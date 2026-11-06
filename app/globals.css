@@ -210,3 +210,6 @@ main input:not([type='checkbox']):not([type='radio']), main select, main textare
 main input[type='checkbox'], main input[type='radio'] { flex-shrink: 0; }
 main .btn-primary, main .btn-secondary, main .btn-dark, main .btn-signal { max-width: 100%; text-align: center; }
 main fieldset { min-width: 0; }
+
+/* Keep German compounds inside narrow form panels and cards. */
+html[lang="de"] :is(h2, h3, h4, .label) { overflow-wrap: anywhere; hyphens: auto; }
