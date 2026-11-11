@@ -15,7 +15,7 @@ export default async function Page({searchParams}:{searchParams:Promise<{event?:
   }
   return <main className="bg-[#f7f5ef]"><section className="shell max-w-3xl py-10 sm:py-12">
     <p className="eyebrow">Freiwilliger Einsatz · Anwesenheit</p>
-    <h2 className="page-title mt-5">Melde dich vor Ort an.</h2>
+    <h1 className="page-title mt-5">Melde dich vor Ort an.</h1>
     {!data?<div className="mt-8 border-y border-black/[0.08] py-6"><p className="text-sm font-black text-[#182237]">{unavailable?"Die Anwesenheitsdaten lassen sich gerade nicht laden.":"Dieser Einsatz konnte auf diesem Gerät nicht geöffnet werden."}</p><p className="mt-2 text-sm leading-6 text-[#667184]">{unavailable?"Deine Anwesenheit können wir gerade nicht bestätigen. Bitte versuch es erneut oder bitte den Verein, das Problem zu dokumentieren.":"Öffne die Einladung, für die du zugesagt hast, oder melde dich bei deinem Engagementpass an. Scanne danach den QR-Code des Vereins erneut."}</p><Link href="/access?role=volunteer" className="text-link mt-4">Bei deinem Engagementpass anmelden →</Link></div>:<>
       <div className="mt-8 divide-y divide-black/[0.08] border-y border-black/[0.08]"><div className="py-5"><p className="text-[10px] font-black uppercase tracking-[.12em] text-[#8a671b]">Einsatz</p><p className="mt-2 text-lg font-black text-[#182237]">{data.title}</p><p className="mt-1 text-sm text-[#667184]">{data.organizationName} · {data.venue}</p></div></div>
       <VolunteerAttendanceActions eventCode={eventCode} initial={data}/>

@@ -1,3 +1,6 @@
 {
-  "buildCommand": "rm -rf .next/cache && npm run build"
+  "buildCommand": "rm -rf .next/cache && ([ \"$VERCEL_ENV\" != \"production\" ] || node scripts/check-placeholders.mjs) && npm run build",
+  "regions": [
+    "fra1"
+  ]
 }

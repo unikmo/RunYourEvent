@@ -25,7 +25,7 @@ export default function VolunteerEnginePage() {
         <div className="shell relative py-8 sm:py-12 lg:py-14">
           <div className="max-w-5xl">
             <p className="eyebrow">Freiwillig im Sport helfen</p>
-            <h2 className="page-title mt-6 max-w-[980px]">Bring 2–4 Stunden mit.<br /><span className="text-[#9a741c]">Mach Sport vor Ort möglich.</span></h2>
+            <h1 className="page-title mt-6 max-w-[980px]">Bring 2–4 Stunden mit.<br /><span className="text-[#9a741c]">Mach Sport vor Ort möglich.</span></h1>
             <p className="mt-8 max-w-[760px] text-[18px] leading-8 text-[#646f80] sm:text-xl">Mit RunYourEvent findest du überschaubare Aufgaben im Sportverein. Du sagst für einen konkreten Einsatz zu und entscheidest danach selbst, ob du wieder mitmachst.</p>
             <div className="mt-6 flex flex-wrap gap-3"><a href="/club" className="btn-primary">Ich suche Freiwillige <ArrowRight className="ml-2" size={16}/></a><a href="/volunteer-engine/volunteers" className="btn-secondary">Ich möchte helfen</a></div>
           </div>

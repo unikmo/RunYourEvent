@@ -47,9 +47,9 @@ export default function CategoryPage() {
           </nav>
 
           <p className="eyebrow">Event planning reference category</p>
-          <h2 className="page-title mt-4 max-w-4xl">
+          <h1 className="page-title mt-4 max-w-4xl">
             {category}
-          </h2>
+          </h1>
           <p className="mt-4 max-w-2xl text-base leading-7 text-[#6d7889]">
             Use these event references to understand scope and coverage. For a real event,
             RunYourEvent can adapt the model to your fixed date, scale, format, venue status and objectives.

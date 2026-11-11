@@ -19,12 +19,9 @@ export async function POST(req:NextRequest){
     const contactEmail=email(body.email)
     const city=text(body.city,120)
     const ageBand=text(body.ageBand,20)
-    const validAge=['16_17','18_20','21_25','26_plus'].includes(ageBand)
-    if(!firstName||!lastName||!contactEmail||city.length<2||!validAge||body.privacyAck!==true){
+    const validAge=['18_20','21_25','26_plus'].includes(ageBand)
+    if(!firstName||!lastName||!contactEmail||city.length<2||!validAge||body.privacyAck!==true||body.adultAck!==true){
       return NextResponse.json({error:'Please complete the required registration fields.'},{status:400})
-    }
-    if(ageBand==='16_17'&&body.guardianConsentReady!==true){
-      return NextResponse.json({error:'For the 16–17 age group, confirm that parent or guardian consent can be provided where required.'},{status:400})
     }
     const db=createServerClient()
     const {data,error}=await db.rpc('rye_register_volunteer',{p_payload:body})

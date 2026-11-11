@@ -41,7 +41,7 @@ export default function SeoAcquisitionPage({ slug, eyebrow, title, lead, intro, 
         <div className="shell relative py-12 sm:py-12 lg:py-14">
           <div className="max-w-5xl">
             <p className="eyebrow">{eyebrow}</p>
-            <h2 className="page-title mt-6 text-[#101827]">{title}</h2>
+            <h1 className="page-title mt-6 text-[#101827]">{title}</h1>
             <p className="mt-8 max-w-3xl text-lg leading-8 text-[#646f80]">{lead}</p>
             <div className="mt-9 flex flex-wrap items-center gap-4">
               <a className="btn-primary" href="/custom">{cta} <ArrowRight className="ml-2" size={15} /></a>

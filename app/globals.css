@@ -53,8 +53,10 @@ input:focus-visible,
 textarea:focus-visible,
 select:focus-visible,
 summary:focus-visible {
-  outline: 3px solid rgba(213, 173, 72, 0.45);
-  outline-offset: 3px;
+  /* Solid navy ring plus a white gap: at least 3:1 on cream, white and dark panels. */
+  outline: 3px solid #101827;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 2px #ffffff;
 }
 
 .skip-link {

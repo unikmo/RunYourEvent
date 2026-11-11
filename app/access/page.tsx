@@ -5,5 +5,5 @@ export const metadata:Metadata={title:"Melde dich bei deinem Konto an",descripti
 export default async function AccessPage({searchParams}:{searchParams:Promise<{role?:string}>}) {
   const query=await searchParams
   const role=query.role==='club'?'club':'volunteer'
-  return <main className="shell max-w-3xl section-pad"><p className="eyebrow">Dein RunYourEvent-Konto</p><h2 className="page-title mt-5">Schön, dass du wieder da bist.</h2><p className="lede mt-7">Melde dich auf diesem Gerät bei deinem Engagementpass oder Vereinsbereich an. Dafür bestätigen wir die E-Mail-Adresse, die du bei der Registrierung angegeben hast.</p><AccessForm initialRole={role}/></main>
+  return <main className="shell max-w-3xl section-pad"><p className="eyebrow">Dein RunYourEvent-Konto</p><h1 className="page-title mt-5">Schön, dass du wieder da bist.</h1><p className="lede mt-7">Melde dich auf diesem Gerät bei deinem Engagementpass oder Vereinsbereich an. Dafür bestätigen wir die E-Mail-Adresse, die du bei der Registrierung angegeben hast.</p><AccessForm initialRole={role}/></main>
 }

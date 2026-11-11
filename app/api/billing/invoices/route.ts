@@ -6,6 +6,7 @@ import {createServerClient,getServerSupabase} from '@/lib/supabase-server'
 
 export const runtime='nodejs';export const dynamic='force-dynamic'
 export async function POST(req:NextRequest){
+ if(process.env.BILLING_ACTIVE!=='true')return NextResponse.json({error:'In der Pilotphase fallen keine Gebühren an und es werden keine Rechnungen erstellt.'},{status:503})
  if(!isSameOrigin(req))return NextResponse.json({error:'Invalid request origin'},{status:403})
  try{
   const raw=await req.text();if(raw.length>10000)return NextResponse.json({error:'Request too large'},{status:413})

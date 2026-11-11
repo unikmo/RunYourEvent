@@ -54,12 +54,12 @@ export default function WorkspaceClient({workspaceId}:{workspaceId:string}){
     const out=await res.json().catch(()=>({}));if(!res.ok){setMessage(out.error||'Invite failed.');return}setInviteUrl(out.inviteUrl);e.currentTarget.reset();await load(true)
   }
 
-  if(loading)return <main className="shell py-10"><p className="eyebrow">RunYourEvent workspace</p><h2 className="page-title mt-4">Loading execution plan…</h2></main>
-  if(error||!data)return <main className="shell py-10"><p className="eyebrow">Workspace access</p><h2 className="page-title mt-4">This workspace is not available in this browser.</h2><p className="mt-4 text-[#687386]">{error}</p></main>
+  if(loading)return <main className="shell py-10"><p className="eyebrow">RunYourEvent workspace</p><h1 className="page-title mt-4">Loading execution plan…</h1></main>
+  if(error||!data)return <main className="shell py-10"><p className="eyebrow">Workspace access</p><h1 className="page-title mt-4">This workspace is not available in this browser.</h1><p className="mt-4 text-[#687386]">{error}</p></main>
 
   return <main className="min-h-screen bg-[#f5f2ea] pb-10">
     <section className="border-b border-black/[.055] bg-[#15233f] text-white"><div className="shell py-9">
-      <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between"><div><p className="text-[10px] font-black uppercase tracking-[.14em] text-[#efcd6d]">Live execution workspace · {data.role}</p><h2 className="page-title mt-3">{data.workspace.name}</h2><p className="mt-3 text-sm text-white/70">Changes sync every 10 seconds for collaborators. Task updates recalculate readiness immediately.</p><a href="/my-events" className="mt-3 inline-block text-xs font-black text-[#efcd6d]">← My events</a></div>
+      <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between"><div><p className="text-[10px] font-black uppercase tracking-[.14em] text-[#efcd6d]">Live execution workspace · {data.role}</p><h1 className="page-title mt-3">{data.workspace.name}</h1><p className="mt-3 text-sm text-white/70">Changes sync every 10 seconds for collaborators. Task updates recalculate readiness immediately.</p><a href="/my-events" className="mt-3 inline-block text-xs font-black text-[#efcd6d]">← My events</a></div>
       <div className="flex flex-wrap gap-2"><input type="date" value={newDate} onChange={e=>setNewDate(e.target.value)} disabled={!canWrite} className="rounded-xl border border-white/15 bg-white/10 px-3 py-2 text-sm text-white"/><button onClick={replanEvent} disabled={!canWrite||!newDate} className="rounded-xl bg-[#efcd6d] px-4 py-2 text-sm font-black text-[#15233f]">Replan event</button><button onClick={()=>load()} className="rounded-xl border border-white/15 px-3 py-2"><RefreshCw size={16}/></button></div></div>
     </div></section>
 

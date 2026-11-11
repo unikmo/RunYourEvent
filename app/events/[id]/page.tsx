@@ -101,7 +101,7 @@ export default function EventPage() {
       <main className="grid min-h-[62vh] place-items-center bg-[#fbfaf7] px-6 text-center">
         <div>
           <p className="eyebrow">Reference not found</p>
-          <h2 className="page-title mt-3 text-[#15233f]">This event model is unavailable.</h2>
+          <h1 className="page-title mt-3 text-[#15233f]">This event model is unavailable.</h1>
           <a href="/custom" className="btn-primary mt-6">Build a tailored plan instead →</a>
         </div>
       </main>
@@ -128,7 +128,7 @@ export default function EventPage() {
           <div className="grid items-end gap-8 lg:grid-cols-[1fr_auto]">
             <div className="max-w-4xl">
               <p className="eyebrow">Event planning reference model</p>
-              <h2 className="page-title mt-4">{event.name}</h2>
+              <h1 className="page-title mt-4">{event.name}</h1>
               <p className="mt-4 max-w-3xl text-base leading-7 text-[#687386]">{event.description}</p>
             </div>
 

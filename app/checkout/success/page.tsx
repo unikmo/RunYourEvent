@@ -9,7 +9,7 @@ export default async function SuccessPage() {
   const cookieStore = await cookies()
   const draftToken = cookieStore.get('dengine_draft')?.value
   if (!draftToken) {
-    return <main className="shell py-10"><p className="eyebrow">Plan reference missing</p><h2 className="page-title mt-4">We cannot identify the purchased event plan in this browser.</h2><p className="mt-4 max-w-2xl text-[#687386]">Return to the event builder in the browser where checkout was started, or contact hello@runyourevent.com with the Stripe receipt email.</p></main>
+    return <main className="shell py-10"><p className="eyebrow">Plan reference missing</p><h1 className="page-title mt-4">We cannot identify the purchased event plan in this browser.</h1><p className="mt-4 max-w-2xl text-[#687386]">Return to the event builder in the browser where checkout was started, or contact hello@runyourevent.com with the Stripe receipt email.</p></main>
   }
 
   const supabase = createServerClient()
@@ -18,11 +18,11 @@ export default async function SuccessPage() {
 
   if (error) {
     console.error('Paid-plan lookup failed', error)
-    return <main className="shell py-10"><p className="eyebrow">Verification error</p><h2 className="page-title mt-4">Your payment could not be verified right now.</h2><p className="mt-4 text-[#687386]">We cannot confirm the payment state while verification is unavailable. Please retry or contact hello@runyourevent.com with your earlier receipt.</p></main>
+    return <main className="shell py-10"><p className="eyebrow">Verification error</p><h1 className="page-title mt-4">Your payment could not be verified right now.</h1><p className="mt-4 text-[#687386]">We cannot confirm the payment state while verification is unavailable. Please retry or contact hello@runyourevent.com with your earlier receipt.</p></main>
   }
 
   if (!row) {
-    return <main className="shell py-10"><p className="eyebrow">Payment verification</p><h2 className="page-title mt-4">No verified legacy purchase is available yet.</h2><p className="mt-4 max-w-2xl text-[#687386]">The plan unlocks only after RunYourEvent receives and verifies Stripe&apos;s signed payment event. Refresh this page shortly.</p><a href="/checkout/success" className="btn-primary mt-7">Check payment again →</a></main>
+    return <main className="shell py-10"><p className="eyebrow">Payment verification</p><h1 className="page-title mt-4">No verified legacy purchase is available yet.</h1><p className="mt-4 max-w-2xl text-[#687386]">The plan unlocks only after RunYourEvent receives and verifies Stripe&apos;s signed payment event. Refresh this page shortly.</p><a href="/checkout/success" className="btn-primary mt-7">Check payment again →</a></main>
   }
 
   const tier = row.paid_tier === 'professional' ? 'professional' : 'essential'
@@ -37,7 +37,7 @@ export default async function SuccessPage() {
   return <main className="bg-[#fbfaf7] pb-12">
     <section className="border-b border-black/[0.055] bg-[#15233f] text-white"><div className="shell py-14 sm:py-8">
       <div className="flex items-center gap-3 text-[#efcd6d]"><CheckCircle2 size={22}/><span className="text-xs font-black uppercase tracking-[0.14em]">Payment confirmed</span></div>
-      <h2 className="page-title mt-4">{plan.event?.name || 'Your event'} execution plan</h2>
+      <h1 className="page-title mt-4">{plan.event?.name || 'Your event'} execution plan</h1>
       <p className="mt-4 max-w-3xl text-white/70">{tier === 'professional' ? 'Professional execution intelligence unlocked: dependencies, approvals, risks, contingencies and critical-path detail.' : 'Essential execution plan unlocked: complete task coverage, owners, timing, dependencies and completion criteria.'}</p>
       <div className="mt-6 flex flex-wrap gap-2 text-xs font-bold text-white/65"><span className="rounded-full bg-white/10 px-3 py-2">{tasks.length} tasks</span><span className="rounded-full bg-white/10 px-3 py-2">{groups.size} workstreams</span><span className="rounded-full bg-white/10 px-3 py-2">{tier === 'professional' ? '$39 Professional' : '$19 Essential'}</span></div>
       <form action="/api/workspaces/provision" method="post" className="mt-7"><button type="submit" className="btn-signal">Open live execution workspace →</button></form>

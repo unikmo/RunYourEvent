@@ -10,7 +10,7 @@ export const metadata:Metadata=pageMetadata({
 
 export default function Page(){
   return <main className="bg-[#f7f5ef]">
-    <section className="border-b border-black/[0.06]"><div className="shell py-10 sm:py-12"><p className="eyebrow">Für Freiwillige</p><h2 className="page-title mt-5 max-w-4xl">Ein paar Stunden für deinen Sport.</h2><p className="mt-6 max-w-2xl text-lg leading-8 text-[#646f80]">Wähle einen Einsatz in deiner Nähe, der in deinen Alltag passt. Du musst dich nicht für eine ganze Saison verpflichten. Deine bestätigten Stunden zählen für Bronze ab 20, Silber ab 40 und Gold ab 60 Stunden.</p></div></section>
+    <section className="border-b border-black/[0.06]"><div className="shell py-10 sm:py-12"><p className="eyebrow">Für Freiwillige</p><h1 className="page-title mt-5 max-w-4xl">Ein paar Stunden für deinen Sport.</h1><p className="mt-6 max-w-2xl text-lg leading-8 text-[#646f80]">Wähle einen Einsatz in deiner Nähe, der in deinen Alltag passt. Du musst dich nicht für eine ganze Saison verpflichten. Deine bestätigten Stunden zählen für Bronze ab 20, Silber ab 40 und Gold ab 60 Stunden.</p></div></section>
     <section className="bg-white py-10 sm:py-12"><div className="shell grid gap-8 lg:grid-cols-[.62fr_1.38fr]">
       <aside className="order-2 lg:order-1"><p className="eyebrow">Du entscheidest bei jedem Einsatz neu</p><div className="mt-6 divide-y divide-black/[0.08] border-y border-black/[0.08] text-sm leading-6 text-[#667184]">
         <p className="py-5"><b className="text-[#182237]">1. Schau dir die Aufgabe an.</b><br/>Aufgabe, Datum, Ort und der Zeitraum von 2–4 Stunden stehen fest, bevor du zusagst.</p>

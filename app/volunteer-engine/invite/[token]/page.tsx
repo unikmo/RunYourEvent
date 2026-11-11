@@ -12,13 +12,13 @@ export default async function Page({params}:{params:Promise<{token:string}>}){
   if(!/^[a-f0-9]{48}$/i.test(token)) notFound()
   let data:any=null;let unavailable=false
   try{const r=await createServerClient().rpc('rye_volunteer_invite_lookup',{p_invite_token:token});if(r.error)unavailable=true;else data=r.data}catch{unavailable=true}
-  if(unavailable)return <main className="shell section-pad"><h2 className="page-title section-title">Deine Einladung lässt sich gerade nicht laden.</h2><p className="lede mt-5">Wir konnten den Einsatz und seinen aktuellen Stand nicht laden. Bitte versuch es später noch einmal.</p></main>
+  if(unavailable)return <main className="shell section-pad"><h1 className="page-title section-title">Deine Einladung lässt sich gerade nicht laden.</h1><p className="lede mt-5">Wir konnten den Einsatz und seinen aktuellen Stand nicht laden. Bitte versuch es später noch einmal.</p></main>
   if(!data)notFound()
   const row=data as any; const o=row.opportunity||{}; const v=row.volunteer||{}
   const start=o.shiftStart?new Date(o.shiftStart):null; const end=o.shiftEnd?new Date(o.shiftEnd):null
   return <main className="bg-[#f7f5ef]"><section className="shell max-w-4xl py-10 sm:py-12">
     <p className="eyebrow">Freiwilliger Einsatz im Sport</p>
-    <h2 className="page-title mt-5">{v.firstName}, du entscheidest, ob du mitmachst.</h2>
+    <h1 className="page-title mt-5">{v.firstName}, du entscheidest, ob du mitmachst.</h1>
     <p className="mt-6 max-w-2xl text-lg leading-8 text-[#646f80]">Deine Zusage gilt nur für diesen Einsatz{start&&end?` (${Math.round((end.getTime()-start.getTime())/360000)/10} Stunden)`:''}. Du verpflichtest dich zu keinen weiteren Einsätzen.</p>
     <div className="mt-6 divide-y divide-black/[0.08] border-y border-black/[0.08]">
       {[

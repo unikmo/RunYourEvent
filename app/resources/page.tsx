@@ -51,7 +51,7 @@ export default function Page() {
       <section className="border-b border-black/[0.06]">
         <div className="shell py-10 sm:py-12">
           <p className="eyebrow">Resources</p>
-          <h2 className="page-title mt-5 max-w-5xl">Planning guides that lead to execution—not another pile of generic checklists.</h2>
+          <h1 className="page-title mt-5 max-w-5xl">Planning guides that lead to execution—not another pile of generic checklists.</h1>
           <p className="lede mt-7">Find the planning language you searched for, then use it to build the stronger operating model behind delivery: owners, dependencies, deadlines, readiness and Run of Show.</p>
         </div>
       </section>

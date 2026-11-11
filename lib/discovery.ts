@@ -9,8 +9,8 @@ export function pageMetadata(input: Metadata): Metadata {
   return {
     ...input,
     title: { absolute: title.includes('RunYourEvent') ? title : `${title} | RunYourEvent` },
-    openGraph: { type: 'website', locale: 'de_DE', siteName: 'RunYourEvent', title, description: input.description || '', url: path },
-    twitter: { card: 'summary', title, description: input.description || '' },
+    openGraph: { images: [{ url: '/social-card', width: 1200, height: 630, alt: 'RunYourEvent: Gemeinsam anpacken im Sportverein' }], type: 'website', locale: 'de_DE', siteName: 'RunYourEvent', title, description: input.description || '', url: path },
+    twitter: { card: 'summary_large_image', images: ['/social-card'], title, description: input.description || '' },
     ...(isPreview ? { robots: { index: false, follow: false } } : {}),
   }
 }

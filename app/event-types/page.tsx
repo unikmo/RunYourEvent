@@ -55,7 +55,7 @@ export default function Page() {
       <section className="border-b border-black/[0.06]">
         <div className="shell py-10 sm:py-12">
           <p className="eyebrow">Event types</p>
-          <h2 className="page-title mt-5 max-w-5xl">One execution engine. Built around the event you actually have to deliver.</h2>
+          <h1 className="page-title mt-5 max-w-5xl">One execution engine. Built around the event you actually have to deliver.</h1>
           <p className="lede mt-7">Start with the event type that matches your situation. Each guide uses the language people search for, while the product itself remains focused on execution.</p>
         </div>
       </section>

@@ -33,10 +33,10 @@ export default function BrowsePage() {
         <div className="shell grid items-end gap-8 py-8 lg:grid-cols-[1fr_auto] lg:py-10">
           <div className="max-w-3xl">
             <p className="eyebrow">Event execution template library</p>
-            <h2 className="page-title mt-4">
+            <h1 className="page-title mt-4">
               Start from execution knowledge.
               <span className="block text-[#8b7440]">Then tailor the operating plan.</span>
-            </h2>
+            </h1>
             <p className="mt-5 max-w-2xl text-lg leading-8 text-[#6d7889]">
               Browse event types for coverage and inspiration. When you are ready to execute,
               RunYourEvent adapts the event context into a dependency-aware execution model.

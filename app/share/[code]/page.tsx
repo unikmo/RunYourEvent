@@ -63,7 +63,7 @@ export default function SharePage() {
       <main className="grid min-h-[62vh] place-items-center bg-[#fbfaf7] px-6 text-center">
         <div>
           <p className="eyebrow">Shared plan unavailable</p>
-          <h2 className="page-title mt-3 text-[#15233f]">We could not find this execution plan.</h2>
+          <h1 className="page-title mt-3 text-[#15233f]">We could not find this execution plan.</h1>
           <a href="/custom" className="btn-primary mt-6">Build your own plan →</a>
         </div>
       </main>
@@ -75,9 +75,9 @@ export default function SharePage() {
       <section className="border-b border-black/[0.055] bg-[#f5f2ea]">
         <div className="shell py-12 sm:py-8">
           <p className="eyebrow">Shared RunYourEvent plan</p>
-          <h2 className="page-title mt-4">
+          <h1 className="page-title mt-4">
             {blueprint.event_name}
-          </h2>
+          </h1>
           <div className="mt-4 flex flex-wrap gap-4 text-sm font-bold text-[#768192]">
             <span>{tasks.length} tasks</span>
             <span>·</span>

@@ -4,7 +4,7 @@ const mobileLinks = [
   ['/opportunities', 'Vereinsprojekte entdecken'], ['/seasonal-needs', 'Unterstützung für die Saison'],
   ['/sponsors', 'Für Sponsoren'], ['/corporate', 'Teameinsätze'],
   ['/champsboard', 'Champsboard'], ['/recognition', 'Anerkennung'],
-  ['/notifications', 'Nachrichten & passende Einsätze'], ['/billing', 'Rechnungen für deinen Verein'],
+  ['/notifications', 'Nachrichten & passende Einsätze'],
   ['/pricing', 'Preise'],
 ]
 
